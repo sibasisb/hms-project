@@ -14,7 +14,7 @@ const Routing = () => {
 
 	return (
 		<Switch>
-			<Route path="/appointment">
+			<Route path="/appointment/:patientId">
 				<Appointment />
 			</Route>
 		</Switch>

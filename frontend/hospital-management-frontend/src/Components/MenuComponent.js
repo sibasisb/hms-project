@@ -16,7 +16,7 @@ const MenuComponent=()=>{
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">  
                 <ul className="navbar-nav mr-auto">  
                     <li className="nav-item active">
-                        <Link className="nav-link" to="/appointment"> Book Appointment </Link>
+                        <Link className="nav-link" to="/appointment/54"> Book Appointment </Link>
                     </li>
                 </ul>
                 </div>
