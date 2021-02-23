@@ -3,6 +3,10 @@ import {Switch,BrowserRouter,Route, useHistory} from 'react-router-dom'
 import './App.css';
 import MenuComponent from './Components/MenuComponent';
 import userReducer, { initialState } from './Reducers/userReducer';
+import FacilityAddUpdateComponent from './Components/FacilityAddUpdateComponent';
+import FacilityUpdateList from './Components/FacilityUpdateListComponent';
+
+//import {BrowserRouter as Router , Switch , Route } from 'react-router-dom';
 
 export const UserContext=createContext()
 
@@ -15,7 +19,10 @@ const Routing=()=>{
   
   return (
     <Switch>
-      
+      <Route path="/addfacility" exact component={FacilityAddUpdateComponent} />
+      <Route path="/addfacility/:id"  component={FacilityAddUpdateComponent} />
+      <Route path="/updatefacility"  component={FacilityUpdateList} />
+
     </Switch>
   )
 }
@@ -27,6 +34,7 @@ function App() {
       <UserContext.Provider value={{state,dispatch}}>
         <BrowserRouter>
           <MenuComponent/>
+         
           <Routing/>
         </BrowserRouter>
       </UserContext.Provider>
