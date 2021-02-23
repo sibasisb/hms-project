@@ -1,0 +1,22 @@
+.select-empty{
+
+    --rmsc-border:#ff0000  !important
+}
+
+.select-notEmpty
+{
+    --rmsc-border:#cccccc !important
+}
+
+
+.login {
+    width: 40%;
+}
+
+@media screen and (max-width:1000px) {
+
+    .login {
+
+        width: 60%
+    }
+}
