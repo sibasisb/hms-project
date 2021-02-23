@@ -1,27 +1,27 @@
-import React,{useEffect,useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
 function PatientForm(props) {
 
 
-    const error={
-        borderColor:"red"
+    const error = {
+        borderColor: "red"
     }
 
-    const noerror={
-        borderColor:"#ced4da"
+    const noerror = {
+        borderColor: "#ced4da"
     }
     console.log(props.errors);
     console.log(props.state)
     const initialState = {
-        fName:"",
-        lName:"",
-        dob:"",
-        contact:"",
-        gender:"male",
-        email:"",
-        password:""
+        fName: "",
+        lName: "",
+        dob: "",
+        contact: "",
+        gender: "male",
+        email: "",
+        password: ""
     }
-   // const initialState=props.state
+    // const initialState=props.state
     const [state,
         setstate] = useState(initialState)
 
@@ -45,19 +45,19 @@ function PatientForm(props) {
             <div className="row">
                 <div className="form-group col-md-6">
                     <label htmlFor="inputFName">First Name</label>
-                    <input type="text" className="form-control" name="fName" placeholder="First name" style={props.errors?.fName?error:noerror} onChange={changeValue}/>
+                    <input type="text" className="form-control" name="fName" placeholder="First name" style={props.errors?.fName ? error : noerror} onChange={changeValue} />
                     <small className="text-danger">{props.errors?.fName}</small>
                 </div>
                 <div className="form-group col-md-6">
                     <label htmlFor="inputLName">Last Name</label>
-                    <input type="text" className="form-control" name="lName" placeholder="Last name" style={props.errors?.lName?error:noerror} onChange={changeValue}/>
+                    <input type="text" className="form-control" name="lName" placeholder="Last name" style={props.errors?.lName ? error : noerror} onChange={changeValue} />
                     <small className="text-danger">{props.errors?.lName}</small>
                 </div>
             </div>
             <div className="row">
                 <div className="form-group col-md-6">
                     <label htmlFor="inputDOB">Date of Birth</label>
-                    <input type="date" className="form-control" name="dob" placeholder="Date of Birth" style={props.errors?.dob?error:noerror} onChange={changeValue}/>
+                    <input type="date" className="form-control" name="dob" placeholder="Date of Birth" style={props.errors?.dob ? error : noerror} onChange={changeValue} />
                     <small className="text-danger">{props.errors?.dob}</small>
                 </div>
                 <div className="form-group col-md-6">
@@ -67,9 +67,9 @@ function PatientForm(props) {
                         className="form-control"
                         name="contact"
                         placeholder="Contact Number"
-                        style={props.errors?.contact?error:noerror}
-                        onChange={changeValue}/>
-                        <small className="text-danger">{props.errors?.contact}</small>
+                        style={props.errors?.contact ? error : noerror}
+                        onChange={changeValue} />
+                    <small className="text-danger">{props.errors?.contact}</small>
                 </div>
             </div>
             <div className="row">
@@ -83,8 +83,8 @@ function PatientForm(props) {
                                 id="male"
                                 name="gender"
                                 value="male"
-                               {...(state.gender==="male" && {defaultChecked:"checked"})}
-                                />Male
+                                {...(state.gender === "male" && { defaultChecked: "checked" })}
+                            />Male
                         </label>
                     </div>
                     <div className="form-check-inline">
@@ -95,8 +95,8 @@ function PatientForm(props) {
                                 id="female"
                                 name="gender"
                                 value="female"
-                                {...(state.gender==="female" && {defaultChecked:"checked"})}
-                                />Female
+                                {...(state.gender === "female" && { defaultChecked: "checked" })}
+                            />Female
                         </label>
                     </div>
                 </div>
@@ -109,8 +109,8 @@ function PatientForm(props) {
                     name="email"
                     id="inputEmail"
                     placeholder="Email"
-                    style={props.errors?.email?error:noerror}
-                    onChange={changeValue}/>
+                    style={props.errors?.email ? error : noerror}
+                    onChange={changeValue} />
             </div>
             <div className="form-group">
                 <label htmlFor="inputPassword">Password</label>
@@ -120,9 +120,9 @@ function PatientForm(props) {
                     name="password"
                     id="inputPassword"
                     placeholder="Password"
-                    style={props.errors?.password?error:noerror}
-                    onChange={changeValue}/>
-                    <small className="text-danger">{props.errors?.password}</small>
+                    style={props.errors?.password ? error : noerror}
+                    onChange={changeValue} />
+                <small className="text-danger">{props.errors?.password}</small>
             </div>
 
         </div>
