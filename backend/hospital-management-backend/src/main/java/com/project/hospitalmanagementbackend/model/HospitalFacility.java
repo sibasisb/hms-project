@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -29,9 +30,9 @@ public class HospitalFacility {
 	@Column(name="hospital_facility_id")
 	private long hospitalFacilityId;
 	
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "hospital_id")
-	private Hospital hospital;*/
+	private Hospital hospital;
 	
 	@OneToOne
 	@JoinColumn(name = "facility_id")

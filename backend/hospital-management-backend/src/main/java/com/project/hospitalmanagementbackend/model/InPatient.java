@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -28,9 +30,9 @@ public class InPatient {
 	@Column(name="in_patient_id")
 	private long inPatientId;
 	
-	/*@OneToOne
+	@OneToOne
 	@JoinColumn(name = "patient_id")
-	private Patient patient;*/
+	private Patient patient;
 	
 	@Column(name="admission_date")
 	private LocalDateTime admissionDate;
