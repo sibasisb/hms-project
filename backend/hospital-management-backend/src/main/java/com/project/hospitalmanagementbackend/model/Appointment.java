@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,22 +28,21 @@ public class Appointment {
 	@Column(name = "appointment_id")
 	private Long appointmentId;
 
-	// TODO: add missing model associations
-	// @OneToOne
-	// @JoinColumn(name="patient_id")
-	// private Patient patient
+	@OneToOne
+	@JoinColumn(name = "patient_id")
+	private Patient patient;
 
-	// @OneToOne
-	// @JoinColumn(name="doctor_id")
-	// private Doctor doctor
+	@OneToOne
+	@JoinColumn(name = "doctor_id")
+	private Doctor doctor;
 
-	// @OneToOne
-	// @JoinColumn(name="hospital_id")
-	// private Hospital hospital
+	@OneToOne
+	@JoinColumn(name = "hospital_id")
+	private Hospital hospital;
 
-	// @ManyToOne
-	// @JoinColumn(name="hospital_facility_id")
-	// private HospitalFacility f
+	@ManyToOne
+	@JoinColumn(name = "hospital_facility_id")
+	private HospitalFacility hospitalFacility;
 
 	@Column(name = "appointment_date")
 	private LocalDate appointmentDate;
