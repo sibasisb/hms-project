@@ -15,7 +15,7 @@ public class PatientService {
 	private PatientRepository patientRepository;
 	
 	public List<Patient> getPatientsWithFacilityRequests(){
-		return patientRepository.findAll();
+		return patientRepository.findPatientsWithFacilityRequests();
 	}
 	
 }
