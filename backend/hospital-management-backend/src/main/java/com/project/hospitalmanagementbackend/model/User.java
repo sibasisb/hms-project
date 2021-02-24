@@ -32,34 +32,33 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	Long userId;
+	private Long userId;
 	
 	@Column(name = "fname")
-	String firstName;
+	private String firstName;
 	
 	@Column(name = "lname")
-	String lastName;
+	private String lastName;
 	
 	@Column(name = "dob")
-	LocalDate dateOfBirth;
+	private LocalDate dateOfBirth;
 	
 	@Column(name = "gender")
-	String gender;
+	private String gender;
 	
 	@Column(name = "contact")
-	String contact;
+	private String contact;
 	
 	@Column(name = "email")
-	String email;
+	private String email;
 	
 	@Column(name = "password")
-	String password;
+	private String password;
 	
 	@Column(name = "role")
-	String role;
+	private String role;
 	
-	@Column(name="security_answers")
-	HashMap<Long,String> securityAnwswers=new HashMap<Long,String>();
+	
 	
 	
 }

@@ -1,15 +1,13 @@
 package com.project.hospitalmanagementbackend.model;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,27 +18,28 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="hospital_admin")
+@Table(name = "security_answers")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class HospitalAdmin {
+public class SecurityAnswer {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="hospital_admin_id")
-	private Long hospitalAdminId;
+	@Column(name = "answer_id")
+	private Long answerId;
 	
-	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name="user_id")
+	@Column(name = "answer")
+	private String answer;
+	
+	@OneToOne
+	@JoinColumn(name="question_id")
+	private SecurityQuestions question;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private User user;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="hospital_id")
-	private Hospital hospital; 
-	
 	
 }

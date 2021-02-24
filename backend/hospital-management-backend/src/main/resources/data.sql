@@ -3,12 +3,17 @@ INSERT INTO sys_admins VALUES ('admin', 'root');
 INSERT INTO sys_admins VALUES ('su', 'root');
 
 -- insert into user table
-insert into user values(1,'8545635212','1998-03-26','abc@gmail.com','john','male','smith','pass12$','patient','');
-insert into user values(2,'8545635212','1998-03-26','abc@gmail.com','patty','female','smith','pass12$','hospital admin','');
-insert into user values(3,'8545635212','1998-03-26','abc@gmail.com','kenny','male','smith','pass12$','hospital admin','');
-insert into user values(4,'8545635212','1998-03-26','abc@gmail.com','billy','male','smith','pass12$','doctor','');
-insert into user values(5,'8545635212','1998-03-26','abc@gmail.com','peter','male','fernandez','pass12$','patient','');
-insert into user values(6,'8545635212','1998-03-26','abc@gmail.com','bobby','female','denver','pass12$','patient','');
+insert into user values(1,'8545635212','1998-03-26','abc@gmail.com','john','male','smith','pass12$','patient');
+insert into user values(2,'8545635212','1998-03-26','abc@gmail.com','patty','female','smith','pass12$','hospital admin');
+insert into user values(3,'8545635212','1998-03-26','abc@gmail.com','kenny','male','smith','pass12$','hospital admin');
+insert into user values(4,'8545635212','1998-03-26','abc@gmail.com','billy','male','smith','pass12$','doctor');
+insert into user values(5,'8545635212','1998-03-26','abc@gmail.com','peter','male','fernandez','pass12$','patient');
+insert into user values(6,'8545635212','1998-03-26','abc@gmail.com','bobby','female','denver','pass12$','patient');
+
+--insert into security_questions
+insert into security_questions values(1,'What is the name of your pet?');
+insert into security_questions values(2,'What is the name of your favourite movie?');
+insert into security_questions values(3,'what is your favourite food?');
 
 -- insert into doctor table
 insert into doctor values('DOC999','Mon-Tue','2P.M.-5P.M.',500,5,'M.D.','Heart',4);

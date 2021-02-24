@@ -43,24 +43,24 @@ public class Hospital {
             @Parameter(name = HospitalIdGenerator.INCREMENT_PARAM, value = "1"),
             @Parameter(name = HospitalIdGenerator.VALUE_PREFIX_PARAMETER, value = "HOS"),
             @Parameter(name =HospitalIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d") })
-	String hospitalId;
+	private String hospitalId;
 	
 	@Column(name="name")
-	String name;
+	private String name;
 	
 	@Column(name="address")
-	String address;
+	private String address;
 	
 	@Column(name="phone")
-	String phone;
+	private String phone;
 	
 	@Column(name="website")
-	String website;
+	private String website;
 	
 	@ManyToMany(mappedBy = "hospital")
-	List<Doctor> doctor=new ArrayList<>();
+	private List<Doctor> doctor=new ArrayList<>();
 	
 	@OneToMany(mappedBy = "hospital")
-	List<HospitalAdmin> hospitalAdminId=new ArrayList<>();
+	private List<HospitalAdmin> hospitalAdminId=new ArrayList<>();
 	
 }

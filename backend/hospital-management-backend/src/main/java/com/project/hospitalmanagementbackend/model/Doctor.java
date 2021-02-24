@@ -52,25 +52,25 @@ public class Doctor  {
     	           @Parameter(name = DoctorIdGenerator.INCREMENT_PARAM, value = "1"),
     	           @Parameter(name = DoctorIdGenerator.VALUE_PREFIX_PARAMETER, value = "DOC"),
     	           @Parameter(name = DoctorIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d") })
-	 String doctorId;
+	 private String doctorId;
 	
 	@Column(name="qualification")
-	String qualification;
+	private String qualification;
 	
 	@Column(name="speciality")
-	String speciality;
+	private String speciality;
 	
 	@Column(name="experience")
-	int experience;
+	private int experience;
 	
 	@Column(name="availableDays")
-	String availableDays;
+	private String availableDays;
 	
 	@Column(name="availableTime")
-	String availableTime;
+	private String availableTime;
 	
 	@Column(name="charge")
-	BigDecimal charge;
+	private BigDecimal charge;
 	
 	@ManyToMany
 	@JoinTable(
@@ -79,11 +79,11 @@ public class Doctor  {
 			inverseJoinColumns = @JoinColumn(name="hospital_id"))
 	@GeneratedValue(generator = "new-gen",strategy = GenerationType.IDENTITY)
 	@CollectionId(columns = { @Column(name="doctor_hospital_id") }, generator = "new-gen", type = @Type(type = "long"))
-	List<Hospital> hospital=new ArrayList<>();
+	private List<Hospital> hospital=new ArrayList<>();
 	
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name="user_id")
-	User user;
+	private User user;
 	
 	
 	
