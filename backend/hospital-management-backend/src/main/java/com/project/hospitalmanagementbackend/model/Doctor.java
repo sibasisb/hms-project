@@ -50,9 +50,9 @@ public class Doctor  {
     	       strategy = "com.project.hospitalmanagementbackend.util.DoctorIdGenerator", 
     	       parameters = {
     	           @Parameter(name = DoctorIdGenerator.INCREMENT_PARAM, value = "1"),
-    	           @Parameter(name = DoctorIdGenerator.VALUE_PREFIX_PARAMETER, value = "DOC_"),
+    	           @Parameter(name = DoctorIdGenerator.VALUE_PREFIX_PARAMETER, value = "DOC"),
     	           @Parameter(name = DoctorIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d") })
-	 String dcotorId;
+	 String doctorId;
 	
 	@Column(name="qualification")
 	String qualification;
