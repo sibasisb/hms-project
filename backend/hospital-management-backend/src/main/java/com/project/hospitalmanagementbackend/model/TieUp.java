@@ -2,6 +2,8 @@ package com.project.hospitalmanagementbackend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,10 +23,10 @@ import lombok.Setter;
 public class TieUp {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "tie_up_id")
 	private Long tieUpId;
 
-	// TODO: add missing model associations
 	@ManyToOne
 	@JoinColumn(name = "hospital_id_1")
 	private Hospital hospital1;

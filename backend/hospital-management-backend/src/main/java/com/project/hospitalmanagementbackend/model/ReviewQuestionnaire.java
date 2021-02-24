@@ -21,7 +21,7 @@ import lombok.Setter;
 public class ReviewQuestionnaire {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long questionId;
 	
 	@Column(name="question")

@@ -59,7 +59,7 @@ public class User {
 	String role;
 	
 	@Column(name="security_answers")
-	Map<Long,String> securityAnwswers=new HashMap<Long,String>();
+	HashMap<Long,String> securityAnwswers=new HashMap<Long,String>();
 	
 	
 }

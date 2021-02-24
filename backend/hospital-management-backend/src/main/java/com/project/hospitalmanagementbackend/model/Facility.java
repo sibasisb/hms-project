@@ -21,16 +21,16 @@ import lombok.Setter;
 @Entity
 @Table(name = "facility")
 public class Facility {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="facility_id")
-	private long facilityId;
-	
-	@Column(name="facility_name")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "facility_id")
+	private Long facilityId;
+
+	@Column(name = "facility_name")
 	private String name;
-	
-	@Column(name="values")
-	private HashMap<String,String> baselineValues;
+
+	@Column(name = "baseline_values")
+	private HashMap<String, String> baselineValues;
 
 }
