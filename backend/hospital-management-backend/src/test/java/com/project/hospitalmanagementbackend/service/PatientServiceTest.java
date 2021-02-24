@@ -20,7 +20,7 @@ import com.project.hospitalmanagementbackend.repository.PatientRepository;
 public class PatientServiceTest {
 
 	@InjectMocks
-	PatientService patientService;
+	private PatientService patientService;
 	
     @Mock
     private PatientRepository patientRepository;
