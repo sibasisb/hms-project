@@ -1,7 +1,9 @@
-package com.project.hospitalmanagementbackend.model;
+package com.project.hospitalmanagementbackend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.project.hospitalmanagementbackend.model.TieUp;
 
 @Repository
 public interface TieUpRepository extends JpaRepository<TieUp, Long> {
