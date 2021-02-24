@@ -34,10 +34,8 @@ public class TreatmentHistory {
 	@JoinColumn(name="treatment_patient_id")
 	private Patient patient;
 	
-	/*
-	 * @ManyToOne
-	 * @JoinColumn(name="treatment_doctor_id") 
-	 * private Doctor doctor;
-	 */
+	@ManyToOne
+	@JoinColumn(name="treatment_doctor_id") 
+	private Doctor doctor;
 	
 }
