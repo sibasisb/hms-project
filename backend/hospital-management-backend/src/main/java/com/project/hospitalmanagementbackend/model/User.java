@@ -58,9 +58,7 @@ public class User {
 	@Column(name = "role")
 	String role;
 	
-	@ElementCollection(fetch = FetchType.LAZY)
-	@JoinTable(
-			joinColumns = @JoinColumn(name="user_id"))
+	@Column(name="security_answers")
 	Map<Long,String> securityAnwswers=new HashMap<Long,String>();
 	
 	
