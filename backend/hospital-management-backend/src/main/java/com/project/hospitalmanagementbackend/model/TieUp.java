@@ -25,12 +25,12 @@ public class TieUp {
 	private Long tieUpId;
 
 	// TODO: add missing model associations
-	// @ManyToOne
-	// @JoinColumn(name="hospital_id_1")
-	// private Hospital hospital1
+	@ManyToOne
+	@JoinColumn(name = "hospital_id_1")
+	private Hospital hospital1;
 
-	// @ManyToOne
-	// @JoinColumn(name="hospital_id_2")
-	// private Hospital hospital2
+	@ManyToOne
+	@JoinColumn(name = "hospital_id_2")
+	private Hospital hospital2;
 
 }
