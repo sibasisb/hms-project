@@ -41,7 +41,7 @@ public class Hospital {
         strategy = "com.project.hospitalmanagementbackend.util.HospitalIdGenerator", 
         parameters = {
             @Parameter(name = HospitalIdGenerator.INCREMENT_PARAM, value = "1"),
-            @Parameter(name = HospitalIdGenerator.VALUE_PREFIX_PARAMETER, value = "HOS_"),
+            @Parameter(name = HospitalIdGenerator.VALUE_PREFIX_PARAMETER, value = "HOS"),
             @Parameter(name =HospitalIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d") })
 	String hospitalId;
 	
