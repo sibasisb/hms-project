@@ -11,7 +11,9 @@ public class HospitalManagementBackendApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(HospitalManagementBackendApplication.class, args);
-
+		
 	}
+	
+	
 
 }
