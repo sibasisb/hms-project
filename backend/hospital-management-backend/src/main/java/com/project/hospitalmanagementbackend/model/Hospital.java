@@ -38,11 +38,11 @@ public class Hospital {
 	 @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hospital_seq")
     @GenericGenerator(
         name = "hospital_seq", 
-        strategy = "com.project.hospitalmanagementbackend.util.HospitalIdGenerator", 
+        strategy = "com.project.hospitalmanagementbackend.util.StringPrefixedPatientIdGenerator", 
         parameters = {
             @Parameter(name = HospitalIdGenerator.INCREMENT_PARAM, value = "1"),
             @Parameter(name = HospitalIdGenerator.VALUE_PREFIX_PARAMETER, value = "HOS"),
-            @Parameter(name =HospitalIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d") })
+            @Parameter(name =HospitalIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%04d") })
 	private String hospitalId;
 	
 	@Column(name="name")
@@ -60,7 +60,5 @@ public class Hospital {
 	@ManyToMany(mappedBy = "hospital")
 	private List<Doctor> doctor=new ArrayList<>();
 	
-	@OneToMany(mappedBy = "hospital")
-	private List<HospitalAdmin> hospitalAdminId=new ArrayList<>();
 	
 }

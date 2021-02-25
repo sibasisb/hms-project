@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.hospitalmanagementbackend.dto.AuthRequestUser;
+import com.project.hospitalmanagementbackend.dto.AuthResponseUser;
+import com.project.hospitalmanagementbackend.dto.UserInfo;
 import com.project.hospitalmanagementbackend.model.SystemAdmin;
 import com.project.hospitalmanagementbackend.service.UserService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
@@ -23,6 +26,19 @@ public class UserController {
 	public ResponseEntity<?> loginAsAdmin(@RequestBody SystemAdmin sysadmin) {
 		// TODO Auto-generated method stub
 		return new ResponseEntity<>(userService.getAdmin(sysadmin),HttpStatus.OK);
+	}
+
+	@PostMapping("/login/user")
+	public ResponseEntity<AuthResponseUser> loginAsUser(@RequestBody AuthRequestUser user) {
+		// TODO Auto-generated method stub
+		return new ResponseEntity<AuthResponseUser>(userService.getUser(user),HttpStatus.OK);
+	}
+
+	@PostMapping("/register")
+	public ResponseEntity<?> registerUser(@RequestBody UserInfo userInfo) {
+		// TODO Auto-generated method stub
+		System.out.println("in controller");
+		return new ResponseEntity<>(userService.register(userInfo), HttpStatus.OK);
 	}
 
 }
