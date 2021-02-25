@@ -44,8 +44,9 @@ public class AppointmentControllerTest {
 		Appointment appointment = new Appointment(121l, patient, doctor , hospital, hospitalFacility , LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
 		List<Appointment> appointmentList=new ArrayList<Appointment>();
 		appointmentList.add(appointment);
-    	when(appointmentService.getPendingAppointents()).thenReturn(appointmentList);
-    	assertEquals(appointmentController.getPendingAppointmentList(appointment),new ResponseEntity<>(appointmentList, HttpStatus.OK));
+		Long hospitalAdminId=2L;
+    	when(appointmentService.getPendingAppointents(hospitalAdminId)).thenReturn(appointmentList);
+    	assertEquals(appointmentController.getPendingAppointmentList(hospitalAdminId),new ResponseEntity<>(appointmentList, HttpStatus.OK));
 	}
 	
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.hospitalmanagementbackend.model.Appointment;
 import com.project.hospitalmanagementbackend.repository.AppointmentRepository;
+import com.project.hospitalmanagementbackend.repository.HospitalAdminRepository;
 
 @Service
 public class AppointmentService {
@@ -14,8 +15,12 @@ public class AppointmentService {
 	@Autowired
 	private AppointmentRepository appointmentRepository;
 	
-	public List<Appointment> getPendingAppointents(){
-		return appointmentRepository.findPatientsWithFacilityRequests();
+	@Autowired
+	private HospitalAdminRepository hospitalAdminRepository;
+	
+	public List<Appointment> getPendingAppointents(Long hospitalAdminId){
+		String hospitalId=hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId);
+		return appointmentRepository.findPatientsWithFacilityRequests(hospitalId);
 	}
 	
 }

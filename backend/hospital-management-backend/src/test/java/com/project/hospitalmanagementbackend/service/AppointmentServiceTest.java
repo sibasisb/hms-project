@@ -22,6 +22,7 @@ import com.project.hospitalmanagementbackend.model.HospitalFacility;
 import com.project.hospitalmanagementbackend.model.Patient;
 import com.project.hospitalmanagementbackend.model.User;
 import com.project.hospitalmanagementbackend.repository.AppointmentRepository;
+import com.project.hospitalmanagementbackend.repository.HospitalAdminRepository;
 
 @SpringBootTest
 public class AppointmentServiceTest {
@@ -31,6 +32,9 @@ public class AppointmentServiceTest {
 	
     @Mock
     private AppointmentRepository appointmentRepository;
+    
+    @Mock
+    private HospitalAdminRepository hospitalAdminRepository;
     
     @Test
     public void testGetPendingAppointents() {
@@ -42,8 +46,10 @@ public class AppointmentServiceTest {
 		Appointment appointment = new Appointment(121l, patient, doctor , hospital, hospitalFacility , LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
 		List<Appointment> appointmentList=new ArrayList<Appointment>();
 		appointmentList.add(appointment);
-    	when(appointmentRepository.findPatientsWithFacilityRequests()).thenReturn(appointmentList);
-    	assertEquals(appointmentService.getPendingAppointents(),appointmentList);
+		Long hospitalAdminId=2L;
+    	when(appointmentRepository.findPatientsWithFacilityRequests(hospital.getHospitalId())).thenReturn(appointmentList);
+    	when(hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId)).thenReturn(hospital.getHospitalId());
+    	assertEquals(appointmentService.getPendingAppointents(hospitalAdminId),appointmentList);
     }
     
 }
