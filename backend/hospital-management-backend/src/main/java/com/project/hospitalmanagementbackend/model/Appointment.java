@@ -31,15 +31,15 @@ public class Appointment {
 	@Column(name = "appointment_id")
 	private Long appointmentId;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "patient_id")
 	private Patient patient;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "doctor_id")
 	private Doctor doctor;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "hospital_id")
 	private Hospital hospital;
 

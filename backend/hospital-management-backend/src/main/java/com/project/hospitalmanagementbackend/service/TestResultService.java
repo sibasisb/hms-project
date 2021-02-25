@@ -14,8 +14,8 @@ public class TestResultService {
 	@Autowired
 	private TestResultRepository testResultRepository;
 	
-	public List<TestResult> getTestResults(String patientId){
-		return testResultRepository.getTestResults(patientId);
+	public List<TestResult> getTestResults(String patientId,Long appointmentId){
+		return testResultRepository.getTestResults(patientId,appointmentId);
 	}
 	
 }

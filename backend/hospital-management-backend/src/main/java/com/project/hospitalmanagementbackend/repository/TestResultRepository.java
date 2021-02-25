@@ -12,7 +12,7 @@ import com.project.hospitalmanagementbackend.model.TestResult;
 @Repository
 public interface TestResultRepository extends JpaRepository<TestResult, Long> {
 
-	@Query("select t from TestResult t inner join t.patient p where p.patientId=:patientId")
-	public List<TestResult> getTestResults(@Param("patientId") String patientId);
+	@Query("select t from TestResult t where t.patient.patientId=:patientId and t.appointment.appointmentId=:appointmentId")
+	public List<TestResult> getTestResults(@Param("patientId") String patientId,@Param("appointmentId") Long appointmentId);
 	
 }

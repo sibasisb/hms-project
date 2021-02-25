@@ -11,20 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.hospitalmanagementbackend.model.Appointment;
-import com.project.hospitalmanagementbackend.model.TestResult;
-import com.project.hospitalmanagementbackend.service.TestResultService;
+import com.project.hospitalmanagementbackend.service.AppointmentService;
 
 @RestController
-@RequestMapping("/testresults")
-public class TestResultController {
+@RequestMapping("/appointments")
+public class AppointmentController {
 
 	@Autowired
-	private TestResultService testResultService;
+	private AppointmentService appointmentService;
 	
-	@GetMapping("/results")
-	public ResponseEntity<?> getTestResults(@RequestBody Appointment appointment){
-		List<TestResult> testResultList=testResultService.getTestResults(appointment.getPatient().getPatientId(),appointment.getAppointmentId());
-		return new ResponseEntity<>(testResultList, HttpStatus.OK);
+	@GetMapping("/pending")
+	public ResponseEntity<?> getPendingAppointmentList(@RequestBody Appointment appointment){
+		List<Appointment> appointmentList=appointmentService.getPendingAppointents();
+		return new ResponseEntity<>(appointmentList, HttpStatus.OK);
 	}
 	
 }
