@@ -65,4 +65,5 @@ public class Appointment {
 
 	@Column(name = "paid")
 	private Boolean paid;
+
 }

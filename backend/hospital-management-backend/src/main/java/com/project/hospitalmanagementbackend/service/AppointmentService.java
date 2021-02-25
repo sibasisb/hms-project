@@ -1,7 +1,7 @@
 package com.project.hospitalmanagementbackend.service;
 
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +15,7 @@ import com.project.hospitalmanagementbackend.model.HospitalFacility;
 import com.project.hospitalmanagementbackend.model.Patient;
 import com.project.hospitalmanagementbackend.repository.AppointmentRepository;
 import com.project.hospitalmanagementbackend.repository.DoctorRepository;
+import com.project.hospitalmanagementbackend.repository.HospitalAdminRepository;
 import com.project.hospitalmanagementbackend.repository.HospitalFacilityRepository;
 import com.project.hospitalmanagementbackend.repository.HospitalRepository;
 import com.project.hospitalmanagementbackend.repository.PatientRepository;
@@ -38,6 +39,9 @@ public class AppointmentService {
 
 	@Autowired
 	HospitalFacilityRepository hospitalFacilityRepository;
+	
+	@Autowired
+	private HospitalAdminRepository hospitalAdminRepository;
 
 	@Transactional
 	public Set<Appointment> getAllAppointmentsByUser(String patientId) {
@@ -81,6 +85,11 @@ public class AppointmentService {
 			appointmentRepository.save(appointment);
 		}
 		return "created";
+	}
+	
+	public List<Appointment> getPendingAppointents(String hospitalAdminId){
+		String hospitalId=hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId);
+		return appointmentRepository.findPatientsWithFacilityRequests(hospitalId);
 	}
 
 }

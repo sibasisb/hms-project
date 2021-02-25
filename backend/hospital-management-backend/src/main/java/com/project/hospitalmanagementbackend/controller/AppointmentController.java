@@ -35,8 +35,16 @@ public class AppointmentController {
 	}
 
 	@PostMapping("/{patientId}/{hospitalId}/{serviceId}")
-	public ResponseEntity<String> bookAppointment(@PathVariable String patientId,@PathVariable String hospitalId,@PathVariable String serviceId,@RequestBody Appointment appointment) {
-		return new ResponseEntity<>(appointmentService.bookAnAppointment(patientId, hospitalId, serviceId, appointment), HttpStatus.CREATED);
+	public ResponseEntity<String> bookAppointment(@PathVariable String patientId, @PathVariable String hospitalId,
+			@PathVariable String serviceId, @RequestBody Appointment appointment) {
+		return new ResponseEntity<>(appointmentService.bookAnAppointment(patientId, hospitalId, serviceId, appointment),
+				HttpStatus.CREATED);
+	}
+
+	@GetMapping("/pending/{hospitalAdminId}")
+	public ResponseEntity<?> getPendingAppointmentList(@PathVariable("hospitalAdminId") String hospitalAdminId) {
+		List<Appointment> appointmentList = appointmentService.getPendingAppointents(hospitalAdminId);
+		return new ResponseEntity<>(appointmentList, HttpStatus.OK);
 	}
 
 }
