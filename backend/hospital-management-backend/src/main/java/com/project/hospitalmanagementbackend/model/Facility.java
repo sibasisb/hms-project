@@ -15,11 +15,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "facility")
 public class Facility {
@@ -33,7 +35,7 @@ public class Facility {
 	private String name;
 
 	@Column(name = "baseline_values")
-	@OneToMany(mappedBy="facility",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="facility",fetch = FetchType.LAZY)
 	private List<Baseline> baselines;
 
 }

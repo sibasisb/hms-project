@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import com.project.hospitalmanagementbackend.model.Hospital;
 import com.project.hospitalmanagementbackend.repository.HospitalRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class HospitalService {
 	
@@ -19,8 +22,9 @@ public class HospitalService {
 	
 	@Transactional
 	public Set<Hospital> getAllHospitals(){
-		
-		return hospitalRepository.getAllHospitals();
+		Set<Hospital> hospitals = hospitalRepository.getAllHospitals() ;
+		hospitals.forEach((appointment) -> log.info(appointment.toString()));
+		return hospitals;
 	}
 	
 	@Transactional

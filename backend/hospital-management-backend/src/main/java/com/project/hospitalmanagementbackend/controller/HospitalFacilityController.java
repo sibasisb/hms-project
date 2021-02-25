@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.hospitalmanagementbackend.model.HospitalFacility;
-import com.project.hospitalmanagementbackend.service.FacilityService;
 import com.project.hospitalmanagementbackend.service.HospitalFacilityService;
 
 @RestController

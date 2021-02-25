@@ -3,8 +3,10 @@ package com.project.hospitalmanagementbackend.service;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,8 +28,8 @@ public class HospitalServiceTest {
 	@Test
 	void testGetAllHospitals() {
 		
-		List<Hospital> hospitalList = new ArrayList<>();
-		when(hospitalRepository.findAll()).thenReturn(hospitalList);
+		Set<Hospital> hospitalList = new HashSet<>();
+		when(hospitalRepository.getAllHospitals()).thenReturn(hospitalList);
 		assertEquals(hospitalList, hospitalService.getAllHospitals());
 	}
 	

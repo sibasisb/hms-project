@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,29 +26,29 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "hospital_facility")
-@JsonIgnoreProperties(value= {"hospital"})
+@JsonIgnoreProperties(value = { "hospital" })
 public class HospitalFacility {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="hospital_facility_id")
+	@Column(name = "hospital_facility_id")
 	private long hospitalFacilityId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "hospital_id")
 	private Hospital hospital;
-	
+
 	@OneToOne
 	@JoinColumn(name = "facility_id")
 	private Facility facility;
-	
-	@Column(name="description")
+
+	@Column(name = "description")
 	private String description;
-	
-	@Column(name="remarks")
+
+	@Column(name = "remarks")
 	private String remarks;
-	
-	@Column(name="charges")
+
+	@Column(name = "charges")
 	private BigDecimal charges;
 
 }
