@@ -35,7 +35,7 @@ public class Facility {
 	private String name;
 
 	@Column(name = "baseline_values")
-	@OneToMany(mappedBy="facility",fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="facility",fetch = FetchType.EAGER)
 	private List<Baseline> baselines;
 
 }

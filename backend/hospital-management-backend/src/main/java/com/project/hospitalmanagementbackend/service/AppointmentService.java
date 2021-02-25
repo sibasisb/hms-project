@@ -1,5 +1,6 @@
 package com.project.hospitalmanagementbackend.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.hospitalmanagementbackend.dto.AppointmentInfo;
 import com.project.hospitalmanagementbackend.model.Appointment;
 import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Hospital;
@@ -44,22 +46,37 @@ public class AppointmentService {
 	private HospitalAdminRepository hospitalAdminRepository;
 
 	@Transactional
-	public Set<Appointment> getAllAppointmentsByUser(String patientId) {
+	public List<AppointmentInfo> getAllAppointmentsByUser(String patientId) {
 		// Set<Appointment> appointments = appointmentRepository.findByPatient_PatientId(patientId).stream().collect(Collectors.toSet());
 		
 		Set<Appointment> appointments = appointmentRepository.getAllAppointmentsByPatient(patientId);
+		System.out.println(appointments);
+		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
+		appointments.forEach((appointment->{
+			AppointmentInfo appointmentInfo = new AppointmentInfo();
+			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
+			appointmentInfo.setAppointmentTime(appointment.getAppointmentTime());
+			if(appointment.getHospitalFacility()==null)
+			appointmentInfo.setDoctorName(appointment.getDoctor().getUser().getFirstName()+" "+appointment.getDoctor().getUser().getLastName());
+			else
+			appointmentInfo.setFacilityName(appointment.getHospitalFacility().getFacility().getName());
+			
+			appointmentInfo.setHospitalName(appointment.getHospital().getName());
+			appointmentInfoList.add(appointmentInfo);
+		}));
+	
 		
 		// Please DONT delete this line
-		for (Appointment appointment : appointments) {
-			appointment.setPatient(appointment.getPatient());
-			appointment.setHospital(appointment.getHospital());
-			if(appointment.getDoctor() == null) 
-				appointment.setHospitalFacility(appointment.getHospitalFacility());
-			else
-				appointment.setDoctor(appointment.getDoctor());
-		}
-		appointments.forEach((appointment) -> log.info(appointment.toString()));
-		return appointments;
+//		for (Appointment appointment : appointments) {
+//			appointment.setPatient(appointment.getPatient());
+//			appointment.setHospital(appointment.getHospital());
+//			if(appointment.getDoctor() == null) 
+//				appointment.setHospitalFacility(appointment.getHospitalFacility());
+//			else
+//				appointment.setDoctor(appointment.getDoctor());
+//		}
+//		appointments.forEach((appointment) -> log.info(appointment.toString()));
+		return appointmentInfoList;
 	}
 
 	@Transactional
@@ -77,7 +94,7 @@ public class AppointmentService {
 			Doctor doctor = doctorRepository.findById(serviceId).get();
 			appointment.setDoctor(doctor);
 			log.info(doctor.getSpeciality());
-			log.info(appointmentRepository.save(appointment).getAppointmentDate().toString());
+			appointmentRepository.save(appointment);
 		} else {
 			HospitalFacility hospitalFacility = hospitalFacilityRepository.findById(Long.valueOf(serviceId)).get();
 			appointment.setHospitalFacility(hospitalFacility);

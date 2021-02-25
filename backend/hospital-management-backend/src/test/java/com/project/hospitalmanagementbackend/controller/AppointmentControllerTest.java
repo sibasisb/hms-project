@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.project.hospitalmanagementbackend.dto.AppointmentInfo;
 import com.project.hospitalmanagementbackend.model.Appointment;
 import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Facility;
@@ -46,10 +47,11 @@ public class AppointmentControllerTest {
 		Appointment appointment = new Appointment(121l, patient, doctor , hospital, hospitalFacility , LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
 		Set<Appointment> appointments = new HashSet<>();
 		appointments.add(appointment);
+		AppointmentInfo appointmentInfo = new AppointmentInfo(LocalDate.of(2021, 02, 14),LocalTime.of(20, 04),"John Doe",null,"something");
+		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
+		when(appointmentService.getAllAppointmentsByUser(patient.getPatientId())).thenReturn(appointmentList);
 		
-		when(appointmentService.getAllAppointmentsByUser(patient.getPatientId())).thenReturn(appointments);
-		
-		assertEquals(appointmentController.getAllAppointmentByUser(patient.getPatientId()), new ResponseEntity<>(appointments, HttpStatus.OK));
+		assertEquals(appointmentController.getAllAppointmentByUser(patient.getPatientId()), new ResponseEntity<>(appointmentList, HttpStatus.OK));
 	}
 	
 	@Test

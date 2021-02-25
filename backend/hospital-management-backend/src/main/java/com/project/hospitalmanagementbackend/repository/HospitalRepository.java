@@ -1,5 +1,6 @@
 package com.project.hospitalmanagementbackend.repository;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,8 +13,11 @@ import com.project.hospitalmanagementbackend.model.Hospital;
 @Repository
 public interface HospitalRepository extends JpaRepository<Hospital, String> {
 	
-	@Query("SELECT h FROM Hospital h JOIN FETCH h.hospitalFacilities hf join fetch hf.facility f join fetch f.baselines JOIN FETCH h.doctors d Join fetch d.user")
+	@Query("SELECT h FROM Hospital h left JOIN FETCH h.hospitalFacilities hf left join fetch hf.facility f left join fetch f.baselines left JOIN FETCH h.doctors d left Join fetch d.user")
 	public Set<Hospital> getAllHospitals();
+
+	@Query("SELECT h FROM Hospital h left JOIN FETCH h.hospitalFacilities hf left join fetch hf.facility f left join fetch f.baselines left JOIN FETCH h.doctors d left Join fetch d.user where h.hospitalId=?1")
+	public Optional<Hospital> getHospitalById(String hospitalId);
 	
 
 }

@@ -22,15 +22,20 @@ public class HospitalService {
 	
 	@Transactional
 	public Set<Hospital> getAllHospitals(){
-		Set<Hospital> hospitals = hospitalRepository.getAllHospitals() ;
-		hospitals.forEach((appointment) -> log.info(appointment.toString()));
+		//Set<Hospital> hospitals = hospitalRepository.findAll().stream().collect(Collectors.toSet()) ;
+		Set<Hospital> hospitals = hospitalRepository.getAllHospitals();
+//		//hospitals.forEach(System.out::println);
+//		hospitals.forEach((hospital)->{
+//			hospital.getHospitalFacilities();
+//			hospital.getDoctors();
+//		});
 		return hospitals;
 	}
 	
 	@Transactional
 	public Hospital getHospitalById(String hospitalId) {
 		
-		Optional<Hospital> hospital = hospitalRepository.findById(hospitalId);
+		Optional<Hospital> hospital = hospitalRepository.getHospitalById(hospitalId);
 		if(hospital.isPresent())
 			return hospital.get();
 		else

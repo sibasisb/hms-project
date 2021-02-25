@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.hospitalmanagementbackend.dto.AppointmentInfo;
 import com.project.hospitalmanagementbackend.model.Appointment;
 import com.project.hospitalmanagementbackend.service.AppointmentService;
 
@@ -26,9 +27,9 @@ public class AppointmentController {
 	AppointmentService appointmentService;
 
 	@GetMapping("/{patientId}")
-	public ResponseEntity<Set<Appointment>> getAllAppointmentByUser(@PathVariable String patientId) {
-		Set<Appointment> appointments = appointmentService.getAllAppointmentsByUser(patientId);
-		ResponseEntity<Set<Appointment>> entity = new ResponseEntity<>(appointments, HttpStatus.OK);
+	public ResponseEntity<?> getAllAppointmentByUser(@PathVariable String patientId) {
+		List<AppointmentInfo> appointments = appointmentService.getAllAppointmentsByUser(patientId);
+		ResponseEntity<?> entity = new ResponseEntity<>(appointments, HttpStatus.OK);
 		// appointments.forEach((appointment) -> log.info(appointment.toString()));
 		// log.info(entity.toString());
 		return entity;
