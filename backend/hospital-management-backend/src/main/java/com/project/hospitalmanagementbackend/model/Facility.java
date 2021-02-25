@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class Facility {
 	private String name;
 
 	@Column(name = "baseline_values")
-	@OneToMany(mappedBy="facility")
+	@OneToMany(mappedBy="facility",fetch = FetchType.EAGER)
 	private List<Baseline> baselines;
 
 }
