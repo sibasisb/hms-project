@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,15 +32,15 @@ public class Appointment {
 	@Column(name = "appointment_id")
 	private Long appointmentId;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "patient_id")
 	private Patient patient;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "doctor_id")
 	private Doctor doctor;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "hospital_id")
 	private Hospital hospital;
 
@@ -58,10 +59,10 @@ public class Appointment {
 
 	@Column(name = "medical_records")
 	private byte[] medicalRecords;
-	
-	@Column(name="approved")
+
+	@Column(name = "approved")
 	private Boolean approved;
-	
-	@Column(name="paid")
+
+	@Column(name = "paid")
 	private Boolean paid;
 }

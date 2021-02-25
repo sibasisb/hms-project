@@ -2,6 +2,8 @@ package com.project.hospitalmanagementbackend.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +35,14 @@ public class AppointmentService {
 	@Autowired
 	HospitalFacilityRepository hospitalFacilityRepository;
 	
+	@Transactional
 	public List<Appointment> getAllAppointmentsByUser(String patientId) {
-		Patient patient = patientRepository.findById(patientId).get();
-		return appointmentRepository.findAllByPatient(patient);
+		// Patient patient = patientRepository.findById(patientId).get();
+		
+		return appointmentRepository.getAllAppointmentsByPatient(patientId);
 	}
 
+	@Transactional
 	public String bookAnAppointment(String patientId, String hospitalId, String serviceId,
 			Appointment appointment) {
 		Patient patient = patientRepository.findById(patientId).get();

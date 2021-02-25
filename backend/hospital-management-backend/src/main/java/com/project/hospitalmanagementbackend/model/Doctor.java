@@ -34,58 +34,49 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="doctor")
+@Table(name = "doctor")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Doctor  {
+public class Doctor {
 
-	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "doctor_seq")
-    @GenericGenerator(
-    	       name = "doctor_seq", 
-    	       strategy = "com.project.hospitalmanagementbackend.util.DoctorIdGenerator", 
-    	       parameters = {
-    	           @Parameter(name = DoctorIdGenerator.INCREMENT_PARAM, value = "1"),
-    	           @Parameter(name = DoctorIdGenerator.VALUE_PREFIX_PARAMETER, value = "DOC"),
-    	           @Parameter(name = DoctorIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d") })
-	 private String doctorId;
-	
-	@Column(name="qualification")
+	@GenericGenerator(name = "doctor_seq", strategy = "com.project.hospitalmanagementbackend.util.DoctorIdGenerator", parameters = {
+			@Parameter(name = DoctorIdGenerator.INCREMENT_PARAM, value = "1"),
+			@Parameter(name = DoctorIdGenerator.VALUE_PREFIX_PARAMETER, value = "DOC"),
+			@Parameter(name = DoctorIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d") })
+	private String doctorId;
+
+	@Column(name = "qualification")
 	private String qualification;
-	
-	@Column(name="speciality")
+
+	@Column(name = "speciality")
 	private String speciality;
-	
-	@Column(name="experience")
+
+	@Column(name = "experience")
 	private int experience;
-	
-	@Column(name="availableDays")
+
+	@Column(name = "availableDays")
 	private String availableDays;
-	
-	@Column(name="availableTime")
+
+	@Column(name = "availableTime")
 	private String availableTime;
-	
-	@Column(name="charge")
+
+	@Column(name = "charge")
 	private BigDecimal charge;
-	
+
 	@ManyToMany
-	@JoinTable(
-			name="doctor_hospital",
-			joinColumns = @JoinColumn(name = "doctor_id"),
-			inverseJoinColumns = @JoinColumn(name="hospital_id"))
-	@GeneratedValue(generator = "new-gen",strategy = GenerationType.IDENTITY)
-	@CollectionId(columns = { @Column(name="doctor_hospital_id") }, generator = "new-gen", type = @Type(type = "long"))
-	private List<Hospital> hospital=new ArrayList<>();
-	
-	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name="user_id")
+	@JoinTable(name = "doctor_hospital", joinColumns = @JoinColumn(name = "doctor_id"), inverseJoinColumns = @JoinColumn(name = "hospital_id"))
+	@GeneratedValue(generator = "new-gen", strategy = GenerationType.IDENTITY)
+	@CollectionId(columns = {
+			@Column(name = "doctor_hospital_id") }, generator = "new-gen", type = @Type(type = "long"))
+	private List<Hospital> hospital = new ArrayList<>();
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id")
 	private User user;
-	
-	
-	
-	
+
 }
