@@ -58,4 +58,10 @@ public class Appointment {
 
 	@Column(name = "medical_records")
 	private byte[] medicalRecords;
+	
+	@Column(name="approved")
+	private Boolean approved;
+	
+	@Column(name="paid")
+	private Boolean paid;
 }
