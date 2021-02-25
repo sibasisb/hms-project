@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "hospital_facility")
+@JsonIgnoreProperties(value= {"hospital"})
 public class HospitalFacility {
 	
 	@Id
