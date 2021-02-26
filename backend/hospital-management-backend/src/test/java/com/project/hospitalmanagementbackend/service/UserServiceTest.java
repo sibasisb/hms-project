@@ -56,7 +56,7 @@ public class UserServiceTest {
 		SystemAdmin systemAdmin = new SystemAdmin("admin", "admin");
 		when(sysadminRepository.findById("admin")).thenReturn(Optional.of(systemAdmin));
 		String token = "jwttoken";
-		assertEquals(userService.getAdmin(systemAdmin), token);
+		assertEquals(token,userService.getAdmin(systemAdmin));
 	}
 
 	@Test
@@ -77,7 +77,7 @@ public class UserServiceTest {
 		when(userRepository.findById(1l)).thenReturn(Optional.of(userInfo));
 		AuthResponseUser authResponseUser = new AuthResponseUser("John", "patient", "jwttoken");
 		AuthResponseUser responseUser = userService.getUser(user);
-		assertEquals(responseUser.getToken(), authResponseUser.getToken());
+		assertEquals(authResponseUser.getToken(),responseUser.getToken());
 	}
 
 	@Test
@@ -105,6 +105,6 @@ public class UserServiceTest {
     	when(doctorRepository.save(doctor)).thenReturn(doctor);
     	when(hospitalRepository.findById("HOS001")).thenReturn(Optional.of(hospital));
     	String success="User Registered Successfully";
-    	assertEquals(userService.register(userInfo),success);
+    	assertEquals(success,userService.register(userInfo));
 	}
 }

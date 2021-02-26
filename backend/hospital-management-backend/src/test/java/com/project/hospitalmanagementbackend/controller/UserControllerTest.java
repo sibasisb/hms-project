@@ -50,7 +50,7 @@ public class UserControllerTest {
     	AuthRequestUser user = new AuthRequestUser("PAT000001","pass12$"); 
     	AuthResponseUser authResponseUser = new AuthResponseUser("John","patient","jwttoken");
     	when(userService.getUser(user)).thenReturn(authResponseUser);
-    	assertEquals(userController.loginAsUser(user),new ResponseEntity<AuthResponseUser>(authResponseUser, HttpStatus.OK));
+    	assertEquals(new ResponseEntity<AuthResponseUser>(authResponseUser, HttpStatus.OK),userController.loginAsUser(user));
     }
     
     @Test
@@ -63,7 +63,7 @@ public class UserControllerTest {
     	userInfo.setUser(user);
     	String success="User Registered Successfully";
     	when(userService.register(userInfo)).thenReturn(success);
-    	assertEquals(userController.registerUser(userInfo),new ResponseEntity<>(success, HttpStatus.OK));
+    	assertEquals(new ResponseEntity<>(success, HttpStatus.OK),userController.registerUser(userInfo));
     	
     	
     }
