@@ -72,7 +72,7 @@ public class UserService {
 			if (patient.isPresent()) {
 				found=1;
 				User userFound = patient.get().getUser();
-				return new AuthResponseUser(userFound.getFirstName(), userFound.getRole(), "jwttoken");
+				return new AuthResponseUser(patient.get().getPatientId(),userFound.getFirstName(), userFound.getRole(), "jwttoken");
 			}
 			break;
 		}
@@ -81,7 +81,7 @@ public class UserService {
 			if (doctor.isPresent()) {
 				found=1;
 				User userFound = doctor.get().getUser();
-				return new AuthResponseUser(userFound.getFirstName(), userFound.getRole(), "jwttoken");
+				return new AuthResponseUser(doctor.get().getDoctorId(),userFound.getFirstName(), userFound.getRole(), "jwttoken");
 			}
 			break;
 		}
@@ -90,7 +90,7 @@ public class UserService {
 			if (hospitalAdmin.isPresent()) {
 				found=1;
 				User userFound = hospitalAdmin.get().getUser();
-				return new AuthResponseUser(userFound.getFirstName(), userFound.getRole(), "jwttoken");
+				return new AuthResponseUser(hospitalAdmin.get().getHospitalAdminId(),userFound.getFirstName(), userFound.getRole(), "jwttoken");
 			}
 			break;
 		}

@@ -26,7 +26,6 @@ public class FacilityService {
 
 	public Facility getFacilityById(long facilityId) {
 		Optional<Facility> facility = facilityRepository.getFacilityById(facilityId);
-		System.out.println(facility.get());
 		if (facility.isPresent())
 			return facility.get();
 		else
