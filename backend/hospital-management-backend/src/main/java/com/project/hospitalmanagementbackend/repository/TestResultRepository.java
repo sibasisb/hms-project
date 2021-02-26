@@ -14,5 +14,8 @@ public interface TestResultRepository extends JpaRepository<TestResult, Long> {
 
 	@Query("select t from TestResult t where t.patient.patientId=:patientId and t.appointment.appointmentId=:appointmentId")
 	public List<TestResult> getTestResults(@Param("patientId") String patientId,@Param("appointmentId") Long appointmentId);
+
+	@Query("select t from TestResult t where t.patient.patientId=?1")
+	public List<TestResult> getTestResultsByPatientId(String patientId);
 	
 }
