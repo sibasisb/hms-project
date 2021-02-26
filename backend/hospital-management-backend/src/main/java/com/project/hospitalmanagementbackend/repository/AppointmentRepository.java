@@ -18,7 +18,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 	@Query("Select a from Appointment a where a.patient.patientId=?1")
 	public Set<Appointment> getAllAppointmentsByPatient(String patientId);
 	
-	@Query("from Appointment a where a.approved=true and a.paid=false and a.hospital.hospitalId=:hospitalId")
+	@Query("from Appointment a where a.approved=true and a.paid=false and a.hospitalFacility.hospitalFacilityId is not null and a.hospital.hospitalId=:hospitalId")
 	public List<Appointment> findPatientsWithFacilityRequests(@Param("hospitalId") String hospitalId);
 	
 	@Query("SELECT a from Appointment a where a.doctor.doctorId=?1")

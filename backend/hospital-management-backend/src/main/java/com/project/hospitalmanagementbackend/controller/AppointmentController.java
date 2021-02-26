@@ -44,7 +44,7 @@ public class AppointmentController {
 
 	@GetMapping("/pending/{hospitalAdminId}")
 	public ResponseEntity<?> getPendingAppointmentList(@PathVariable("hospitalAdminId") String hospitalAdminId) {
-		List<Appointment> appointmentList = appointmentService.getPendingAppointents(hospitalAdminId);
+		List<AppointmentInfo> appointmentList = appointmentService.getPendingAppointents(hospitalAdminId);
 		return new ResponseEntity<>(appointmentList, HttpStatus.OK);
 	}
 

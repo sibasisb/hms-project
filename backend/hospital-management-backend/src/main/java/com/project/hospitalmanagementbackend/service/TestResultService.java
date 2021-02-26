@@ -1,16 +1,26 @@
 package com.project.hospitalmanagementbackend.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.hospitalmanagementbackend.dto.PatientInfo;
-import com.project.hospitalmanagementbackend.dto.TestResultPatientInfo;
+import com.project.hospitalmanagementbackend.dto.TestResultDto;
+import com.project.hospitalmanagementbackend.exception.PatientNotFoundException;
+import com.project.hospitalmanagementbackend.exception.TestResultNotFoundException;
+import com.project.hospitalmanagementbackend.model.Appointment;
+import com.project.hospitalmanagementbackend.model.Patient;
 import com.project.hospitalmanagementbackend.model.TestResult;
+import com.project.hospitalmanagementbackend.model.TestResultsInformation;
+import com.project.hospitalmanagementbackend.repository.AppointmentRepository;
+import com.project.hospitalmanagementbackend.repository.PatientRepository;
 import com.project.hospitalmanagementbackend.repository.TestResultRepository;
 
 @Service
@@ -20,38 +30,130 @@ public class TestResultService {
 	private TestResultRepository testResultRepository;
 	
 	@Autowired
-	private PatientService patientService;
+	private AppointmentRepository appointmentRepository;
 	
-	public List<TestResult> getTestResults(String patientId,Long appointmentId){
-		return testResultRepository.getTestResults(patientId,appointmentId);
+	@Autowired
+	private PatientRepository patientRepository;
+	
+	@Transactional
+	public Set<TestResultDto> getTestResults(String patientId,Long appointmentId){
+		Set<TestResult> testResults = testResultRepository.getTestResults(patientId,appointmentId);
+		Set<TestResultDto> testInfoList=new HashSet<TestResultDto>();
+		testResults.forEach((result)->{
+			TestResultDto testResultDto=new TestResultDto();
+			testResultDto.setPatientName(result.getPatient().getUser().getFirstName() +" " + result.getPatient().getUser().getLastName());
+			testResultDto.setPatientId(result.getPatient().getPatientId());
+			testResultDto.setTestName(result.getTestName());
+			//List<TestResultsInformation> testResultsInformationList=new ArrayList<>();
+			HashMap<String,String> hmap=new HashMap<>();
+			result.getInfos().forEach((info)->{
+				/*
+				 * TestResultsInformation testResultInformation=new TestResultsInformation();
+				 * testResultInformation.setResultInfoName(info.getResultInfoName());
+				 * testResultInformation.setResultInfoValue(info.getResultInfoValue());
+				 * testResultInformation.setTestResult(result);
+				 * testResultsInformationList.add(testResultInformation);
+				 */
+				hmap.put(info.getResultInfoName(),info.getResultInfoValue());
+			});
+			testResultDto.setInfos(hmap);
+			testResultDto.setResultId(result.getResultId());
+			testInfoList.add(testResultDto);
+		});
+		return testInfoList;
 	}
 	
 	@Transactional
-	public String updateTestResult(TestResult testResult) {
+	public String updateTestResult(TestResult testResult,String patientId,Long appointmentId,long resultId) {
+		if(!testResultRepository.findById(resultId).isPresent()) {
+			throw new TestResultNotFoundException("Test result not found");
+		}
+		Optional<Patient> oppatient=patientRepository.findById(patientId);
+		if(!oppatient.isPresent()) {
+			throw new PatientNotFoundException("Patient not found");
+		}
+		Optional<Appointment> opappointment=appointmentRepository.findById(appointmentId);
+		if(!opappointment.isPresent()) {
+			//TODO:add exception
+			throw new PatientNotFoundException("Patient not found");
+		}
+		Patient patient=oppatient.get();
+		Appointment appointment=opappointment.get();
+		testResult.setAppointment(appointment);
+		testResult.setPatient(patient);
+		List<TestResultsInformation> testResultsInformationList=new ArrayList<>();
+		testResult.getInfos().forEach((info)->{
+			TestResultsInformation testResultInformation=new TestResultsInformation();
+			testResultInformation.setResultInfoName(info.getResultInfoName());
+			testResultInformation.setResultInfoValue(info.getResultInfoValue());
+			testResultInformation.setTestResult(testResult);
+			testResultsInformationList.add(testResultInformation);
+		});
+		testResult.setResultId(resultId);
+		testResult.setInfos(testResultsInformationList);
+		testResult.setTestName(testResult.getTestName());
 		TestResult testResultObj=testResultRepository.save(testResult);
 		if(testResultObj!=null)
 			return "Updated record successfully";
 		return "Invalid update";
 	}
 
-	public List<TestResultPatientInfo> fetchTestResultsAndDetails(String patientId) {
-		List<TestResult> testResults=testResultRepository.getTestResultsByPatientId(patientId);
-		PatientInfo patientInfo=patientService.findPatientByPatientId(patientId);
-		List<TestResultPatientInfo> testResultPatientInfos=new ArrayList<TestResultPatientInfo>();
-		for(TestResult testResult:testResults) {
-			TestResultPatientInfo testResultPatientInfo=new TestResultPatientInfo();
-			testResultPatientInfo.setResultId(testResult.getResultId());
-			testResultPatientInfo.setTestName(testResult.getTestName());
-			testResultPatientInfo.setInfos(testResult.getInfos());
-			testResultPatientInfo.setContact(patientInfo.getContact());
-			testResultPatientInfo.setDateOfBirth(patientInfo.getDateOfBirth());
-			testResultPatientInfo.setFirstName(patientInfo.getFirstName());
-			testResultPatientInfo.setGender(patientInfo.getGender());
-			testResultPatientInfo.setLastName(patientInfo.getLastName());
-			testResultPatientInfo.setPatientId(patientInfo.getPatientId());
-			testResultPatientInfos.add(testResultPatientInfo);
+	public Set<TestResultDto> fetchTestResultsAndDetails(String patientId) {
+		Set<TestResult> testResults = testResultRepository.getTestResultsByPatientId(patientId);
+		Set<TestResultDto> testInfoList=new HashSet<TestResultDto>();
+		testResults.forEach((result)->{
+			TestResultDto testResultDto=new TestResultDto();
+			testResultDto.setPatientName(result.getPatient().getUser().getFirstName() +" " + result.getPatient().getUser().getLastName());
+			testResultDto.setPatientId(result.getPatient().getPatientId());
+			testResultDto.setTestName(result.getTestName());
+			//List<TestResultsInformation> testResultsInformationList=new ArrayList<>();
+			HashMap<String,String> hmap=new HashMap<>();
+			result.getInfos().forEach((info)->{
+				/*
+				 * TestResultsInformation testResultInformation=new TestResultsInformation();
+				 * testResultInformation.setResultInfoName(info.getResultInfoName());
+				 * testResultInformation.setResultInfoValue(info.getResultInfoValue());
+				 * testResultInformation.setTestResult(result);
+				 * testResultsInformationList.add(testResultInformation);
+				 */
+				hmap.put(info.getResultInfoName(),info.getResultInfoValue());
+			});
+			testResultDto.setInfos(hmap);
+			testResultDto.setResultId(result.getResultId());
+			testInfoList.add(testResultDto);
+		});
+		return testInfoList;
+	}
+
+	public String addTestResult(TestResult testResult,String patientId,Long appointmentId) {
+		Optional<Patient> oppatient=patientRepository.findById(patientId);
+		if(!oppatient.isPresent()) {
+			throw new PatientNotFoundException("Patient not found");
 		}
-		return testResultPatientInfos;
+		Optional<Appointment> opappointment=appointmentRepository.findById(appointmentId);
+		if(!opappointment.isPresent()) {
+			//TODO:add exception
+			throw new PatientNotFoundException("Patient not found");
+		}
+		Patient patient=oppatient.get();
+		Appointment appointment=opappointment.get();
+		testResult.setAppointment(appointment);
+		testResult.setPatient(patient);
+		List<TestResultsInformation> testResultsInformationList=new ArrayList<>();
+		
+		testResult.getInfos().forEach((info)->{
+			TestResultsInformation testResultInformation=new TestResultsInformation();
+			testResultInformation.setResultInfoName(info.getResultInfoName());
+			testResultInformation.setResultInfoValue(info.getResultInfoValue());
+			testResultInformation.setTestResult(testResult);
+			testResultsInformationList.add(testResultInformation);
+		});
+		testResult.setInfos(testResultsInformationList);
+		testResult.setTestName(testResult.getTestName());
+		TestResult testResultObj=testResultRepository.save(testResult);
+		if(testResultObj!=null)
+			return "Added record successfully";
+		return "Invalid add";
 	}
 	
 }

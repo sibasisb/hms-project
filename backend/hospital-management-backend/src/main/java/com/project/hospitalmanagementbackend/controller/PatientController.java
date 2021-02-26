@@ -22,7 +22,7 @@ public class PatientController {
 	@Autowired
 	private PatientService patientService;
 	
-	@GetMapping("/{doctorId}")
+	@GetMapping("/doc/{doctorId}")
 	public ResponseEntity<?> getPatientsByDoctorId(@PathVariable("doctorId") String doctorId){
 		List<Patient> patientList=patientService.findPatientsFromDoctorId(doctorId);
 		List<PatientInfo> patientInfoList=new ArrayList<PatientInfo>();
@@ -39,7 +39,7 @@ public class PatientController {
 		return new ResponseEntity<>(patientInfoList, HttpStatus.OK);
 	}
 	
-	@GetMapping("/{patientId}")
+	@GetMapping("/pat/{patientId}")
 	public ResponseEntity<?> getPatientByPatientId(@PathVariable("patientId") String patientId){
 		PatientInfo patientInfo=patientService.findPatientByPatientId(patientId);
 		return new ResponseEntity<>(patientInfo, HttpStatus.OK);

@@ -46,9 +46,25 @@ public class PatientControllerTest {
 		patInfo.setContact(p.getUser().getContact());
 		patInfo.setGender(p.getUser().getGender());
 		patientInfoList.add(patInfo);
-		ResponseEntity<List<PatientInfo>> patientsByDoctorId = (ResponseEntity<List<PatientInfo>>)patientController.getPatientsByDoctorId(doctorId);
+		ResponseEntity<List<PatientInfo>> patientsByDoctorId = (ResponseEntity<List<PatientInfo>>) patientController
+				.getPatientsByDoctorId(doctorId);
 		assertEquals(new ResponseEntity<>(patientInfoList, HttpStatus.OK).getBody().size(),
 				patientsByDoctorId.getBody().size());
+	}
+
+	@Test
+	public void testGetPatientByPatientId() {
+		Patient p = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.parse("1985-05-25"), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		PatientInfo patInfo = new PatientInfo();
+		patInfo.setPatientId(p.getPatientId());
+		patInfo.setFirstName(p.getUser().getFirstName());
+		patInfo.setLastName(p.getUser().getLastName());
+		patInfo.setDateOfBirth(p.getUser().getDateOfBirth());
+		patInfo.setContact(p.getUser().getContact());
+		patInfo.setGender(p.getUser().getGender());
+		when(patientService.findPatientByPatientId(p.getPatientId())).thenReturn(patInfo);
+		assertEquals(new ResponseEntity<>(patInfo, HttpStatus.OK), patientController.getPatientByPatientId(p.getPatientId()));
 	}
 
 }

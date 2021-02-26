@@ -104,9 +104,23 @@ public class AppointmentService {
 		return "created";
 	}
 	
-	public List<Appointment> getPendingAppointents(String hospitalAdminId){
+	public List<AppointmentInfo> getPendingAppointents(String hospitalAdminId){
 		String hospitalId=hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId);
-		return appointmentRepository.findPatientsWithFacilityRequests(hospitalId);
+		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
+		List<Appointment> appointments=appointmentRepository.findPatientsWithFacilityRequests(hospitalId);
+		appointments.forEach((appointment->{
+			AppointmentInfo appointmentInfo = new AppointmentInfo();
+			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
+			appointmentInfo.setAppointmentTime(appointment.getAppointmentTime());
+			if(appointment.getHospitalFacility()==null)
+			appointmentInfo.setDoctorName(appointment.getDoctor().getUser().getFirstName()+" "+appointment.getDoctor().getUser().getLastName());
+			else
+			appointmentInfo.setFacilityName(appointment.getHospitalFacility().getFacility().getName());
+			
+			appointmentInfo.setHospitalName(appointment.getHospital().getName());
+			appointmentInfoList.add(appointmentInfo);
+		}));
+		return appointmentInfoList;
 	}
 
 }
