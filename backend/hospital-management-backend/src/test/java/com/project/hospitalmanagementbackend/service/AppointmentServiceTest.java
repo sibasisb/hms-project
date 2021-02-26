@@ -30,6 +30,7 @@ import com.project.hospitalmanagementbackend.repository.DoctorRepository;
 import com.project.hospitalmanagementbackend.repository.HospitalAdminRepository;
 import com.project.hospitalmanagementbackend.repository.HospitalFacilityRepository;
 import com.project.hospitalmanagementbackend.repository.HospitalRepository;
+
 import com.project.hospitalmanagementbackend.repository.PatientRepository;
 
 @SpringBootTest
@@ -57,26 +58,28 @@ public class AppointmentServiceTest {
 	private HospitalAdminRepository hospitalAdminRepository;
 
 	@Test
-	public void testGetPendingAppointents() {
-		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
-				"7894561230", "john@doe.com", "incorrect", "patient"));
+    public void testGetPendingAppointents() {
+    	Patient patient =  new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male", "7894561230", "john@doe.com", "incorrect", "patient"));
 		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
-		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
-				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
-						"circiut", "Doctor"));
-		Facility facility = new Facility(4l, "this", null);
-		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
-				new BigDecimal(54.00));
-		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
-				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
-		List<Appointment> appointmentList = new ArrayList<Appointment>();
-		appointmentList.add(appointment);
-		String hospitalAdminId = "HAD00001";
-		when(appointmentRepository.findPatientsWithFacilityRequests(hospital.getHospitalId()))
-				.thenReturn(appointmentList);
-		when(hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId)).thenReturn(hospital.getHospitalId());
-		assertEquals(appointmentService.getPendingAppointents(hospitalAdminId), appointmentList);
-	}
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null , new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs", "circiut", "Doctor"));
+		Facility facility = new Facility(4l, null, null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility , "desc", "rem", new BigDecimal(54.00));
+		Appointment a = new Appointment(121l, patient, doctor , hospital, hospitalFacility , LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
+		List<Appointment> appointments=appointmentRepository.findPatientsWithFacilityRequests(hospital.getHospitalId());
+		appointments.add(a);
+		appointments.forEach((appointment->{
+			AppointmentInfo appointmentInfo = new AppointmentInfo();
+			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
+			appointmentInfo.setAppointmentTime(appointment.getAppointmentTime());
+			appointmentInfo.setHospitalName(appointment.getHospital().getName());
+			appointmentInfoList.add(appointmentInfo);
+		}));
+		String hospitalAdminId="HAD00001";
+    	when(appointmentRepository.findPatientsWithFacilityRequests(hospital.getHospitalId())).thenReturn(appointments);
+    	when(hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId)).thenReturn(hospital.getHospitalId());
+    	assertEquals(appointmentService.getPendingAppointents(hospitalAdminId).size(),appointmentInfoList.size());
+    }
 
 	@Test
 	void getAllAppointmentsByUserTestSuccess() {

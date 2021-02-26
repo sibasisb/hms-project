@@ -1,6 +1,7 @@
 package com.project.hospitalmanagementbackend.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +13,10 @@ import com.project.hospitalmanagementbackend.model.TestResult;
 @Repository
 public interface TestResultRepository extends JpaRepository<TestResult, Long> {
 
-	@Query("select t from TestResult t where t.patient.patientId=:patientId and t.appointment.appointmentId=:appointmentId")
-	public List<TestResult> getTestResults(@Param("patientId") String patientId,@Param("appointmentId") Long appointmentId);
+	@Query("select t from TestResult t left join fetch t.infos where t.patient.patientId=:patientId and t.appointment.appointmentId=:appointmentId")
+	public Set<TestResult> getTestResults(@Param("patientId") String patientId,@Param("appointmentId") Long appointmentId);
+
+	@Query("select t from TestResult t left join fetch t.infos where t.patient.patientId=?1")
+	public Set<TestResult> getTestResultsByPatientId(String patientId);
 	
 }
