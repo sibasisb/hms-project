@@ -72,6 +72,7 @@ public class AppointmentService {
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
 			appointmentInfo.setRemarks(appointment.getRemarks());
 			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfo.setApproved(appointment.getApproved());
 			appointmentInfoList.add(appointmentInfo);
 		}));
 
@@ -97,23 +98,29 @@ public class AppointmentService {
 			Doctor doctor = doctorRepository.findById(serviceId)
 					.orElseThrow(() -> new DoctorNotFoundException("Invalid Doctor"));
 			appointment.setDoctor(doctor);
+			appointment.setPaid(false);
+			appointment.setApproved(false);
 			log.info(doctor.getSpeciality());
 			appointmentRepository.save(appointment);
 		} else {
 			HospitalFacility hospitalFacility = hospitalFacilityRepository.findById(Long.valueOf(serviceId))
 					.orElseThrow(() -> new HospitalFacilityNotFoundException("Invalid Facility"));
 			appointment.setHospitalFacility(hospitalFacility);
+			appointment.setPaid(false);
+			appointment.setApproved(false);
 			log.info(hospitalFacility.getFacility().getName());
 			appointmentRepository.save(appointment);
 		}
 		return "created";
 	}
 
+	@Transactional
 	public List<Appointment> getPendingAppointents(String hospitalAdminId) {
 		String hospitalId = hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId);
 		return appointmentRepository.findPatientsWithFacilityRequests(hospitalId);
 	}
 
+	@Transactional
 	public List<AppointmentInfo> getAllAppointmentsByDoctor(String doctorId) {
 		doctorRepository.findById(doctorId).orElseThrow(() -> new DoctorNotFoundException("Invalid Doctor"));
 		List<Appointment> appointments = appointmentRepository.findByDoctor_DoctorId(doctorId);
@@ -131,11 +138,13 @@ public class AppointmentService {
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
 			appointmentInfo.setRemarks(appointment.getRemarks());
 			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfo.setApproved(appointment.getApproved());
 			appointmentInfoList.add(appointmentInfo);
 		}));
 		return appointmentInfoList;
 	}
 
+	@Transactional
 	public List<AppointmentInfo> getAllAppointmentsByFacility(long hospitalFacilityId) {
 		hospitalFacilityRepository.findById(hospitalFacilityId)
 				.orElseThrow(() -> new HospitalFacilityNotFoundException("Invalid Facility"));
@@ -153,11 +162,13 @@ public class AppointmentService {
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
 			appointmentInfo.setRemarks(appointment.getRemarks());
 			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfo.setApproved(appointment.getApproved());
 			appointmentInfoList.add(appointmentInfo);
 		}));
 		return appointmentInfoList;
 	}
 
+	@Transactional
 	public String approveAppointment(Long appointmentId) {
 		Appointment appointment = appointmentRepository.findById(appointmentId)
 				.orElseThrow(() -> new AppointmentNotFoundException("No such appointment"));
@@ -166,6 +177,7 @@ public class AppointmentService {
 		return "approved";
 	}
 
+	@Transactional
 	public String rejectAppointment(Long appointmentId) {
 		Appointment appointment = appointmentRepository.findById(appointmentId)
 				.orElseThrow(() -> new AppointmentNotFoundException("No such appointment"));

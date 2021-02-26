@@ -24,4 +24,5 @@ public class AppointmentInfo {
 	String hospitalName;
 	String remarks;
 	byte[] medicalRecords;
+	boolean approved;
 }

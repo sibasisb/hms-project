@@ -51,15 +51,15 @@ public class AppointmentController {
 	public ResponseEntity<List<AppointmentInfo>> getAllAppointmentsByFacility(@PathVariable long hospitalFacilityId) {
 		return new ResponseEntity<>(appointmentService.getAllAppointmentsByFacility(hospitalFacilityId), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/approve/{appointmentId}")
 	public ResponseEntity<String> approveAppointment(@PathVariable Long appointmentId) {
-		return new ResponseEntity<>(appointmentService.approveAppointment(appointmentId), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(appointmentService.approveAppointment(appointmentId), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/reject/{appointmentId}")
 	public ResponseEntity<String> rejectAppointment(@PathVariable Long appointmentId) {
-		return new ResponseEntity<>(appointmentService.rejectAppointment(appointmentId), HttpStatus.ACCEPTED);
-		
+		return new ResponseEntity<>(appointmentService.rejectAppointment(appointmentId), HttpStatus.OK);
+
 	}
 }

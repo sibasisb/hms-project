@@ -53,7 +53,7 @@ public class AppointmentControllerTest {
 		Set<Appointment> appointments = new HashSet<>();
 		appointments.add(appointment);
 		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, LocalDate.of(2021, 02, 14), LocalTime.of(20, 04),
-				"pat", "John Doe", null, "something", null, null);
+				"pat", "John Doe", null, "something", null, null, false);
 		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
 		appointmentList.add(appointmentInfo);
 		when(appointmentService.getAllAppointmentsByUser(patient.getPatientId())).thenReturn(appointmentList);
@@ -120,7 +120,7 @@ public class AppointmentControllerTest {
 		Set<Appointment> appointments = new HashSet<>();
 		appointments.add(appointment);
 		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, appointment.getAppointmentDate(),
-				appointment.getAppointmentTime(), "pat", "John Doe", null, "something", null, null);
+				appointment.getAppointmentTime(), "pat", "John Doe", null, "something", null, null, false);
 		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
 		appointmentList.add(appointmentInfo);
 		when(appointmentService.getAllAppointmentsByDoctor(doctor.getDoctorId())).thenReturn(appointmentList);
@@ -145,7 +145,7 @@ public class AppointmentControllerTest {
 		Set<Appointment> appointments = new HashSet<>();
 		appointments.add(appointment);
 		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, appointment.getAppointmentDate(),
-				appointment.getAppointmentTime(), "pat", "John Doe", null, "something", null, null);
+				appointment.getAppointmentTime(), "pat", "John Doe", null, "something", null, null, false);
 		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
 		appointmentList.add(appointmentInfo);
 		when(appointmentService.getAllAppointmentsByFacility(hospitalFacility.getHospitalFacilityId()))
@@ -172,7 +172,7 @@ public class AppointmentControllerTest {
 		when(appointmentService.approveAppointment(appointment.getAppointmentId())).thenReturn("approved");
 
 		assertEquals(appointmentController.approveAppointment(appointment.getAppointmentId()),
-				new ResponseEntity<>("approved", HttpStatus.ACCEPTED));
+				new ResponseEntity<>("approved", HttpStatus.OK));
 	}
 
 	@Test
@@ -192,6 +192,6 @@ public class AppointmentControllerTest {
 		when(appointmentService.rejectAppointment(appointment.getAppointmentId())).thenReturn("rejected");
 
 		assertEquals(appointmentController.rejectAppointment(appointment.getAppointmentId()),
-				new ResponseEntity<>("rejected", HttpStatus.ACCEPTED));
+				new ResponseEntity<>("rejected", HttpStatus.OK));
 	}
 }
