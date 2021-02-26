@@ -36,8 +36,9 @@ public class FacilityServiceTest {
 	void testGetFacilityById() {
 		
 		Facility facility = new Facility();
-		when(facilityRepository.findById(1L)).thenReturn(Optional.of(facility));
+		when(facilityRepository.getFacilityById(1L)).thenReturn(Optional.of(facility));
 		assertEquals(facility,facilityService.getFacilityById(1L));
 	}
-
+	
+	
 }

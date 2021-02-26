@@ -93,6 +93,28 @@ public class CustomGloabalExceptionHandler extends ResponseEntityExceptionHandle
 	 return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
 	 }
 	 
+	 @ExceptionHandler(InPatientNotFoundException.class)
+	 public ResponseEntity<?> springHandleInPatientNotFound(InPatientNotFoundException ex ) throws IOException{
+	 
+		 Map<String, Object> body = new LinkedHashMap<>();
+
+			body.put("timestamp", new Date());
+			body.put("status", HttpStatus.NOT_FOUND.value());
+			body.put("error", ex.getMessage());
+	 return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
+	 }
+	 
+	 @ExceptionHandler(FacilityNotFoundException.class)
+	 public ResponseEntity<?> springHandleFacilityNotFound(FacilityNotFoundException ex ) throws IOException{
+	 
+		 Map<String, Object> body = new LinkedHashMap<>();
+
+			body.put("timestamp", new Date());
+			body.put("status", HttpStatus.NOT_FOUND.value());
+			body.put("error", ex.getMessage());
+	 return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
+	 }
+	 
 	
 	
 		

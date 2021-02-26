@@ -50,7 +50,7 @@ public class AppointmentService {
 		// Set<Appointment> appointments = appointmentRepository.findByPatient_PatientId(patientId).stream().collect(Collectors.toSet());
 		
 		Set<Appointment> appointments = appointmentRepository.getAllAppointmentsByPatient(patientId);
-		System.out.println(appointments);
+		//System.out.println(appointments);
 		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
 		appointments.forEach((appointment->{
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
