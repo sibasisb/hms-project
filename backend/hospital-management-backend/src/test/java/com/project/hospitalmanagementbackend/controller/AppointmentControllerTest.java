@@ -39,48 +39,159 @@ public class AppointmentControllerTest {
 
 	@Test
 	void getAllAppointmentByUserTestSuccess() {
-		Patient patient =  new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male", "7894561230", "john@doe.com", "incorrect", "patient"));
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
 		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
-		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null , new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs", "circiut", "Doctor"));
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
 		Facility facility = new Facility(4l, "this", null);
-		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility , "desc", "rem", new BigDecimal(54.00));
-		Appointment appointment = new Appointment(121l, patient, doctor , hospital, hospitalFacility , LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
 		Set<Appointment> appointments = new HashSet<>();
 		appointments.add(appointment);
-		AppointmentInfo appointmentInfo = new AppointmentInfo(LocalDate.of(2021, 02, 14),LocalTime.of(20, 04),"John Doe",null,"something");
+		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, LocalDate.of(2021, 02, 14), LocalTime.of(20, 04),
+				"pat", "John Doe", null, "something", null, null);
 		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
+		appointmentList.add(appointmentInfo);
 		when(appointmentService.getAllAppointmentsByUser(patient.getPatientId())).thenReturn(appointmentList);
-		
-		assertEquals(appointmentController.getAllAppointmentByUser(patient.getPatientId()), new ResponseEntity<>(appointmentList, HttpStatus.OK));
+
+		assertEquals(appointmentController.getAllAppointmentByUser(patient.getPatientId()),
+				new ResponseEntity<>(appointmentList, HttpStatus.OK));
 	}
-	
+
 	@Test
 	void bookAppointmentTestSuccess() {
-		Patient patient =  new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male", "7894561230", "john@doe.com", "incorrect", "patient"));
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
 		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
-		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null , new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs", "circiut", "Doctor"));
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
 		Facility facility = new Facility(4l, "this", null);
-		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility , "desc", "rem", new BigDecimal(54.00));
-		Appointment appointment = new Appointment(121l, patient, doctor , hospital, hospitalFacility , LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
-		
-		when(appointmentService.bookAnAppointment(patient.getPatientId(), hospital.getHospitalId(), doctor.getDoctorId(), appointment)).thenReturn("created");
-		
-		assertEquals(appointmentController.bookAppointment(patient.getPatientId(), hospital.getHospitalId(), doctor.getDoctorId(), appointment), new ResponseEntity<>("created", HttpStatus.CREATED));
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(appointmentService.bookAnAppointment(patient.getPatientId(), hospital.getHospitalId(),
+				doctor.getDoctorId(), appointment)).thenReturn("created");
+
+		assertEquals(appointmentController.bookAppointment(patient.getPatientId(), hospital.getHospitalId(),
+				doctor.getDoctorId(), appointment), new ResponseEntity<>("created", HttpStatus.CREATED));
 	}
-	
+
 	@Test
 	public void testGetPendingAppointmentList() {
-		Patient patient =  new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male", "7894561230", "john@doe.com", "incorrect", "patient"));
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
 		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
-		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null , new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs", "circiut", "Doctor"));
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
 		Facility facility = new Facility(4l, "this", null);
-		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility , "desc", "rem", new BigDecimal(54.00));
-		Appointment appointment = new Appointment(121l, patient, doctor , hospital, hospitalFacility , LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
-		List<Appointment> appointmentList=new ArrayList<Appointment>();
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
 		appointmentList.add(appointment);
-		String hospitalAdminId="HAD00001";
-    	when(appointmentService.getPendingAppointents(hospitalAdminId)).thenReturn(appointmentList);
-    	assertEquals(appointmentController.getPendingAppointmentList(hospitalAdminId),new ResponseEntity<>(appointmentList, HttpStatus.OK));
+		String hospitalAdminId = "HAD00001";
+		when(appointmentService.getPendingAppointents(hospitalAdminId)).thenReturn(appointmentList);
+		assertEquals(appointmentController.getPendingAppointmentList(hospitalAdminId),
+				new ResponseEntity<>(appointmentList, HttpStatus.OK));
 	}
-	
+
+	@Test
+	public void getAllAppointmentsByDoctorTestSuccess() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+		Set<Appointment> appointments = new HashSet<>();
+		appointments.add(appointment);
+		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, appointment.getAppointmentDate(),
+				appointment.getAppointmentTime(), "pat", "John Doe", null, "something", null, null);
+		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
+		appointmentList.add(appointmentInfo);
+		when(appointmentService.getAllAppointmentsByDoctor(doctor.getDoctorId())).thenReturn(appointmentList);
+
+		assertEquals(appointmentController.getAllAppointmentsByDoctor(doctor.getDoctorId()),
+				new ResponseEntity<>(appointmentList, HttpStatus.OK));
+	}
+
+	@Test
+	public void getAllAppointmentsByFacilityTestSuccess() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+		Set<Appointment> appointments = new HashSet<>();
+		appointments.add(appointment);
+		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, appointment.getAppointmentDate(),
+				appointment.getAppointmentTime(), "pat", "John Doe", null, "something", null, null);
+		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
+		appointmentList.add(appointmentInfo);
+		when(appointmentService.getAllAppointmentsByFacility(hospitalFacility.getHospitalFacilityId()))
+				.thenReturn(appointmentList);
+
+		assertEquals(appointmentController.getAllAppointmentsByFacility(hospitalFacility.getHospitalFacilityId()),
+				new ResponseEntity<>(appointmentList, HttpStatus.OK));
+	}
+
+	@Test
+	public void approveAppointmentTestSuccess() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(appointmentService.approveAppointment(appointment.getAppointmentId())).thenReturn("approved");
+
+		assertEquals(appointmentController.approveAppointment(appointment.getAppointmentId()),
+				new ResponseEntity<>("approved", HttpStatus.ACCEPTED));
+	}
+
+	@Test
+	public void rejectAppointmentTestSuccess() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(appointmentService.rejectAppointment(appointment.getAppointmentId())).thenReturn("rejected");
+
+		assertEquals(appointmentController.rejectAppointment(appointment.getAppointmentId()),
+				new ResponseEntity<>("rejected", HttpStatus.ACCEPTED));
+	}
 }

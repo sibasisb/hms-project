@@ -1,7 +1,6 @@
 package com.project.hospitalmanagementbackend.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +16,6 @@ import com.project.hospitalmanagementbackend.dto.AppointmentInfo;
 import com.project.hospitalmanagementbackend.model.Appointment;
 import com.project.hospitalmanagementbackend.service.AppointmentService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
@@ -30,8 +26,6 @@ public class AppointmentController {
 	public ResponseEntity<?> getAllAppointmentByUser(@PathVariable String patientId) {
 		List<AppointmentInfo> appointments = appointmentService.getAllAppointmentsByUser(patientId);
 		ResponseEntity<?> entity = new ResponseEntity<>(appointments, HttpStatus.OK);
-		// appointments.forEach((appointment) -> log.info(appointment.toString()));
-		// log.info(entity.toString());
 		return entity;
 	}
 
@@ -48,4 +42,24 @@ public class AppointmentController {
 		return new ResponseEntity<>(appointmentList, HttpStatus.OK);
 	}
 
+	@GetMapping("/view/doctor/{doctorId}")
+	public ResponseEntity<List<AppointmentInfo>> getAllAppointmentsByDoctor(@PathVariable String doctorId) {
+		return new ResponseEntity<>(appointmentService.getAllAppointmentsByDoctor(doctorId), HttpStatus.OK);
+	}
+
+	@GetMapping("/view/facility/{hospitalFacilityId}")
+	public ResponseEntity<List<AppointmentInfo>> getAllAppointmentsByFacility(@PathVariable long hospitalFacilityId) {
+		return new ResponseEntity<>(appointmentService.getAllAppointmentsByFacility(hospitalFacilityId), HttpStatus.OK);
+	}
+	
+	@GetMapping("/approve/{appointmentId}")
+	public ResponseEntity<String> approveAppointment(@PathVariable Long appointmentId) {
+		return new ResponseEntity<>(appointmentService.approveAppointment(appointmentId), HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/reject/{appointmentId}")
+	public ResponseEntity<String> rejectAppointment(@PathVariable Long appointmentId) {
+		return new ResponseEntity<>(appointmentService.rejectAppointment(appointmentId), HttpStatus.ACCEPTED);
+		
+	}
 }

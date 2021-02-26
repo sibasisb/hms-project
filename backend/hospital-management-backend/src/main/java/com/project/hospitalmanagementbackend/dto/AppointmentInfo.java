@@ -3,12 +3,6 @@ package com.project.hospitalmanagementbackend.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.project.hospitalmanagementbackend.model.Appointment;
-import com.project.hospitalmanagementbackend.model.Doctor;
-import com.project.hospitalmanagementbackend.model.Hospital;
-import com.project.hospitalmanagementbackend.model.HospitalFacility;
-import com.project.hospitalmanagementbackend.model.Patient;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,10 +15,13 @@ import lombok.ToString;
 @Setter
 @ToString
 public class AppointmentInfo {
-
+	Long appointmentId;
 	LocalDate appointmentDate;
 	LocalTime appointmentTime;
+	String patientName;
 	String doctorName;
 	String facilityName;
 	String hospitalName;
+	String remarks;
+	byte[] medicalRecords;
 }
