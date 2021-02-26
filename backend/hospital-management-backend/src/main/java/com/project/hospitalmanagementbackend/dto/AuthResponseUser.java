@@ -13,7 +13,9 @@ import lombok.ToString;
 @ToString
 public class AuthResponseUser {
 
+	private String userId;
 	private String username;
 	private String role;
 	private String token;
+	
 }

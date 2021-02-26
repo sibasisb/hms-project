@@ -47,19 +47,17 @@ public class AppointmentService {
 
 	@Transactional
 	public List<AppointmentInfo> getAllAppointmentsByUser(String patientId) {
-		// Set<Appointment> appointments = appointmentRepository.findByPatient_PatientId(patientId).stream().collect(Collectors.toSet());
 		
 		Set<Appointment> appointments = appointmentRepository.getAllAppointmentsByPatient(patientId);
-		System.out.println(appointments);
 		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
 		appointments.forEach((appointment->{
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
 			appointmentInfo.setAppointmentTime(appointment.getAppointmentTime());
 			if(appointment.getHospitalFacility()==null)
-			appointmentInfo.setDoctorName(appointment.getDoctor().getUser().getFirstName()+" "+appointment.getDoctor().getUser().getLastName());
+			{appointmentInfo.setDoctorName(appointment.getDoctor().getUser().getFirstName()+" "+appointment.getDoctor().getUser().getLastName());}
 			else
-			appointmentInfo.setFacilityName(appointment.getHospitalFacility().getFacility().getName());
+			{appointmentInfo.setFacilityName(appointment.getHospitalFacility().getFacility().getName());}
 			
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
 			appointmentInfoList.add(appointmentInfo);

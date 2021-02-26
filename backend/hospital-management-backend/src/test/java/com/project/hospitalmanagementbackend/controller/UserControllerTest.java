@@ -48,7 +48,7 @@ public class UserControllerTest {
     void loginAsUserTest()
     {
     	AuthRequestUser user = new AuthRequestUser("PAT000001","pass12$"); 
-    	AuthResponseUser authResponseUser = new AuthResponseUser("John","patient","jwttoken");
+    	AuthResponseUser authResponseUser = new AuthResponseUser("PAT000001","John","patient","jwttoken");
     	when(userService.getUser(user)).thenReturn(authResponseUser);
     	assertEquals(new ResponseEntity<AuthResponseUser>(authResponseUser, HttpStatus.OK),userController.loginAsUser(user));
     }

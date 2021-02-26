@@ -75,7 +75,7 @@ public class UserServiceTest {
 		Patient patient = new Patient("PAT000001", userInfo);
 		when(patientRepository.findById("PAT000001")).thenReturn(Optional.of(patient));
 		when(userRepository.findById(1l)).thenReturn(Optional.of(userInfo));
-		AuthResponseUser authResponseUser = new AuthResponseUser("John", "patient", "jwttoken");
+		AuthResponseUser authResponseUser = new AuthResponseUser("PAT000001","John", "patient", "jwttoken");
 		AuthResponseUser responseUser = userService.getUser(user);
 		assertEquals(authResponseUser.getToken(),responseUser.getToken());
 	}
@@ -86,7 +86,7 @@ public class UserServiceTest {
 		AuthRequestUser notAnUser = new AuthRequestUser("user123", "pwd12$");
 		User userInfo = new User(1l, "John", null, null, null, null, null, null, "patient");
 		Patient patient = new Patient("PAT000001", userInfo);
-		AuthResponseUser authResponseUser = new AuthResponseUser("John", "patient", "jwttoken");
+		AuthResponseUser authResponseUser = new AuthResponseUser("PAT000001","John", "patient", "jwttoken");
 		when(patientRepository.findById("PAT000001")).thenReturn(Optional.of(patient));
 		when(userRepository.findById(1l)).thenReturn(Optional.of(userInfo));
 		assertThrows(InvalidUserException.class, () -> userService.getUser(notAnUser));

@@ -10,8 +10,8 @@ import com.project.hospitalmanagementbackend.model.TreatmentHistory;
 @Repository
 public interface TreatmentHistoryRepository extends JpaRepository<TreatmentHistory, Long> {
 
-	List<TreatmentHistory> findByPatient_PatientId(String patientId);
+	public List<TreatmentHistory> findByPatient_PatientId(String patientId);
 
-	TreatmentHistory findByPatient_PatientIdAndDoctor_DoctorId(String patienId, String doctorId);
+	public TreatmentHistory findByPatient_PatientIdAndDoctor_DoctorId(String patienId, String doctorId);
 
 }
