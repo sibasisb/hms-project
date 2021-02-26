@@ -14,18 +14,20 @@ import com.project.hospitalmanagementbackend.model.Appointment;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 	public List<Appointment> findByPatient_PatientId(String patientId);
 
-
 	@Query("Select a from Appointment a where a.patient.patientId=?1")
 	public Set<Appointment> getAllAppointmentsByPatient(String patientId);
-	
+
 	public List<Appointment> findByDoctor_DoctorId(String doctorId);
-	
+
 	public List<Appointment> findByHospitalFacility_HospitalFacilityId(long hospitalFacilityId);
-	
-	@Query("from Appointment a where a.approved=true and a.paid=false and a.hospital.hospitalId=:hospitalId")
-	public List<Appointment> findPatientsWithFacilityRequests(@Param("hospitalId") String hospitalId);
-	
+
 	@Query("select a from Appointment a where a.paid=false and a.hospital.hospitalId= ?1 and a.patient.patientId = ?2")
-	public List<Appointment> findUnpaidAppointments(String hospitalId,String patientId);
-	
+	public List<Appointment> findUnpaidAppointments(String hospitalId, String patientId);
+
+	@Query("from Appointment a where a.approved=true and a.paid=false and a.hospitalFacility.hospitalFacilityId is not null and a.hospital.hospitalId=:hospitalId")
+	public List<Appointment> findPatientsWithFacilityRequests(@Param("hospitalId") String hospitalId);
+
+	@Query("SELECT a from Appointment a where a.doctor.doctorId=?1")
+	public List<Appointment> findAppointmentsByDoctorId(String doctorId);
+
 }
