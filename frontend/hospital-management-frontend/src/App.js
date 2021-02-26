@@ -13,6 +13,7 @@ import RegisterComponent from "./Components/RegisterComponent";
 import LoginComponent from "./Components/LoginComponent";
 import FacilityAddUpdateComponent from "./Components/FacilityAddUpdateComponent";
 import FacilityUpdateList from "./Components/FacilityUpdateListComponent";
+import ViewAppointment from "./Components/ViewAppointment";
 
 export const UserContext = createContext();
 
@@ -44,6 +45,9 @@ const Routing = () => {
       <Route path="/addfacility" exact component={FacilityAddUpdateComponent} />
       <Route path="/addfacility/:id" component={FacilityAddUpdateComponent} />
       <Route path="/updatefacility" component={FacilityUpdateList} />
+      <Route path="/view-appointment/:patientId">
+        <ViewAppointment />
+      </Route>
     </Switch>
   );
 };
