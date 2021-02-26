@@ -20,6 +20,16 @@ public class HospitalController {
 		return new ResponseEntity<>(hospitalService.getAllHospitals(),HttpStatus.OK);
 	}
 	
+	@GetMapping("/hospitals/facilities/{hospitalId}")
+	public ResponseEntity<?> getHospitalFacilities(@PathVariable(name="hospitalId") String hospitalId){
+		return new ResponseEntity<>(hospitalService.getHospitalFacilities(hospitalId),HttpStatus.OK);
+	}
+	
+	@GetMapping("/hospitals/doctors/{hospitalId}")
+	public ResponseEntity<?> getHospitalDocotors(@PathVariable(name="hospitalId") String hospitalId){
+		return new ResponseEntity<>(hospitalService.getHospitalDoctors(hospitalId),HttpStatus.OK);
+	}
+	
 	@GetMapping("/hospitals/{hospitalId}")
 	public ResponseEntity<?> getHospitalById(@PathVariable(name="hospitalId") String hospitalId){
 		return new ResponseEntity<>(hospitalService.getHospitalById(hospitalId),HttpStatus.OK);
