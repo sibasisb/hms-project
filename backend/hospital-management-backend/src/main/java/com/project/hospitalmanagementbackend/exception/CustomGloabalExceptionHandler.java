@@ -17,110 +17,150 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import lombok.extern.java.Log;
 
 @Log
 @ControllerAdvice
-public class CustomGloabalExceptionHandler extends ResponseEntityExceptionHandler{
+public class CustomGloabalExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		
-		log.info("Start");
-		
-        Map<String, Object> body = new LinkedHashMap<String, Object>();
-        body.put("timestamp", new Date());
-        body.put("status", status.value());
-        //Get all errors
-        List<String> errors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(x -> x.getDefaultMessage())
-                .collect(Collectors.toList());
 
-        body.put("errors", errors);
-        return new ResponseEntity<>(body, headers, status);
+		log.info("Start");
+
+		Map<String, Object> body = new LinkedHashMap<String, Object>();
+		body.put("timestamp", new Date());
+		body.put("status", status.value());
+		// Get all errors
+		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
+				.collect(Collectors.toList());
+
+		body.put("errors", errors);
+		return new ResponseEntity<>(body, headers, status);
 	}
-	
 
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(
 
 			HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status,
 
 			WebRequest request) {
-		
+
 		log.info("Start");
-			Map<String, Object> body = new LinkedHashMap<>();
+		Map<String, Object> body = new LinkedHashMap<>();
 
-			body.put("timestamp", new Date());
+		body.put("timestamp", new Date());
 
-			body.put("status", status.value());
+		body.put("status", status.value());
 
-			body.put("error", "Bad Request");
+		body.put("error", "Bad Request");
 
-			List<String> errors = new ArrayList<String>();
+		List<String> errors = new ArrayList<String>();
 
-			if (ex.getCause() instanceof InvalidFormatException) {
+		if (ex.getCause() instanceof InvalidFormatException) {
 
 			final Throwable cause = ex.getCause() == null ? ex : ex.getCause();
 
 			for (InvalidFormatException.Reference reference : ((InvalidFormatException) cause).getPath()) {
 
-			body.put("message", "Incorrect format for field '" + reference.getFieldName() + "'");
+				body.put("message", "Incorrect format for field '" + reference.getFieldName() + "'");
 
 			}
 
-			}
+		}
 
-			return new ResponseEntity<>(body, headers, status);
+		return new ResponseEntity<>(body, headers, status);
 
-			}
-	
-	
+	}
 
-	 
-	 @ExceptionHandler(InvalidUserException.class)
-	 public ResponseEntity<?> springHandleInvalidUser(InvalidUserException ex ) throws IOException{
-	 
-		 Map<String, Object> body = new LinkedHashMap<>();
+	@ExceptionHandler(InvalidUserException.class)
+	public ResponseEntity<?> springHandleInvalidUser(InvalidUserException ex) throws IOException {
 
-			body.put("timestamp", new Date());
-			body.put("status", HttpStatus.NOT_FOUND.value());
-			body.put("error", ex.getMessage());
-	 return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
-	 }
-	 
-	 @ExceptionHandler(InPatientNotFoundException.class)
-	 public ResponseEntity<?> springHandleInPatientNotFound(InPatientNotFoundException ex ) throws IOException{
-	 
-		 Map<String, Object> body = new LinkedHashMap<>();
+		Map<String, Object> body = new LinkedHashMap<>();
 
-			body.put("timestamp", new Date());
-			body.put("status", HttpStatus.NOT_FOUND.value());
-			body.put("error", ex.getMessage());
-	 return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
-	 }
-	 
-	 @ExceptionHandler(FacilityNotFoundException.class)
-	 public ResponseEntity<?> springHandleFacilityNotFound(FacilityNotFoundException ex ) throws IOException{
-	 
-		 Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", new Date());
+		body.put("status", HttpStatus.NOT_FOUND.value());
+		body.put("error", ex.getMessage());
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
 
-			body.put("timestamp", new Date());
-			body.put("status", HttpStatus.NOT_FOUND.value());
-			body.put("error", ex.getMessage());
-	 return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
-	 }
-	 
-	
-	
-		
+	@ExceptionHandler(PatientNotFoundException.class)
+	public ResponseEntity<?> springHandleInvalidPatient(PatientNotFoundException ex) throws IOException {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+
+		body.put("timestamp", new Date());
+		body.put("status", HttpStatus.NOT_FOUND.value());
+		body.put("error", ex.getMessage());
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(HospitalNotFoundException.class)
+	public ResponseEntity<?> springHandleInvalidHospital(HospitalNotFoundException ex) throws IOException {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+
+		body.put("timestamp", new Date());
+		body.put("status", HttpStatus.NOT_FOUND.value());
+		body.put("error", ex.getMessage());
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(DoctorNotFoundException.class)
+	public ResponseEntity<?> springHandleInvalidDoctor(DoctorNotFoundException ex) throws IOException {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+
+		body.put("timestamp", new Date());
+		body.put("status", HttpStatus.NOT_FOUND.value());
+		body.put("error", ex.getMessage());
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(HospitalFacilityNotFoundException.class)
+	public ResponseEntity<?> springHandleInvalidHospitalFacility(HospitalFacilityNotFoundException ex)
+			throws IOException {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+
+		body.put("timestamp", new Date());
+		body.put("status", HttpStatus.NOT_FOUND.value());
+		body.put("error", ex.getMessage());
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(AppointmentNotFoundException.class)
+	public ResponseEntity<?> springHandleInvalidAppointment(AppointmentNotFoundException ex) throws IOException {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+
+		body.put("timestamp", new Date());
+		body.put("status", HttpStatus.NOT_FOUND.value());
+		body.put("error", ex.getMessage());
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(InPatientNotFoundException.class)
+	public ResponseEntity<?> springHandleInPatientNotFound(InPatientNotFoundException ex) throws IOException {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+
+		body.put("timestamp", new Date());
+		body.put("status", HttpStatus.NOT_FOUND.value());
+		body.put("error", ex.getMessage());
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(FacilityNotFoundException.class)
+	public ResponseEntity<?> springHandleFacilityNotFound(FacilityNotFoundException ex) throws IOException {
+
+		Map<String, Object> body = new LinkedHashMap<>();
+
+		body.put("timestamp", new Date());
+		body.put("status", HttpStatus.NOT_FOUND.value());
+		body.put("error", ex.getMessage());
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+
 }
-
-
-
-
-
