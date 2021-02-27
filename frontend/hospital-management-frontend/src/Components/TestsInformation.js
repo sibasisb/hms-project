@@ -1,54 +1,40 @@
 import React, { useEffect,useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
+import axios from 'axios';
 
 const TestsInformation=()=>{
     const [testFacilities,setTestFacilities]=useState([])
     useEffect(()=>{
-         const newtestFacilities=[
-             {
-                facilityId:"FAC000001",
-                facilityName:"Blood Test",
-                description:"Test for blood ",
-                remarks:"OKK",
-                hospitalId:"HOS00001",
-                values:{
-                    HB_Value:"102",
-                    Pressure_systolic:"120",
-                    Pressure_dia:"80"
-                },
-                charge:125.00
-             },
-             {
-                facilityId:"FAC000002",
-                facilityName:"Blood Test",
-                description:"Test for blood ",
-                remarks:"UMM",
-                hospitalId:"HOS00001",
-                values:{
-                    HB_Value:"102",
-                    Pressure_systolic:"120",
-                    Pressure_dia:"80"
-                },
-                charge:125.00
-             }
-         ]
-         setTestFacilities(newtestFacilities)
+        const hospitalAdminId="HAD0998";
+        axios.get(`http://localhost:8080/getfacility/${hospitalAdminId}`)
+        .then(res=>{
+            console.log(res)
+            setTestFacilities(res.data)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+
     },[])
 
     const fetchResults=()=>{
 
-        const extractValues=(values)=>{
+        const extractValues=(baselines)=>{
             let li=[]
     
-            for(let i in values){
-                li.push([i,values[i]])    
+            for(let baseline of baselines){
+                let l=[]
+                for(let i in baseline){
+                    l.push(baseline[i])
+                }
+                li.push(l)
             }
             return (
                 li.map((item,index)=>{
                     return (
                             <tr>
-                            <td>{item[0]}</td>
                             <td>{item[1]}</td>
+                            <td>{item[2]}</td>
                             </tr>
                     )
                 })
@@ -59,14 +45,14 @@ const TestsInformation=()=>{
         return testFacilities.map((testFacility,index)=>{
             return (
                 <tr key={index}>
-                    <td>{testFacility.facilityId}</td>
-                    <td>{testFacility.facilityName}</td>
+                    <td>{testFacility.hospitalFacilityId}</td>
+                    <td>{testFacility.facility.name}</td>
                     <td>{testFacility.description}</td>
                     <td>{testFacility.remarks}</td>
                     <table className="table table-condensed table-bordered">
-                    {extractValues(testFacility.values)}
+                    {extractValues(testFacility.facility.baselines)}
                     </table>
-                    <td>&#x20B9;{testFacility.charge}</td>
+                    <td>&#x20B9;{testFacility.charges}</td>
                 </tr>   
             )
         })
@@ -83,7 +69,7 @@ const TestsInformation=()=>{
                     <th scope="col">Description</th>
                     <th scope="col">Remarks</th>
                     <th scope="col">Baseline Values</th>
-                    <th scope="col">Charge</th>
+                    <th scope="col">Charges</th>
                     </tr>
                 </thead>
                 <tbody>

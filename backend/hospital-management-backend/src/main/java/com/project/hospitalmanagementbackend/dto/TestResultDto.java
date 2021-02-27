@@ -17,6 +17,7 @@ public class TestResultDto {
 
 	private long resultId;
 	private String testName;
+	private Long appointmentId;
 	private String patientId;
 	private String patientName;
 	private HashMap<String,String> infos;

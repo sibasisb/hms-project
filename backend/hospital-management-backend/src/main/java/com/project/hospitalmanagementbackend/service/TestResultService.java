@@ -41,6 +41,7 @@ public class TestResultService {
 		Set<TestResultDto> testInfoList=new HashSet<TestResultDto>();
 		testResults.forEach((result)->{
 			TestResultDto testResultDto=new TestResultDto();
+			testResultDto.setAppointmentId(result.getAppointment().getAppointmentId());
 			testResultDto.setPatientName(result.getPatient().getUser().getFirstName() +" " + result.getPatient().getUser().getLastName());
 			testResultDto.setPatientId(result.getPatient().getPatientId());
 			testResultDto.setTestName(result.getTestName());
@@ -103,6 +104,7 @@ public class TestResultService {
 		Set<TestResultDto> testInfoList=new HashSet<TestResultDto>();
 		testResults.forEach((result)->{
 			TestResultDto testResultDto=new TestResultDto();
+			testResultDto.setAppointmentId(result.getAppointment().getAppointmentId());
 			testResultDto.setPatientName(result.getPatient().getUser().getFirstName() +" " + result.getPatient().getUser().getLastName());
 			testResultDto.setPatientId(result.getPatient().getPatientId());
 			testResultDto.setTestName(result.getTestName());
@@ -154,6 +156,25 @@ public class TestResultService {
 		if(testResultObj!=null)
 			return "Added record successfully";
 		return "Invalid add";
+	}
+
+	public TestResultDto getTestResultByIdService(long testResultId) {
+		TestResult result = testResultRepository.findByTestResultId(testResultId);
+		if(result==null) {
+			throw new TestResultNotFoundException("Test result not found");
+		}
+		TestResultDto testResultDto=new TestResultDto();
+		testResultDto.setAppointmentId(result.getAppointment().getAppointmentId());
+		testResultDto.setPatientName(result.getPatient().getUser().getFirstName() +" " + result.getPatient().getUser().getLastName());
+		testResultDto.setPatientId(result.getPatient().getPatientId());
+		testResultDto.setTestName(result.getTestName());
+		HashMap<String,String> hmap=new HashMap<>();
+		result.getInfos().forEach((info)->{
+			hmap.put(info.getResultInfoName(),info.getResultInfoValue());
+		});
+		testResultDto.setInfos(hmap);
+		testResultDto.setResultId(result.getResultId());
+		return testResultDto;
 	}
 	
 }

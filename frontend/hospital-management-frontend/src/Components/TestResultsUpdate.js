@@ -5,20 +5,14 @@ import axios from 'axios'
 
 const TestResultsUpdate=()=>{
 
-    const [patientIds,setPatientIds]=useState([])
+    const [appointmentInfoList,setAppointmentInfoList]=useState([])
 
     useEffect(()=>{
         const hospitalAdminId="HAD0998";
         axios.get('http://localhost:8080/appointments/pending/' + hospitalAdminId)
         .then(res=>{    
-            const appointmentInfoList=[]
-            appointmentInfoList=res.data
             console.log(res)
-            const patientIdsNew=[]
-            appointmentInfoList.forEach(appointmentInfo=>{
-                patientIdsNew.push(appointmentInfo.patientId)
-            })
-            setPatientIds(patientIdsNew)
+            setAppointmentInfoList(res.data);
         })
         .catch(error=>{
             console.log(error);
@@ -29,11 +23,11 @@ const TestResultsUpdate=()=>{
     const displayPatientRecords=()=>{
 
         return (
-            patientIds.map((patientId,index)=>{
-                let testResultUrl="/testresults/"+patientId
+            appointmentInfoList.map((appointmentInfo,index)=>{
+                let testResultUrl="/testresults/" + appointmentInfo.patientId + "/" + appointmentInfo.appointmentId 
                 return (
                     <div className="list-group-item" key={index}>
-                        {patientId}
+                        {appointmentInfo.patientId}
                         <Link to={testResultUrl} key={index} style={{color:"black",textDecoration:"none"}}>
                         <span className="material-icons float-right" style={{color:"black"}}>visibility</span>
                         </Link>

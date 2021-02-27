@@ -1,6 +1,5 @@
 package com.project.hospitalmanagementbackend.repository;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +17,8 @@ public interface TestResultRepository extends JpaRepository<TestResult, Long> {
 
 	@Query("select t from TestResult t left join fetch t.infos where t.patient.patientId=?1")
 	public Set<TestResult> getTestResultsByPatientId(String patientId);
+	
+	@Query("select t from TestResult t left join fetch t.infos where t.resultId=?1")
+	public TestResult findByTestResultId(long testResultId);
 	
 }

@@ -26,7 +26,7 @@ const Routing = () => {
       <Route path="/" exact component={HomeComponent} />
       <Route path="/register" exact component={RegisterComponent} />
       <Route path="/login" exact component={LoginComponent} />
-      <Route path="/testresults/:patientId">
+      <Route path="/testresults/:patientId/:appointmentId">
         <TestResults />
       </Route>
       <Route path="/testresults">

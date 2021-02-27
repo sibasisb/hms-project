@@ -33,7 +33,7 @@ public class HospitalFacilityController {
 		return new ResponseEntity<>(hospitalFacilityService.updateHospitalFacility(hospitalFacility,hospitalId,facilityId), HttpStatus.OK);
 	}
 
-	@GetMapping("/{hospitalAdminId}")
+	@GetMapping("/getfacility/{hospitalAdminId}")
 	public ResponseEntity<?> getTestFacilities(@PathVariable("hospitalAdminId") String hospitalAdminId) {
 		List<HospitalFacility> hospitalFacilities = hospitalFacilityService.getFacilitiesHospitalId(hospitalAdminId);
 		return new ResponseEntity<>(hospitalFacilities, HttpStatus.OK);

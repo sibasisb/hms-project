@@ -1,41 +1,26 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import {Link, useParams} from 'react-router-dom'
+import axios from 'axios'
 
 const TestResults=()=>{
 
-    const [editState,setEditState]=useState(false)
+    const [testResultList,setTestResultList]=useState([])
     const {patientId}=useParams()
-    //fetch all patient records from test results table
-    const testResultList=[
-        {
-            resultId:"TEST000001",
-            patientId,
-            appointmentId:"AP000001",
-            result:{
-                HB_Value:"102",
-                Pressure_systolic:"120"
-            }
-        },
-        {
-            resultId:"TEST000002",
-            patientId,
-            appointmentId:"AP000001",
-            result:{
-                HB_Value:"102",
-                Pressure_systolic:"120"
-            }
-        },
-        {
-            resultId:"TEST000003",
-            patientId,
-            appointmentId:"AP000001",
-            result:{
-                HB_Value:"102",
-                Pressure_systolic:"120"
-            }
-        }
-    ]
+    const {appointmentId}=useParams()
+
+    useEffect(()=>{
+        //fetch all patient records from test results table
+        
+        axios.get('http://localhost:8080/testresults/fetch/' + appointmentId + "/" + patientId)
+        .then(res=>{
+            console.log(res)
+            setTestResultList(res.data)
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    },[])
 
     const extractResults=(result)=>{
         let li=[]
@@ -62,9 +47,9 @@ const TestResults=()=>{
             return (
                 <tr key={index}>
                     <td scope="row">{testResult.resultId}</td>
-                    <td>{testResult.appointmentId}</td>
+                    <td>{testResult.testName}</td>
                     <table className="table table-condensed table-bordered">
-                    {extractResults(testResult.result)}
+                    {extractResults(testResult.infos)}
                     </table>
                     <td>
                     <Link to={"/edittestresult/"+testResult.resultId}>
@@ -83,7 +68,7 @@ const TestResults=()=>{
                 <thead>
                     <tr>
                     <th scope="col">Result Id</th>
-                    <th scope="col">Appointment Id</th>
+                    <th scope="col">Test Name</th>
                     <th scope="col">Test results</th>
                     <th scope="col">Update</th>
                     </tr>
