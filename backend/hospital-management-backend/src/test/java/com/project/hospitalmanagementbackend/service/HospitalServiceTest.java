@@ -13,8 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.project.hospitalmanagementbackend.dto.HospitalInfo;
+import com.project.hospitalmanagementbackend.exception.HospitalNotFoundException;
 import com.project.hospitalmanagementbackend.model.Hospital;
 import com.project.hospitalmanagementbackend.repository.HospitalRepository;
 
@@ -51,6 +53,14 @@ public class HospitalServiceTest {
 		Hospital hospital = new Hospital();
 		when(hospitalRepository.getHospitalById("hId")).thenReturn(Optional.of(hospital));
 		assertEquals(hospital, hospitalService.getHospitalById("hId"));
+	}
+	
+	@Test
+	void testGetHospitalByIdFailure() {
+		
+		Hospital hospital = new Hospital();
+		when(hospitalRepository.getHospitalById("hId")).thenReturn(Optional.of(hospital));
+		assertThrows(HospitalNotFoundException.class, ()->hospitalService.getHospitalById("ppId"));
 	}
 	
 	@Test
