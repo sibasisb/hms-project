@@ -60,6 +60,7 @@ public class AppointmentService {
 		appointments.forEach((appointment -> {
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
 			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientId(appointment.getPatient().getPatientId());
 			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
 					+ appointment.getPatient().getUser().getLastName());
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
@@ -75,6 +76,7 @@ public class AppointmentService {
 			appointmentInfo.setRemarks(appointment.getRemarks());
 			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
 			appointmentInfo.setApproved(appointment.getApproved());
+			appointmentInfo.setPaid(appointment.getPaid());
 			appointmentInfoList.add(appointmentInfo);
 		}));
 
@@ -126,6 +128,7 @@ public class AppointmentService {
 		appointments.forEach((appointment -> {
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
 			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientId(appointment.getPatient().getPatientId());
 			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
 					+ appointment.getPatient().getUser().getLastName());
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
@@ -140,6 +143,7 @@ public class AppointmentService {
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
 			appointmentInfo.setRemarks(appointment.getRemarks());
 			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfo.setPaid(appointment.getPaid());
 			appointmentInfo.setApproved(appointment.getApproved());
 			appointmentInfoList.add(appointmentInfo);
 		}));
@@ -154,6 +158,7 @@ public class AppointmentService {
 		appointments.forEach((appointment -> {
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
 			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientId(appointment.getPatient().getPatientId());
 			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
 					+ appointment.getPatient().getUser().getLastName());
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
@@ -164,6 +169,7 @@ public class AppointmentService {
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
 			appointmentInfo.setRemarks(appointment.getRemarks());
 			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfo.setPaid(appointment.getPaid());
 			appointmentInfo.setApproved(appointment.getApproved());
 			appointmentInfoList.add(appointmentInfo);
 		}));
@@ -183,6 +189,7 @@ public class AppointmentService {
 		appointments.forEach((appointment -> {
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
 			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientId(appointment.getPatient().getPatientId());
 			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
 					+ appointment.getPatient().getUser().getLastName());
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
@@ -191,6 +198,7 @@ public class AppointmentService {
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
 			appointmentInfo.setRemarks(appointment.getRemarks());
 			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfo.setPaid(appointment.getPaid());
 			appointmentInfo.setApproved(appointment.getApproved());
 			appointmentInfoList.add(appointmentInfo);
 		}));

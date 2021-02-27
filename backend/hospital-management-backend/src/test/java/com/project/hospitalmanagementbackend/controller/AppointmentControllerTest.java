@@ -53,7 +53,7 @@ public class AppointmentControllerTest {
 		Set<Appointment> appointments = new HashSet<>();
 		appointments.add(appointment);
 		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, LocalDate.of(2021, 02, 14), LocalTime.of(20, 04),
-				"pat", "John Doe", null, "something", null, null, false);
+				"PAT001", "pat", "John Doe", null, "something", null, null, false, false);
 		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
 		appointmentList.add(appointmentInfo);
 		when(appointmentService.getAllAppointmentsByUser(patient.getPatientId())).thenReturn(appointmentList);
@@ -98,8 +98,8 @@ public class AppointmentControllerTest {
 				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
 		Set<Appointment> appointments = new HashSet<>();
 		appointments.add(appointment);
-		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, appointment.getAppointmentDate(),
-				appointment.getAppointmentTime(), "pat", "John Doe", null, "something", null, null, false);
+		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, LocalDate.of(2021, 02, 14), LocalTime.of(20, 04),
+				"PAT001", "pat", "John Doe", null, "something", null, null, false, false);
 		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
 		appointmentList.add(appointmentInfo);
 		when(appointmentService.getAllAppointmentsByDoctor(doctor.getDoctorId())).thenReturn(appointmentList);
@@ -123,8 +123,8 @@ public class AppointmentControllerTest {
 				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
 		Set<Appointment> appointments = new HashSet<>();
 		appointments.add(appointment);
-		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, appointment.getAppointmentDate(),
-				appointment.getAppointmentTime(), "pat", "John Doe", null, "something", null, null, false);
+		AppointmentInfo appointmentInfo = new AppointmentInfo(121L, LocalDate.of(2021, 02, 14), LocalTime.of(20, 04),
+				"PAT001", "pat", "John Doe", null, "something", null, null, false, false);
 		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
 		appointmentList.add(appointmentInfo);
 		when(appointmentService.getAllAppointmentsByHospitalAdmin("HOS0001")).thenReturn(appointmentList);
