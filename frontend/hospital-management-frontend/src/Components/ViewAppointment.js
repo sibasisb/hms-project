@@ -1,8 +1,7 @@
-import { faList } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
-
-const appointments = [
+const appointmentList = [
 	{
 		appointmentId: 1,
 		appointmentDate: "0218-05-31",
@@ -30,10 +29,19 @@ const appointments = [
 ];
 
 const ViewAppointment = () => {
+	const [appointments, setAppointments] = useState([]);
+
+	useEffect(() => {
+		const patientId = "PAT99996";
+		axios.get(`http://localhost:8080/appointments/${patientId}`).then((res) => {
+			setAppointments(res.data);
+		}).catch((error) => console.log(error));
+	}, [])
+
 	return (
 		<div className="container mt-5">
 			<div className="card">
-				<h4 className="card-header"> List of your appointments <FontAwesomeIcon icon={faList} /> </h4>
+				<h4 className="card-header"> List of your appointments </h4>
 				<div className="card-body">
 					<div className="card-deck">
 						{appointments.map((appointment) => (
@@ -54,7 +62,7 @@ const ViewAppointment = () => {
 										}
 									>
 										Appointment Id:{" "}
-										{appointment.appointmentId}{" "}
+										{appointment.appointmentId}
 									</h5>
 									<h6 className="card-subtitle mb-2 text-muted">
 										{appointment.appointmentTime} ,{" "}

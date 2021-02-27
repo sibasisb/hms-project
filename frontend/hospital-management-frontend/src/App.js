@@ -14,6 +14,7 @@ import LoginComponent from "./Components/LoginComponent";
 import FacilityAddUpdateComponent from "./Components/FacilityAddUpdateComponent";
 import FacilityUpdateList from "./Components/FacilityUpdateListComponent";
 import ViewAppointment from "./Components/ViewAppointment";
+import ApproveAppointments from "./Components/ApproveAppointments";
 
 export const UserContext = createContext();
 
@@ -47,6 +48,9 @@ const Routing = () => {
       <Route path="/updatefacility" component={FacilityUpdateList} />
       <Route path="/view-appointment/:patientId">
         <ViewAppointment />
+      </Route>
+      <Route path="/approve-appointment/:serviceId">
+        <ApproveAppointments />
       </Route>
     </Switch>
   );
