@@ -10,8 +10,8 @@ const TestResults=()=>{
     const {appointmentId}=useParams()
 
     useEffect(()=>{
-        //fetch all patient records from test results table
-        
+        //fetch all test result records from test results table for this patient and appointment
+
         axios.get('http://localhost:8080/testresults/fetch/' + appointmentId + "/" + patientId)
         .then(res=>{
             console.log(res)
@@ -63,7 +63,7 @@ const TestResults=()=>{
 
     return (
         <div className="container">
-            <h1 className="text-center mb-3">Test results of patient {patientId}</h1>
+            <h1 className="text-center mb-3 mt-5">Test results of patient {patientId}</h1>
             <table className="table table-responsive table-condensed mx-auto mt-3" style={{width:"60%"}} >
                 <thead>
                     <tr>
