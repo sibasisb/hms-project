@@ -3,6 +3,8 @@ package com.project.hospitalmanagementbackend.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import com.project.hospitalmanagementbackend.repository.InPatientRepository;
 import com.project.hospitalmanagementbackend.repository.PatientRepository;
 
 @Service
+@Transactional
 public class BillingService {
 
 	@Autowired
@@ -74,6 +77,20 @@ public class BillingService {
 
 		return billingInfoList;
 
+	}
+	public String payPatientBill(String hospitalId,String patientId) {
+		
+		if(!hospitalRepository.getHospitalById(hospitalId).isPresent())
+			throw new HospitalNotFoundException("Hospital Not Found");
+		
+		if(!patientRepository.findById(patientId).isPresent())
+			throw new PatientNotFoundException("Patient Not Found");
+		
+		appointmentRepository.payForAppointments(hospitalId, patientId);
+		inPatientRepository.payForInpatients(hospitalId, patientId);
+		
+		return "Bills Paid Successfully!!";
+		
 	}
 
 }

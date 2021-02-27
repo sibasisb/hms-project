@@ -1,6 +1,7 @@
 package com.project.hospitalmanagementbackend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.project.hospitalmanagementbackend.exception.FacilityNotFoundException;
 import com.project.hospitalmanagementbackend.model.Facility;
 import com.project.hospitalmanagementbackend.repository.FacilityRepository;
 
@@ -38,6 +40,14 @@ public class FacilityServiceTest {
 		Facility facility = new Facility();
 		when(facilityRepository.getFacilityById(1L)).thenReturn(Optional.of(facility));
 		assertEquals(facility,facilityService.getFacilityById(1L));
+	}
+	
+	@Test
+	void testGetFacilityByIdFailure() {
+		
+		Facility facility = new Facility();
+		when(facilityRepository.getFacilityById(1L)).thenReturn(Optional.of(facility));
+		assertThrows(FacilityNotFoundException.class,()->facilityService.getFacilityById(2L));
 	}
 	
 	

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,12 @@ public class BillingController {
 	public ResponseEntity<?> getPatientBill(@PathVariable("hospitalId") String hospitalId ,@PathVariable("patientId") String patientId){
 		
 		return new ResponseEntity<>(billingService.generateBillByPatientId(hospitalId, patientId),HttpStatus.OK);
+	}
+	
+	@PutMapping("/pay/{hospitalId}/{patientId}")
+	public ResponseEntity<?> payPatientBill(@PathVariable("hospitalId") String hospitalId ,@PathVariable("patientId") String patientId){
+		
+		return new ResponseEntity<>(billingService.payPatientBill(hospitalId,patientId),HttpStatus.OK);
 	}
 
 }
