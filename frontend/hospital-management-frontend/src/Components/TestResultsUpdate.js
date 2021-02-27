@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
 
 const TestResultsUpdate=()=>{
 
+    const [patientIds,setPatientIds]=useState([])
+
+    useEffect(()=>{
+        const hospitalAdminId="HAD0998";
+        axios.get('http://localhost:8080/appointments/pending/' + hospitalAdminId)
+        .then(res=>{    
+            const appointmentInfoList=[]
+            appointmentInfoList=res.data
+            console.log(res)
+            const patientIdsNew=[]
+            appointmentInfoList.forEach(appointmentInfo=>{
+                patientIdsNew.push(appointmentInfo.patientId)
+            })
+            setPatientIds(patientIdsNew)
+        })
+        .catch(error=>{
+            console.log(error);
+        });
+
+    },[])
+
     const displayPatientRecords=()=>{
-        const patientIds=[
-            "PAT000001","PAT000002","PAT000003","PAT000004","PAT000005"
-        ]
+
         return (
             patientIds.map((patientId,index)=>{
                 let testResultUrl="/testresults/"+patientId
