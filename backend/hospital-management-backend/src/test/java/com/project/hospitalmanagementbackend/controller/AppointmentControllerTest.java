@@ -109,7 +109,7 @@ public class AppointmentControllerTest {
 	}
 
 	@Test
-	public void getAllAppointmentsByFacilityTestSuccess() {
+	public void getAllAppointmentsByHospitalAdminTestSuccess() {
 		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
 				"7894561230", "john@doe.com", "incorrect", "patient"));
 		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
@@ -127,10 +127,9 @@ public class AppointmentControllerTest {
 				appointment.getAppointmentTime(), "pat", "John Doe", null, "something", null, null, false);
 		ArrayList<AppointmentInfo> appointmentList = new ArrayList<AppointmentInfo>();
 		appointmentList.add(appointmentInfo);
-		when(appointmentService.getAllAppointmentsByFacility(hospitalFacility.getHospitalFacilityId()))
-				.thenReturn(appointmentList);
+		when(appointmentService.getAllAppointmentsByHospitalAdmin("HOS0001")).thenReturn(appointmentList);
 
-		assertEquals(appointmentController.getAllAppointmentsByFacility(hospitalFacility.getHospitalFacilityId()),
+		assertEquals(appointmentController.getAllAppointmentsByHospitalAdmin("HOS0001"),
 				new ResponseEntity<>(appointmentList, HttpStatus.OK));
 	}
 

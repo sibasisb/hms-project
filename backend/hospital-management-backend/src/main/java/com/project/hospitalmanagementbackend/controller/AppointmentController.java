@@ -47,9 +47,9 @@ public class AppointmentController {
 		return new ResponseEntity<>(appointmentService.getAllAppointmentsByDoctor(doctorId), HttpStatus.OK);
 	}
 
-	@GetMapping("/view/facility/{hospitalFacilityId}")
-	public ResponseEntity<List<AppointmentInfo>> getAllAppointmentsByFacility(@PathVariable long hospitalFacilityId) {
-		return new ResponseEntity<>(appointmentService.getAllAppointmentsByFacility(hospitalFacilityId), HttpStatus.OK);
+	@GetMapping("/view/facility/{hospitalAdminId}")
+	public ResponseEntity<List<AppointmentInfo>> getAllAppointmentsByHospitalAdmin(@PathVariable String hospitalAdminId) {
+		return new ResponseEntity<>(appointmentService.getAllAppointmentsByHospitalAdmin(hospitalAdminId), HttpStatus.OK);
 	}
 
 	@GetMapping("/approve/{appointmentId}")
