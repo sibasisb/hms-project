@@ -104,7 +104,7 @@ public class UserServiceTest {
     	userInfo.setHospital(hospital);
     	when(doctorRepository.save(doctor)).thenReturn(doctor);
     	when(hospitalRepository.findById("HOS001")).thenReturn(Optional.of(hospital));
-    	String success="User Registered Successfully";
+    	String success="User Registered Successfully.Your User ID is DOC001";
     	assertEquals(success,userService.register(userInfo));
 	}
 }
