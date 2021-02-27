@@ -22,6 +22,7 @@ import com.project.hospitalmanagementbackend.model.Appointment;
 import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Facility;
 import com.project.hospitalmanagementbackend.model.Hospital;
+import com.project.hospitalmanagementbackend.model.HospitalAdmin;
 import com.project.hospitalmanagementbackend.model.HospitalFacility;
 import com.project.hospitalmanagementbackend.model.Patient;
 import com.project.hospitalmanagementbackend.model.User;
@@ -58,28 +59,35 @@ public class AppointmentServiceTest {
 	private HospitalAdminRepository hospitalAdminRepository;
 
 	@Test
-    public void testGetPendingAppointents() {
-    	Patient patient =  new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male", "7894561230", "john@doe.com", "incorrect", "patient"));
+	public void testGetPendingAppointents() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
 		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
-		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null , new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs", "circiut", "Doctor"));
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
 		Facility facility = new Facility(4l, null, null);
-		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility , "desc", "rem", new BigDecimal(54.00));
-		Appointment a = new Appointment(121l, patient, doctor , hospital, hospitalFacility , LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment a = new Appointment(121l, patient, doctor, hospital, hospitalFacility, LocalDate.of(2021, 02, 14),
+				LocalTime.of(20, 04), "hem", null, true, false);
 		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
-		List<Appointment> appointments=appointmentRepository.findPatientsWithFacilityRequests(hospital.getHospitalId());
+		List<Appointment> appointments = appointmentRepository
+				.findPatientsWithFacilityRequests(hospital.getHospitalId());
 		appointments.add(a);
-		appointments.forEach((appointment->{
+		appointments.forEach((appointment -> {
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
 			appointmentInfo.setAppointmentTime(appointment.getAppointmentTime());
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
 			appointmentInfoList.add(appointmentInfo);
 		}));
-		String hospitalAdminId="HAD00001";
-    	when(appointmentRepository.findPatientsWithFacilityRequests(hospital.getHospitalId())).thenReturn(appointments);
-    	when(hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId)).thenReturn(hospital.getHospitalId());
-    	assertEquals(appointmentService.getPendingAppointents(hospitalAdminId).size(),appointmentInfoList.size());
-    }
+		String hospitalAdminId = "HAD00001";
+		when(hospitalAdminRepository.findById(hospitalAdminId)).thenReturn(Optional.of(new HospitalAdmin()));
+		when(appointmentRepository.findPatientsWithFacilityRequests(hospital.getHospitalId())).thenReturn(appointments);
+		when(hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId)).thenReturn(hospital.getHospitalId());
+		assertEquals(appointmentService.getPendingAppointents(hospitalAdminId).size(), appointmentInfoList.size());
+	}
 
 	@Test
 	void getAllAppointmentsByUserTestSuccess() {
@@ -216,7 +224,7 @@ public class AppointmentServiceTest {
 	}
 
 	@Test
-	void getAllAppointmentsByFacilityTestSuccess() {
+	void getAllAppointmentsByHospitalAdminTestSuccess() {
 		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
 				"7894561230", "john@doe.com", "incorrect", "patient"));
 		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
@@ -226,6 +234,11 @@ public class AppointmentServiceTest {
 		Facility facility = new Facility(4l, "this", null);
 		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
 				new BigDecimal(54.00));
+		Set<HospitalFacility> facilities = new HashSet<>();
+		facilities.add(hospitalFacility);
+		hospital.setHospitalFacilities(facilities);
+		HospitalAdmin hospitalAdmin = new HospitalAdmin();
+		hospitalAdmin.setHospital(hospital);
 		Appointment appointmentN = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
 				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
 		List<Appointment> appointments = new ArrayList<>();
@@ -246,13 +259,13 @@ public class AppointmentServiceTest {
 			appointmentInfoList.add(appointmentInfo);
 		}));
 
-		when(hospitalFacilityRepository.findById(hospitalFacility.getHospitalFacilityId()))
-				.thenReturn(Optional.of(hospitalFacility));
+		when(hospitalAdminRepository.findById("HOS001")).thenReturn(Optional.of(hospitalAdmin));
+		when(hospitalRepository.findById(hospitalAdmin.getHospital().getHospitalId()))
+				.thenReturn(Optional.of(hospital));
 		when(appointmentRepository.findByHospitalFacility_HospitalFacilityId(hospitalFacility.getHospitalFacilityId()))
 				.thenReturn(appointments);
 
-		List<AppointmentInfo> expected = appointmentService
-				.getAllAppointmentsByFacility(hospitalFacility.getHospitalFacilityId());
+		List<AppointmentInfo> expected = appointmentService.getAllAppointmentsByHospitalAdmin("HOS001");
 		List<AppointmentInfo> actual = appointmentInfoList;
 		for (int i = 0; i < actual.size(); i++) {
 			assertEquals(expected.get(i).getAppointmentDate(), actual.get(i).getAppointmentDate());

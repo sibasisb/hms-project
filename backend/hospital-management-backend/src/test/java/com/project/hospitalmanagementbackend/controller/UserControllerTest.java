@@ -61,7 +61,7 @@ public class UserControllerTest {
     	Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "05:00PM-07:00PM", new BigDecimal(250.00), null ,null);
     	userInfo.setDoctor(doctor);
     	userInfo.setUser(user);
-    	String success="User Registered Successfully";
+    	String success="User Registered Successfully.Your User ID is DOC001";
     	when(userService.register(userInfo)).thenReturn(success);
     	assertEquals(new ResponseEntity<>(success, HttpStatus.OK),userController.registerUser(userInfo));
     	

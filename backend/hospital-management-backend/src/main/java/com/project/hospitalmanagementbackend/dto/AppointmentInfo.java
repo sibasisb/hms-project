@@ -18,6 +18,7 @@ public class AppointmentInfo {
 	Long appointmentId;
 	LocalDate appointmentDate;
 	LocalTime appointmentTime;
+	String patientId;
 	String patientName;
 	String doctorName;
 	String facilityName;
@@ -25,4 +26,5 @@ public class AppointmentInfo {
 	String remarks;
 	byte[] medicalRecords;
 	boolean approved;
+	boolean paid;
 }

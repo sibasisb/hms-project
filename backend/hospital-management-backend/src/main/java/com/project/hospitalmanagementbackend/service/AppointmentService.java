@@ -12,12 +12,14 @@ import org.springframework.stereotype.Service;
 import com.project.hospitalmanagementbackend.dto.AppointmentInfo;
 import com.project.hospitalmanagementbackend.exception.AppointmentNotFoundException;
 import com.project.hospitalmanagementbackend.exception.DoctorNotFoundException;
+import com.project.hospitalmanagementbackend.exception.HospitalAdminNotFoundException;
 import com.project.hospitalmanagementbackend.exception.HospitalFacilityNotFoundException;
 import com.project.hospitalmanagementbackend.exception.HospitalNotFoundException;
 import com.project.hospitalmanagementbackend.exception.PatientNotFoundException;
 import com.project.hospitalmanagementbackend.model.Appointment;
 import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Hospital;
+import com.project.hospitalmanagementbackend.model.HospitalAdmin;
 import com.project.hospitalmanagementbackend.model.HospitalFacility;
 import com.project.hospitalmanagementbackend.model.Patient;
 import com.project.hospitalmanagementbackend.repository.AppointmentRepository;
@@ -58,6 +60,7 @@ public class AppointmentService {
 		appointments.forEach((appointment -> {
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
 			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientId(appointment.getPatient().getPatientId());
 			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
 					+ appointment.getPatient().getUser().getLastName());
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
@@ -73,6 +76,7 @@ public class AppointmentService {
 			appointmentInfo.setRemarks(appointment.getRemarks());
 			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
 			appointmentInfo.setApproved(appointment.getApproved());
+			appointmentInfo.setPaid(appointment.getPaid());
 			appointmentInfoList.add(appointmentInfo);
 		}));
 
@@ -116,20 +120,31 @@ public class AppointmentService {
 
 	@Transactional
 	public List<AppointmentInfo> getPendingAppointents(String hospitalAdminId) {
+		hospitalAdminRepository.findById(hospitalAdminId)
+				.orElseThrow(() -> new HospitalAdminNotFoundException("Invalid Facility"));
 		String hospitalId = hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId);
 		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
 		List<Appointment> appointments = appointmentRepository.findPatientsWithFacilityRequests(hospitalId);
 		appointments.forEach((appointment -> {
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
+			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientId(appointment.getPatient().getPatientId());
+			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
+					+ appointment.getPatient().getUser().getLastName());
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
 			appointmentInfo.setAppointmentTime(appointment.getAppointmentTime());
-			if (appointment.getHospitalFacility() == null)
+			if (appointment.getHospitalFacility() == null) {
 				appointmentInfo.setDoctorName(appointment.getDoctor().getUser().getFirstName() + " "
 						+ appointment.getDoctor().getUser().getLastName());
-			else
+			} else {
 				appointmentInfo.setFacilityName(appointment.getHospitalFacility().getFacility().getName());
+			}
 
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
+			appointmentInfo.setRemarks(appointment.getRemarks());
+			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfo.setPaid(appointment.getPaid());
+			appointmentInfo.setApproved(appointment.getApproved());
 			appointmentInfoList.add(appointmentInfo);
 		}));
 		return appointmentInfoList;
@@ -143,6 +158,7 @@ public class AppointmentService {
 		appointments.forEach((appointment -> {
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
 			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientId(appointment.getPatient().getPatientId());
 			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
 					+ appointment.getPatient().getUser().getLastName());
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
@@ -153,6 +169,7 @@ public class AppointmentService {
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
 			appointmentInfo.setRemarks(appointment.getRemarks());
 			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfo.setPaid(appointment.getPaid());
 			appointmentInfo.setApproved(appointment.getApproved());
 			appointmentInfoList.add(appointmentInfo);
 		}));
@@ -160,15 +177,19 @@ public class AppointmentService {
 	}
 
 	@Transactional
-	public List<AppointmentInfo> getAllAppointmentsByFacility(long hospitalFacilityId) {
-		hospitalFacilityRepository.findById(hospitalFacilityId)
-				.orElseThrow(() -> new HospitalFacilityNotFoundException("Invalid Facility"));
-		List<Appointment> appointments = appointmentRepository
-				.findByHospitalFacility_HospitalFacilityId(hospitalFacilityId);
+	public List<AppointmentInfo> getAllAppointmentsByHospitalAdmin(String hospitalAdminId) {
+		HospitalAdmin hospitalAdmin = hospitalAdminRepository.findById(hospitalAdminId)
+				.orElseThrow(() -> new HospitalAdminNotFoundException("Invalid Facility"));
+		Hospital hospital = hospitalRepository.findById(hospitalAdmin.getHospital().getHospitalId()).get();
+		Set<HospitalFacility> facilities = hospital.getHospitalFacilities();
+		List<Appointment> appointments = new ArrayList<>();
+		facilities.forEach(facility -> appointments.addAll(
+				appointmentRepository.findByHospitalFacility_HospitalFacilityId(facility.getHospitalFacilityId())));
 		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
 		appointments.forEach((appointment -> {
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
 			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientId(appointment.getPatient().getPatientId());
 			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
 					+ appointment.getPatient().getUser().getLastName());
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
@@ -177,6 +198,7 @@ public class AppointmentService {
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
 			appointmentInfo.setRemarks(appointment.getRemarks());
 			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfo.setPaid(appointment.getPaid());
 			appointmentInfo.setApproved(appointment.getApproved());
 			appointmentInfoList.add(appointmentInfo);
 		}));

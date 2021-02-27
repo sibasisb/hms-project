@@ -33,5 +33,14 @@ public class BillingControllerTest {
 		assertEquals(new ResponseEntity<>(billingInfoList, HttpStatus.OK), billingController.getPatientBill("hId", "pId"));
 		
 	}
+	
+	@Test
+	void testPayBillByPatient() {
+		
+		String msg="Bills Paid Successfully!!";
+		when(billingService.payPatientBill("hId", "pId")).thenReturn(msg);
+		assertEquals(new ResponseEntity<>(msg, HttpStatus.OK), billingController.payPatientBill("hId", "pId"));
+		
+	}
 
 }
