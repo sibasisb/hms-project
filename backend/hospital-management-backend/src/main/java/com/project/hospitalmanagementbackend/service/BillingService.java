@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.hospitalmanagementbackend.dto.BillingInfo;
+import com.project.hospitalmanagementbackend.exception.HospitalNotFoundException;
+import com.project.hospitalmanagementbackend.exception.PatientNotFoundException;
 import com.project.hospitalmanagementbackend.model.Appointment;
 import com.project.hospitalmanagementbackend.model.InPatient;
 import com.project.hospitalmanagementbackend.repository.AppointmentRepository;
@@ -32,10 +34,10 @@ public class BillingService {
 	public List<BillingInfo> generateBillByPatientId(String hospitalId, String patientId) {
 
 		if(!hospitalRepository.getHospitalById(hospitalId).isPresent())
-			throw new RuntimeException("Hospital Not Found");
+			throw new HospitalNotFoundException("Hospital Not Found");
 		
 		if(!patientRepository.findById(patientId).isPresent())
-			throw new RuntimeException("Patient Not Found");
+			throw new PatientNotFoundException("Patient Not Found");
 		
 		List<Appointment> appointments = appointmentRepository.findUnpaidAppointments(hospitalId, patientId);
 		List<InPatient> inPatients = inPatientRepository.findUnpaidInpatients(hospitalId, patientId);
