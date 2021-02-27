@@ -1,3 +1,7 @@
+import { faList } from "@fortawesome/free-solid-svg-icons";
+
+const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
+
 const appointments = [
 	{
 		appointmentId: 1,
@@ -29,7 +33,7 @@ const ViewAppointment = () => {
 	return (
 		<div className="container mt-5">
 			<div className="card">
-				<h4 className="card-header"> List of your appointments </h4>
+				<h4 className="card-header"> List of your appointments <FontAwesomeIcon icon={faList} /> </h4>
 				<div className="card-body">
 					<div className="card-deck">
 						{appointments.map((appointment) => (
