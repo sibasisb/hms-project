@@ -121,15 +121,22 @@ public class AppointmentService {
 		List<Appointment> appointments = appointmentRepository.findPatientsWithFacilityRequests(hospitalId);
 		appointments.forEach((appointment -> {
 			AppointmentInfo appointmentInfo = new AppointmentInfo();
+			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
+					+ appointment.getPatient().getUser().getLastName());
 			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
 			appointmentInfo.setAppointmentTime(appointment.getAppointmentTime());
-			if (appointment.getHospitalFacility() == null)
+			if (appointment.getHospitalFacility() == null) {
 				appointmentInfo.setDoctorName(appointment.getDoctor().getUser().getFirstName() + " "
 						+ appointment.getDoctor().getUser().getLastName());
-			else
+			} else {
 				appointmentInfo.setFacilityName(appointment.getHospitalFacility().getFacility().getName());
+			}
 
 			appointmentInfo.setHospitalName(appointment.getHospital().getName());
+			appointmentInfo.setRemarks(appointment.getRemarks());
+			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfo.setApproved(appointment.getApproved());
 			appointmentInfoList.add(appointmentInfo);
 		}));
 		return appointmentInfoList;
