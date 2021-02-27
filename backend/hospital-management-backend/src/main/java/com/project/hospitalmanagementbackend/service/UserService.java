@@ -109,6 +109,7 @@ public class UserService {
 		// TODO Auto-generated method stub
 		log.info(userInfo.toString());
 		String role=userInfo.getUser().getRole();
+		String userId="";
 		switch(role)
 		{
 		case "doctor":
@@ -116,7 +117,8 @@ public class UserService {
 			Doctor doctor=userInfo.getDoctor();
 			doctor.setUser(userInfo.getUser());
 			doctor.getHospital().add(hospitalRepository.findById(userInfo.getHospital().getHospitalId()).get());
-			doctorRepository.save(doctor);
+			Doctor savedDoctor = doctorRepository.save(doctor);
+			userId=savedDoctor.getDoctorId();
 			break;
 		}
 		case "hospital admin":
@@ -125,17 +127,19 @@ public class UserService {
 			HospitalAdmin hosAdmin=new HospitalAdmin();
 			hosAdmin.setHospital(userInfo.getHospital());
 			hosAdmin.setUser(userInfo.getUser());
-			hospitalAdminRepository.save(hosAdmin);
+			HospitalAdmin savedHospitalAdmin = hospitalAdminRepository.save(hosAdmin);
+			userId=savedHospitalAdmin.getHospitalAdminId();
 			break;
 		}
 		default :
 		{
 			Patient patient = new Patient();
 			patient.setUser(userInfo.getUser());
-			patientRepository.save(patient);
+			Patient savedPatient = patientRepository.save(patient);
+			userId=savedPatient.getPatientId();
 		}
 		}
-		return "User Registered Successfully";
+		return "User Registered Successfully.Your User ID is "+userId;
 		
 	}
 

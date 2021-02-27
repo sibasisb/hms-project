@@ -35,7 +35,7 @@ public class Patient {
         strategy = "com.project.hospitalmanagementbackend.util.StringPrefixedPatientIdGenerator", 
         parameters = {
             @Parameter(name = StringPrefixedPatientIdGenerator.INCREMENT_PARAM, value = "1"),
-            @Parameter(name = StringPrefixedPatientIdGenerator.VALUE_PREFIX_PARAMETER, value = "PAT_"),
+            @Parameter(name = StringPrefixedPatientIdGenerator.VALUE_PREFIX_PARAMETER, value = "PAT"),
             @Parameter(name = StringPrefixedPatientIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%06d") })
 	@Column(name="patient_id")
 	private String patientId;
