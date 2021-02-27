@@ -44,11 +44,16 @@ public class HospitalFacilityService {
 		return "Facility added to hospital";
 	}
 
-	public String updateHospitalFacility(HospitalFacility hospitalFacility) {
+	public String updateHospitalFacility(HospitalFacility hospitalFacility,String hospitalId,long facilityId) {
 
+		
 		Optional<HospitalFacility> findFacility = hospitalFacilityRepository
 				.findById(hospitalFacility.getHospitalFacilityId());
 		if (findFacility.isPresent()) {
+			Hospital hospital = hospitalService.getHospitalById(hospitalId);
+			Facility facility = facilityService.getFacilityById(facilityId);
+			hospitalFacility.setHospital(hospital);
+			hospitalFacility.setFacility(facility);
 			hospitalFacilityRepository.save(hospitalFacility);
 			return "Facility Updated Successfully!";
 		} else

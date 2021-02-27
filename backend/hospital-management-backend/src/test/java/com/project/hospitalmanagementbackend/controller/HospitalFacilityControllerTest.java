@@ -30,8 +30,8 @@ public class HospitalFacilityControllerTest {
 	@Test
 	public void testUpdateHospitalFacility() {
 		HospitalFacility hospitalFacility = new HospitalFacility();
-		when(hospitalFacilityService.updateHospitalFacility(hospitalFacility)).thenReturn("Updated Successfully");
-		assertEquals(new ResponseEntity<>("Updated Successfully",HttpStatus.OK),hospitalFacilityController.updateHospitalFacility(hospitalFacility));
+		when(hospitalFacilityService.updateHospitalFacility(hospitalFacility,"hId",1L)).thenReturn("Updated Successfully");
+		assertEquals(new ResponseEntity<>("Updated Successfully",HttpStatus.OK),hospitalFacilityController.updateHospitalFacility(hospitalFacility,"hId",1L));
 	}
 
 }

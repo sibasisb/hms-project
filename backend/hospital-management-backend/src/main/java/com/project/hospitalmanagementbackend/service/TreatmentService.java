@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.hospitalmanagementbackend.dto.TreatmentHistoryInfo;
+import com.project.hospitalmanagementbackend.exception.DoctorNotFoundException;
+import com.project.hospitalmanagementbackend.exception.PatientNotFoundException;
 import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Patient;
 import com.project.hospitalmanagementbackend.model.User;
@@ -39,12 +41,12 @@ public class TreatmentService {
 		if (doctor.isPresent())
 			treatmentHistory.setDoctor(doctor.get());
 		else
-			throw new RuntimeException("Doctor not found");
+			throw new DoctorNotFoundException("Doctor not found");
 		Optional<Patient> patient = patientRepository.findById(patientid);
 		if (patient.isPresent())
 			treatmentHistory.setPatient(patient.get());
 		else
-			throw new RuntimeException("Patient not found");
+			throw new PatientNotFoundException("Patient not found");
 		treatmentHistoryRepository.save(treatmentHistory);
 		return "Treatment history updated successfully";
 	}
@@ -70,7 +72,7 @@ public class TreatmentService {
 
 			return historyList;
 		} else
-			throw new RuntimeException("Patient not found");
+			throw new PatientNotFoundException("Patient not found");
 
 	}
 
@@ -78,10 +80,10 @@ public class TreatmentService {
 		// TODO Auto-generated method stub
 		Optional<Doctor> doctor = doctorRepository.findById(doctorId);
 		if (!doctor.isPresent())
-			throw new RuntimeException("Doctor not found");
+			throw new DoctorNotFoundException("Doctor not found");
 		Optional<Patient> patient = patientRepository.findById(patientId);
 		if (!patient.isPresent())
-			throw new RuntimeException("Patient not found");
+			throw new PatientNotFoundException("Patient not found");
 
 		TreatmentHistory history = treatmentHistoryRepository.findByPatient_PatientIdAndDoctor_DoctorId(patientId, doctorId);
 		if(history!=null)

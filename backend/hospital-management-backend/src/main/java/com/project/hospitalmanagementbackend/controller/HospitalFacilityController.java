@@ -27,9 +27,10 @@ public class HospitalFacilityController {
 				hospitalFacilityService.addHospitalFacility(hospitalFacility, hospitalId, facilityId), HttpStatus.OK);
 	}
 
-	@PutMapping("/updatefacility")
-	public ResponseEntity<?> updateHospitalFacility(@RequestBody HospitalFacility hospitalFacility) {
-		return new ResponseEntity<>(hospitalFacilityService.updateHospitalFacility(hospitalFacility), HttpStatus.OK);
+	@PutMapping("/updatefacility/{hospitalId}/{facilityId}")
+	public ResponseEntity<?> updateHospitalFacility(@RequestBody HospitalFacility hospitalFacility, 
+			@PathVariable("hospitalId") String hospitalId,@PathVariable("facilityId") long facilityId) {
+		return new ResponseEntity<>(hospitalFacilityService.updateHospitalFacility(hospitalFacility,hospitalId,facilityId), HttpStatus.OK);
 	}
 
 	@GetMapping("/{hospitalAdminId}")

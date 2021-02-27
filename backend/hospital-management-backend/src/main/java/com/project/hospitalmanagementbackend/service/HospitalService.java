@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.hospitalmanagementbackend.dto.HospitalInfo;
+import com.project.hospitalmanagementbackend.exception.HospitalNotFoundException;
 import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Hospital;
 import com.project.hospitalmanagementbackend.model.HospitalFacility;
@@ -50,7 +51,7 @@ public class HospitalService {
 			return hospital.get();
 		}
 		else
-			throw new RuntimeException("Hospital Not Found");
+			throw new HospitalNotFoundException("Hospital Not Found");
 	}
 
 	public Set<HospitalFacility> getHospitalFacilities(String hospitalId) {
