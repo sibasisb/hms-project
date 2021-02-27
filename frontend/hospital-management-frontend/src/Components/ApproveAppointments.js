@@ -1,3 +1,6 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 import ApproveAppointmentCard from "./ApproveAppointmentCard";
 
 const appointments = [
@@ -28,12 +31,35 @@ const appointments = [
 ];
 
 const ApproveAppointments = () => {
+	const [appointments, setAppointments] = useState([]);
+
+	useEffect(() => {
+		// for doctor
+		const doctorId = "DOC0999";
+		const url = `http://localhost:8080/appointments/view/doctor/${doctorId}`;
+
+		// for hospital admin
+		// const hospitalAdminId = "HAD0998";
+		// const url = `http://localhost:8080/appointments/view/facility/${hospitalAdminId}`;
+
+		axios
+			.get(url)
+			.then((res) => {
+				setAppointments(res.data);
+			})
+			.catch((error) => console.log(error));
+	}, []);
+
 	const handleApprove = (appointmentId) => {
-		// TODO: call /approve
+		axios.get(`http://localhost:8080/appointments/approve/${appointmentId}`).then((res) => {
+			(res.status === 200) ? console.log("approved") : console.log("rejected");
+		}).catch((error) => console.log(error));
 	};
 
 	const handleReject = (appointmentId) => {
-		// TODO: call /reject
+		axios.get(`http://localhost:8080/appointments/reject/${appointmentId}`).then((res) => {
+			(res.status === 200) ? console.log("rejected") : console.log("rejected");
+		}).catch((error) => console.log(error));
 	};
 
 	return (
