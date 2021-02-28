@@ -11,6 +11,9 @@ import com.project.hospitalmanagementbackend.model.HospitalFacility;
 import com.project.hospitalmanagementbackend.service.HospitalFacilityService;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 public class HospitalFacilityControllerTest {
 	
@@ -32,6 +35,16 @@ public class HospitalFacilityControllerTest {
 		HospitalFacility hospitalFacility = new HospitalFacility();
 		when(hospitalFacilityService.updateHospitalFacility(hospitalFacility,"hId",1L)).thenReturn("Updated Successfully");
 		assertEquals(new ResponseEntity<>("Updated Successfully",HttpStatus.OK),hospitalFacilityController.updateHospitalFacility(hospitalFacility,"hId",1L));
+	}
+	
+	@Test
+	public void testGetTestFacilities() {
+		String hospitalAdminId="HAD0998";
+		HospitalFacility hospitalFacility = new HospitalFacility(1L,null,null,"desc","remarks",null);
+		List<HospitalFacility> hospitalFacilityList=new ArrayList<>();
+		hospitalFacilityList.add(hospitalFacility);
+		when(hospitalFacilityService.getFacilitiesHospitalId(hospitalAdminId)).thenReturn(hospitalFacilityList);
+		assertEquals(new ResponseEntity<>(hospitalFacilityList,HttpStatus.OK),hospitalFacilityController.getTestFacilities(hospitalAdminId));
 	}
 
 }

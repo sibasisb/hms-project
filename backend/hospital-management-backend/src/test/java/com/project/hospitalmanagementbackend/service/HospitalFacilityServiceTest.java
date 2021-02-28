@@ -2,6 +2,9 @@ package com.project.hospitalmanagementbackend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -12,9 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.project.hospitalmanagementbackend.model.Facility;
 import com.project.hospitalmanagementbackend.model.Hospital;
 import com.project.hospitalmanagementbackend.model.HospitalFacility;
-import com.project.hospitalmanagementbackend.repository.FacilityRepository;
+import com.project.hospitalmanagementbackend.repository.HospitalAdminRepository;
 import com.project.hospitalmanagementbackend.repository.HospitalFacilityRepository;
-import com.project.hospitalmanagementbackend.repository.HospitalRepository;
 
 @SpringBootTest
 public class HospitalFacilityServiceTest {
@@ -25,6 +27,9 @@ public class HospitalFacilityServiceTest {
 	
 	@Mock
 	HospitalFacilityRepository hospitalFacilityRepository;
+	
+	@Mock
+	HospitalAdminRepository hospitalAdminRepository;
 	
 	@Mock 
 	HospitalService hospitalService;
@@ -58,5 +63,16 @@ public class HospitalFacilityServiceTest {
 		assertEquals("Facility Updated Successfully!",hospitalFacilityService.updateHospitalFacility(hospitalFacility,"hId",1L));
 	}
 	
+	@Test
+	void testGetFacilitiesHospitalId() {
+		String hospitalId="HOS000001";
+		String hospitalAdminId="HAD0998";
+		HospitalFacility hospitalFacility = new HospitalFacility(1L,null,null,"desc","remarks",null);
+		List<HospitalFacility> hospitalFacilityList=new ArrayList<>();
+		hospitalFacilityList.add(hospitalFacility);
+		when(hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId)).thenReturn(hospitalId);
+		when(hospitalFacilityRepository.getFacilitiesByHospitalId(hospitalId)).thenReturn(hospitalFacilityList);
+		assertEquals(hospitalFacilityList,hospitalFacilityService.getFacilitiesHospitalId(hospitalAdminId));
+	}
 
 }

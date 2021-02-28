@@ -2,7 +2,6 @@ import React, { useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import {Link,useParams} from 'react-router-dom'
 import axios from 'axios'
-import {  } from "@fortawesome/free-solid-svg-icons";
 
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 

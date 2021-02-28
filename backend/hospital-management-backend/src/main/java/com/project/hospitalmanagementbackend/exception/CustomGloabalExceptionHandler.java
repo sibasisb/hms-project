@@ -177,4 +177,14 @@ public class CustomGloabalExceptionHandler extends ResponseEntityExceptionHandle
 		body.put("error", ex.getMessage());
 		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(QuestionNotFoundException.class)
+	public ResponseEntity<?> springHandleQuestionNotFound(QuestionNotFoundException ex) throws IOException {
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", new Date());
+		body.put("status", HttpStatus.NOT_FOUND.value());
+		body.put("error", ex.getMessage());
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	}
+	
 }
