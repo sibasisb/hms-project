@@ -24,6 +24,7 @@ const AddReviewQuestion=()=>{
         })
         .then(res=>{
             console.log(res);
+            setQuestion("")
             setShowSuccessAlert(true)
         })
         .catch(err=>{
