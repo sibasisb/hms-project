@@ -46,7 +46,7 @@ const Routing = () => {
       <Route path="/testsinformation">
         <TestsInformation />
       </Route>
-      <Route path="/testsinfodocview/:testResultId">
+      <Route path="/testinfodocview/:testResultId">
         <TestInfoDocView/>
       </Route>
       <Route path="/appointment/:patientId">

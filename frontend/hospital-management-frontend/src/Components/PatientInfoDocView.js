@@ -63,13 +63,10 @@ const PatientInfoDocView=(props)=>{
 
         return (
             testResultList.map((testResult,index)=>{
-                let testResultUrl=""
+                let testResultUrl="/testinfodocview/"+testResult.resultId
                 return (
                     <div className="list-group-item" key={index}>
-                        <Link to={""}><button className="btn btn-lg btn-info">{testResult.resultId}</button></Link>
-                        <Link to={""} key={index} style={{color:"black",textDecoration:"none"}}>
-                        <FontAwesomeIcon icon={faEye} className="float-right mt-3" style={{color:"black"}}/>
-                        </Link>
+                        <Link to={testResultUrl}><button className="btn btn-md btn-info mx-auto">Test Result Id {testResult.resultId}</button></Link>
                     </div>
                 )
             })
