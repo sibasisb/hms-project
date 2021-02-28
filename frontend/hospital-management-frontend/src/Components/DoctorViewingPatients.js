@@ -33,10 +33,19 @@ const DoctorViewingPatients=()=>{
                 }
                 return (
                     <div className="list-group-item" key={index}>
-                        {patientInfo.patientId}
-                        <Link to={testResultUri} key={index} style={{color:"black",textDecoration:"none"}}>
-                        <FontAwesomeIcon icon={faEye} className="float-right" style={{color:"black"}}/>
-                        </Link>
+                        <div className="row">
+                            <div className="col-xs-12 col-sm-4 col-md-4">
+                            {patientInfo.patientId}
+                            </div>
+                            <div className="col-xs-12 col-sm-4 col-md-4">
+                            <Link to={""} className="my-auto"><button className="btn btn-sm btn-info">Medical History</button></Link>
+                            </div>
+                            <div className="col-xs-12 col-sm-4 col-md-4">
+                            <Link to={testResultUri} key={index} className="my-auto" style={{color:"black",textDecoration:"none"}}>
+                            <button className="btn btn-sm btn-info">Patient Info</button>
+                            </Link>
+                            </div>
+                        </div>
                     </div>
                 )
             })

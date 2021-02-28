@@ -10,11 +10,11 @@ const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 const PatientInfoDocView=(props)=>{
     const [testResultList,setTestResultList]=useState([])
     const [patientInfo,setPatientInfo]=useState(null)
-    const patientId=useParams()
+    const {patientId}=useParams()
     useEffect(()=>{
         //fetch all test result records from test results table for this patient
-        console.log(props)
-        axios.get(`http://localhost:8080/testresults/${patientId}`)
+        console.log(patientId)
+        axios.get("http://localhost:8080/testresults/" + patientId)
         .then(res=>{
             console.log(res)
             setTestResultList(res.data)
@@ -24,7 +24,7 @@ const PatientInfoDocView=(props)=>{
         })
 
         //fetch patient info for this patient
-        axios.get(`http://localhost:8080/patients/pat/${patientId}`)
+        axios.get("http://localhost:8080/patients/pat/" + patientId)
         .then(res=>{
             console.log(res)
             setPatientInfo(res.data)
@@ -66,9 +66,9 @@ const PatientInfoDocView=(props)=>{
                 let testResultUrl=""
                 return (
                     <div className="list-group-item" key={index}>
-                        {testResult.resultId}
+                        <Link to={""}><button className="btn btn-lg btn-info">{testResult.resultId}</button></Link>
                         <Link to={""} key={index} style={{color:"black",textDecoration:"none"}}>
-                        <FontAwesomeIcon icon={faEye} className="float-right" style={{color:"black"}}/>
+                        <FontAwesomeIcon icon={faEye} className="float-right mt-3" style={{color:"black"}}/>
                         </Link>
                     </div>
                 )
@@ -112,10 +112,9 @@ const PatientInfoDocView=(props)=>{
                 (<></>)
             }
             </form>
-            <h1 className="text-center mb-5 mt-5">Test results of patient {patientInfo.patientId}</h1>
-            <div className="card mt-5 mx-auto" style={{width:"60%"}}>
+            <div className="card mt-5" style={{width:"50%"}}>
                 <div className="card-header">
-                <h1>Requests for facilities</h1>
+                <h1>Test results of patient</h1>
                 </div>
                 <div className="card-body">
                 <div className="list-group">
