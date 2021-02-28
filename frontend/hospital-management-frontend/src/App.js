@@ -16,6 +16,7 @@ import FacilityUpdateList from "./Components/FacilityUpdateListComponent";
 import DoctorViewingPatients from "./Components/DoctorViewingPatients";
 import PatientInfoDocView from "./Components/PatientInfoDocView";
 import TestInfoDocView from "./Components/TestInfoDocView";
+import AddReviewQuestion from "./Components/AddReviewQuestion";
 
 export const UserContext = createContext();
 
@@ -48,6 +49,9 @@ const Routing = () => {
       </Route>
       <Route path="/testinfodocview/:testResultId">
         <TestInfoDocView/>
+      </Route>
+      <Route path="/addreviewquestion">
+        <AddReviewQuestion/>
       </Route>
       <Route path="/appointment/:patientId">
         <Appointment />
