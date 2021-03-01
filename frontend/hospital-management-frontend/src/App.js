@@ -65,7 +65,7 @@ const Routing = () => {
       <ProtectedRoute roles={[roles.doctor]} path="/doctordashboard" exact component={DoctorDashboard} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/hospitaladmindashboard" exact component={HospitalAdminDashboard} />
       <ProtectedRoute roles={[roles.sys_admin]} path="/admindashboard" exact component={SystemAdminDashboard} />
-      <ProtectedRoute roles={[roles.doctor]} path="/addtreatmenthistory" exact component={PatientTreatmentHistory} />
+      <ProtectedRoute roles={[roles.doctor]} path="/addtreatmenthistory/:patientId/:doctorId" exact component={PatientTreatmentHistory} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/addfacility" exact component={FacilityAddUpdateComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/addfacility/:id" exact component={FacilityAddUpdateComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/updatefacility" exact component={FacilityUpdateList} />

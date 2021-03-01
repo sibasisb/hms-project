@@ -1,5 +1,4 @@
 export const initialState = {
-    isAuthenticated: false,
     userId: null,
     token: null,
     role: null
@@ -14,16 +13,17 @@ export const userReducer = (state, action) => {
             action.payload.hospitalId && localStorage.setItem("hospitalId",action.payload.hospitalId); 
             return {
                 ...state,
-                isAuthenticated: true,
                 user: action.payload.user,
-                token: action.payload.token
+                token: action.payload.token,
+                role:action.payload.role
             };
         case "LOGOUT":
             localStorage.clear();
             return {
-                ...state,
-                isAuthenticated: false,
-                user: null
+                userId: null,
+                token: null,
+                role: null
+               
             };
         default:
             return state;

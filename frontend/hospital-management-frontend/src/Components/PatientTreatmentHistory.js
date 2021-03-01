@@ -10,6 +10,7 @@ function PatientTreatmentHistory(props) {
 
     const [data, setData] = useState({});
     const [prescription, changePrescription] = useState();
+    const [alert,setalert]=useState("");
     useEffect(() => {
 
         axios.get(`http://localhost:8080/treatmenthistory/${patientId}/${doctorId}`)
@@ -35,6 +36,8 @@ function PatientTreatmentHistory(props) {
         axios.post(`http://localhost:8080/treatmenthistory/${patientId}/${doctorId}`, dataToSend)
             .then(res => {
                 console.log(res)
+                const alertmsg=<div className="alert alert-success text-bold">Prescription updated successfully.</div>
+                setalert(alertmsg)
             }).catch(err => console.log(err))
     }
 
@@ -46,8 +49,9 @@ function PatientTreatmentHistory(props) {
                 <div className="card-header">
                     <h1>Treatment History</h1>
                 </div>
-                <div className="card-body p-5">
-                    <h5 className="card-title">
+                <div className="card-body">
+                <div>{alert}</div>
+                    <h5 className="card-title p-3">
                         <div className="pb-3">Patient Name : {patientInfo.firstName} {patientInfo.lastName}</div>
                         <div className="pb-3">Age : {patientInfo.age}</div>
                         <div className="pb-3">Sex : {patientInfo.gender}</div>

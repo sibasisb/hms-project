@@ -21,18 +21,17 @@ function ProtectedRoute({component:Component,roles,...rest}) {
 
     function checkAuthorization()
     {
-      //   let role=localStorage.getItem("role").split("\"").join("");
-      //   console.log("in here 2");   
-      //   if(roles.includes(role))
-      //  { 
-      //   console.log("in here 3");   
-      //   return true}
-      //   else
-      //   {
-      //       console.log("not in there");
-      //     return false
-      //   }
-        return true;
+        let role=localStorage.getItem("role").split("\"").join("");
+        console.log("in here 2");   
+        if(roles.includes(role))
+       { 
+        console.log("in here 3");   
+        return true}
+        else
+        {
+            console.log("not in there");
+          return false
+        }
 
     }
 
