@@ -4,6 +4,10 @@ import DoctorForm from './DoctorForm';
 import HospitalAdminForm from './HospitalAdminForm';
 import PatientForm from './PatientForm';
 import { Link } from 'react-router-dom'
+import axios from 'axios';
+import { faCaretDown, faCaretUp, faList } from "@fortawesome/free-solid-svg-icons";
+
+const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
 function RegisterComponent(props) {
 
@@ -21,17 +25,6 @@ function RegisterComponent(props) {
     const [state,
         setState] = useState(initialState)
 
-    useEffect(() => {
-        console.log(state);
-        if (Object.keys(state.errors).length !== 0) {
-            setState(
-                {
-                    ...state,
-                    // arrowDirectionUp:true
-                }
-            )
-        }
-    }, [state.errors])
 
     function changeValue(event) {
         setState({
@@ -111,8 +104,8 @@ function RegisterComponent(props) {
             if (state.hospitalDetails[field] === "" && field !== "addr2")
                 error[field] = true;
 
-            if (field === "phone" && !(/^([0-9]{10})$/.test(state.userDetails[field])))
-                error[field] = "Phone Number should have 10 digits"
+            // if (field === "phone" && !(/^([0-9]{10})$/.test(state.userDetails[field])))
+            //     error[field] = "Phone Number should have 10 digits"
         }
 
 
@@ -149,6 +142,7 @@ function RegisterComponent(props) {
         event.preventDefault();
         if (validateForm()) {
 
+            console.log("validated")
             let userDetails = {
                 ...state.userDetails,
                 role: props.location.state
@@ -156,42 +150,56 @@ function RegisterComponent(props) {
             console.log(userDetails)
             let hospitalDetails = {}
             let doctorDetails = {}
-            //        let {addr1,addr2,city,state:state1,zip,...restH}=state.hospitalDetails;
-            //        let {dates,startTime,endTime,...restD}=state.doctorDetails;
-            //        console.log(dates)
-            //        let availableDate=``
-            //        for(let date of dates)
-            //        {
-            //            availableDate+=`${date.value},`
-            //        }
+            if (props.location.state === "hospital admin") {
+                let { addr1, addr2, city, state: state1, zip, ...restH } = state.hospitalDetails;
 
-            //        let doctorDetails={
-            //             ...restD,
-            //             dates:availableDate,
-            //             timing:`${startTime}-${endTime}`
-            //        }
-            //     let hospitalDetails={}
-            //   hospitalDetails=  {
-            //         ...restH,
-            //         address:[addr1,addr2,city,state1,zip].join(",")
-            //     }
-
-            let user = {
-                userInfo: userDetails,
-                doctorInfo: doctorDetails,
-                hospitalInfo: hospitalDetails
-            }
-            console.log(user)
-            console.log("Details saved successfully");
-            setState(
-                {
-                    ...state,
-                    errors: {},
-                    successAlert: <div className="alert alert-success">User Details submitted Successfully!!</div>
+                hospitalDetails = {
+                    ...restH,
+                    address: [addr1, addr2, city, state1, zip].join(",")
                 }
-            )
+            }
+            if (props.location.state === "doctor") {
+                let { hospitalID, dates, startTime, endTime, ...restD } = state.doctorDetails;
+                console.log(hospitalID)
+                let availableDate = ``
+                for (let date of dates) {
+                    availableDate += `${date.value},`
+                }
+
+                let doctorDetails = {
+                    ...restD,
+                    availableDays: availableDate,
+                    availableTime: `${startTime}-${endTime}`
+                }
+                hospitalDetails = {
+                    hospitalId: hospitalID
+                }
+            }
+            let userInfo = {
+                user: userDetails,
+                doctor: doctorDetails,
+                hospital: hospitalDetails
+            }
+            console.log(userInfo)
+            axios.post("http://localhost:8080/users/register", userInfo)
+                .then(res => {
+                    console.log(res.data);
+                    console.log(userInfo)
+                    console.log("Details saved successfully");
+                    setState(
+                        {
+                            ...state,
+                            errors: {},
+                            successAlert: <div className="alert alert-success text-bold">{res.data}</div>,
+                            arrowDirectionUp: false
+                        }
+                    )
+                }).catch(err => {
+                    console.log(err);
+                })
+
         }
-        return false
+        //  return false
     }
     return (
         <div>
@@ -199,7 +207,7 @@ function RegisterComponent(props) {
 
                 <div className="card card-outline-secondary">
                     <div className="card-header">
-                        <h3 className="mb-0">Register as {props.location.state}</h3>
+                        <h3 className="mb-0">Register as {props.location.state.toUpperCase()}</h3>
                     </div>
                     <div className="card-body">
                         {state.successAlert ? state.successAlert : state.errors?.erroralert}
@@ -207,13 +215,14 @@ function RegisterComponent(props) {
                         <form className="form" role="form" noValidate onSubmit={handleSubmit}>
                             <PatientForm errors={state.errors} changeUserDetails={changeUserDetails} /> {props.location.state === "doctor"
                                 ? <div className="bg-light mb-4" onClick={displayComponent}>Fill up Doctor specific details {state.arrowDirectionUp
-                                    ? <i className="fa fa-caret-up"></i>
-                                    : <i className="fa fa-caret-down"></i>}
+                                    ?
+                                    <FontAwesomeIcon icon={faCaretUp} />
+                                    : <FontAwesomeIcon icon={faCaretDown} />}
                                 </div>
                                 : (props.location.state === "hospital admin"
                                     ? <div className="bg-light mb-4" onClick={displayComponent}>Fill up Hospital specific details {state.arrowDirectionUp
-                                        ? <i className="fa fa-caret-up"></i>
-                                        : <i className="fa fa-caret-down"></i>}
+                                        ? <FontAwesomeIcon icon={faCaretUp} />
+                                        : <FontAwesomeIcon icon={faCaretDown} />}
                                     </div>
                                     : "")
                             }
@@ -226,13 +235,13 @@ function RegisterComponent(props) {
                                         : null))
                                 : null
                             }
-                            
+
 
                             <div className="d-flex flex-row justify-content-between" >
-                            <div className="form-group">
-                                <input type="submit" className="btn btn-primary btn-lg mt-4" value="Register" />
-                            </div>
-                            <div className="mt-4"><b><Link to="/login">Go to Login Page</Link></b></div>
+                                <div className="form-group">
+                                    <input type="submit" className="btn btn-primary btn-lg mt-4" value="Register" />
+                                </div>
+                                <div className="mt-4"><b><Link to="/login">Go to Login Page</Link></b></div>
                             </div>
                         </form>
 
