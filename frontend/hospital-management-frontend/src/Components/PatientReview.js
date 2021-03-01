@@ -135,6 +135,13 @@ const PatientReview=()=>{
                         ) :
                         (<></>)
                     }
+                    {
+                        questionList.length==0?
+                        (<div className="alert alert-danger">
+                            <strong>No question found</strong>
+                        </div>):
+                        (<></>)
+                    }
                     <div className="list-group">
                     {displayQuestions()}
                     </div>

@@ -114,6 +114,13 @@ const PatientInfoDocView=(props)=>{
                 <h3>Test results of patient</h3>
                 </div>
                 <div className="card-body">
+                {
+                    testResultList.length==0?
+                    (<div className="alert alert-danger">
+                        <h3>No tests found!!!</h3>
+                    </div>):
+                    (<></>)
+                }
                 <div className="list-group">
                 {displayTestResultIds()}
                 </div>

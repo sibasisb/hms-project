@@ -36,6 +36,13 @@ const TreatmentHistoryPatient=()=>{
             <div className="card mx-auto mt-5" style={{width:"80%"}}>
             <div className="card-header"><h3 className="">Treatment history of patient {patientId}</h3></div>
             <div className="card-body">
+            {
+                treatmentHistoryInfo.length==0?
+                (<div className="alert alert-danger">
+                    <h3>No treatment history found!!!</h3>
+                </div>):
+                (<></>)
+            }
             <table className="table table-responsive table-bordered mt-3" >
                 <thead>
                     <tr>

@@ -62,6 +62,13 @@ const DoctorViewingPatients = () => {
                     <h3>My Patients</h3>
                 </div>
                 <div className="card-body">
+                {
+                    patientInfoList.length==0?
+                    (<div className="alert alert-danger">
+                        <h1>No patient found!!!</h1>
+                    </div>):
+                    (<></>)
+                }
                     <div className="list-group">
                         {displayPatientRecords()}
                     </div>

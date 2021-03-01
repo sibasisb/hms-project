@@ -44,6 +44,13 @@ const TestResultsUpdate=()=>{
                 <h3>Update test results</h3>
                 </div>
                 <div className="card-body">
+                {
+                    appointmentInfoList.length==0?
+                    (<div className="alert alert-danger">
+                        <h2>No test result found to update!!!</h2>
+                    </div>):
+                    (<></>)
+                }
                 <div className="list-group">
                 {displayPatientRecords()}
                 </div>
