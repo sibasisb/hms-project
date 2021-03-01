@@ -84,7 +84,7 @@ const PatientReview=()=>{
                 return (
                     <div className="list-group-item" key={index}>
                         <div className="form-group">
-                        <label><h3>Q{index+1} .  {question.question}</h3></label><br/>
+                        <label><h5>Q{index+1} .  {question.question}</h5></label><br/>
                         <div className="form-check form-check-inline">
                             <input className="form-check-input" type="radio" name={question?.questionId} id={question?.questionId} value={1} onChange={handleChange}/>
                             <label className="form-check-label" htmlFor={question?.questionId}>1</label>
@@ -115,7 +115,7 @@ const PatientReview=()=>{
     return (
         <div className="container">
             <form className="card mt-5" onSubmit={handleSubmit}>
-                <div className="card-header"><h1>Patient Feedback</h1></div>
+                <div className="card-header"><h3>Patient Feedback</h3></div>
                 <div className="card-body">
                     {
                         showSuccessAlert ?
@@ -130,7 +130,7 @@ const PatientReview=()=>{
                         showFailureAlert ?
                         (
                             <div className="alert alert-danger">
-                                <strong>OOPS!</strong> Something went wrong!!!Please answer all questions
+                                <strong>Please answer all questions</strong>
                             </div>
                         ) :
                         (<></>)
@@ -138,7 +138,7 @@ const PatientReview=()=>{
                     <div className="list-group">
                     {displayQuestions()}
                     </div>
-                    <button className="btn btn-primary btn-md">Submit feedback</button>
+                    <button className="btn btn-primary btn-md mt-3">Submit feedback</button>
                 </div>
             </form>
         </div>

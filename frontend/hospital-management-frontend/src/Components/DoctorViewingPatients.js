@@ -38,7 +38,7 @@ const DoctorViewingPatients=()=>{
                             {patientInfo.patientId}
                             </div>
                             <div className="col-xs-12 col-sm-4 col-md-4">
-                            <Link to={""} className="my-auto"><button className="btn btn-sm btn-info">Medical History</button></Link>
+                            <Link to={"/treatmenthistory/" + patientInfo.patientId} className="my-auto"><button className="btn btn-sm btn-info">Medical History</button></Link>
                             </div>
                             <div className="col-xs-12 col-sm-4 col-md-4">
                             <Link to={testResultUri} key={index} className="my-auto" style={{color:"black",textDecoration:"none"}}>
@@ -56,7 +56,7 @@ const DoctorViewingPatients=()=>{
         <div className="container">
             <div className="card mt-5 mx-auto" style={{width:"60%"}}>
                 <div className="card-header">
-                <h1>My Patients</h1>
+                <h3>My Patients</h3>
                 </div>
                 <div className="card-body">
                 <div className="list-group">

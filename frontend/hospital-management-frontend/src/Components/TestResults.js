@@ -32,8 +32,8 @@ const TestResults=()=>{
             li.map((item,index)=>{
                 return (
                         <tr key={index}>
-                        <td>{item[0]}</td>
-                        <td>{item[1]}</td>
+                        <td className="text-center">{item[0]}</td>
+                        <td className="text-center">{item[1]}</td>
                         </tr>
                 )
             })
@@ -46,12 +46,12 @@ const TestResults=()=>{
         return testResultList.map((testResult,index)=>{
             return (
                 <tr key={index}>
-                    <td scope="row">{testResult.resultId}</td>
+                    <td className="text-center" scope="row">{testResult.resultId}</td>
                     <td>{testResult.testName}</td>
                     <table className="table table-condensed table-bordered">
                     {extractResults(testResult.infos)}
                     </table>
-                    <td>
+                    <td className="text-center">
                     <Link to={"/edittestresult/"+testResult.resultId}>
                     <span className="material-icons pl-3 pt-3" style={{color:"black"}}>create</span>
                     </Link>
@@ -63,18 +63,24 @@ const TestResults=()=>{
 
     return (
         <div className="container">
-            <h1 className="text-center mb-3 mt-5">Test results of patient {patientId}</h1>
-            <table className="table table-responsive table-condensed mx-auto mt-3" style={{width:"60%"}} >
+            <div className="card mt-5 mx-auto" style={{width:"80%"}}>
+            <div className="card-header"><h3 className="">Test results of patient {patientId}</h3></div>
+            <div className="card-body">
+            <table className="table table-bordered table-responsive table-condensed mt-3" >
                 <thead>
                     <tr>
-                    <th scope="col">Result Id</th>
-                    <th scope="col">Test Name</th>
-                    <th scope="col">Test results</th>
-                    <th scope="col">Update</th>
+                    <th className="text-center" scope="col">Result Id</th>
+                    <th className="text-center" scope="col">Test Name</th>
+                    <th className="text-center" scope="col">Test results</th>
+                    <th className="text-center" scope="col">Update</th>
                     </tr>
                 </thead>
+                <tbody>
                 {fetchResults()}
+                </tbody>
             </table>
+            </div>
+            </div>
         </div>
     )
 }

@@ -33,8 +33,8 @@ const TestsInformation=()=>{
                 li.map((item,index)=>{
                     return (
                             <tr>
-                            <td>{item[1]}</td>
-                            <td>{item[2]}</td>
+                            <td className="text-center">{item[1]}</td>
+                            <td className="text-center">{item[2]}</td>
                             </tr>
                     )
                 })
@@ -45,10 +45,10 @@ const TestsInformation=()=>{
         return testFacilities.map((testFacility,index)=>{
             return (
                 <tr key={index}>
-                    <td>{testFacility.hospitalFacilityId}</td>
-                    <td>{testFacility.facility.name}</td>
-                    <td>{testFacility.description}</td>
-                    <td>{testFacility.remarks}</td>
+                    <td className="text-center">{testFacility.hospitalFacilityId}</td>
+                    <td className="text-center">{testFacility.facility.name}</td>
+                    <td className="text-center">{testFacility.description}</td>
+                    <td className="text-center">{testFacility.remarks}</td>
                     <table className="table table-condensed table-bordered">
                     {extractValues(testFacility.facility.baselines)}
                     </table>
@@ -60,22 +60,26 @@ const TestsInformation=()=>{
 
     return (
         <div className="container">
-            <h1 className="text-center m-md-3 pr-md-2">Information for all test facilities</h1>
-            <table className="table table-responsive table-condensed mx-auto mt-3" style={{width:"80%"}}>
+            <div className="card mt-5 mx-auto" style={{width:"80%"}}>
+            <div className="card-header"><h3 className="">Information for all test facilities</h3></div>
+            <div className="card-body">
+            <table className="table table-bordered table-responsive table-condensed mt-3" style={{width:"100%"}}>
                 <thead className="mx-auto">
                     <tr>
-                    <th scope="col">Facility Id</th>
-                    <th scope="col">Facility Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Remarks</th>
-                    <th scope="col">Baseline Values</th>
-                    <th scope="col">Charges</th>
+                    <th className="text-center" scope="col">Facility Id</th>
+                    <th className="text-center" scope="col">Facility Name</th>
+                    <th className="text-center" scope="col">Description</th>
+                    <th className="text-center" scope="col">Remarks</th>
+                    <th className="text-center" scope="col">Baseline Values</th>
+                    <th className="text-center" scope="col">Charges</th>
                     </tr>
                 </thead>
                 <tbody>
                 {fetchResults()}
                 </tbody>
             </table>
+            </div>
+            </div>
         </div>
     )
 }

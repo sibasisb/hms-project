@@ -36,7 +36,7 @@ const AddReviewQuestion=()=>{
     return (
         <div className="container">
             <form className="card mt-5" onSubmit={handleAddSubmit} style={{width: "80%"}}>
-                <div className="card-header"><h1>Add review question</h1></div>
+                <div className="card-header"><h3>Add review question</h3></div>
                 <div className="card-body">
                     {
                         showSuccessAlert ?
@@ -58,13 +58,12 @@ const AddReviewQuestion=()=>{
                     }
                     <div className="form-group form-row">
                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <label htmlFor="questionarea">Write a question to add to the questionnaire here...</label><br/>
-                        <input className="form-control input-lg" id="questionarea" type="textarea" rows="50" style={{width:"100%",height:"100%"}} value={question} onChange={(e)=>{setQuestion(e.target.value)}}/>
+                        <label htmlFor="questionarea">Write a question to add to the questionnaire</label><br/>
+                        <input placeholder="Write your question here..." className="form-control input-lg" id="questionarea" type="textarea" rows="50" style={{width:"100%",height:"100%"}} value={question} onChange={(e)=>{setQuestion(e.target.value)}}/>
                         </div>
                     </div>
                     <div className="form-group mt-5">
-                        <button className="btn btn-md btn-primary">Add this question</button>
-                        <button className="btn btn-md btn-primary" style={{float:"right"}}>Go Back</button>
+                        <button className="btn btn-md btn-primary mt-3">Add this question</button>
                     </div>
                 </div>
             </form>

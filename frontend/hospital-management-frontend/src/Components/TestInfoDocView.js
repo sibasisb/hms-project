@@ -46,7 +46,7 @@ const TestInfoDocView=()=>{
         <div className="container">
             <form className="card mt-5">
                 <div className="card-header">
-                <h1>Test result of {testResultInfo?.patientId} {testResultInfo?.patientName?.toUpperCase()}</h1>
+                <h3>Test result of {testResultInfo?.patientId} {testResultInfo?.patientName?.toUpperCase()}</h3>
                 </div>
                 <div className="card-body">
                 <div className="form-row">

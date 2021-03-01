@@ -75,9 +75,9 @@ const PatientInfoDocView=(props)=>{
 
     return (
         <div className="container">
-            <h1 className="text-center mb-3 mt-5">Patient {patientInfo?.patientId}</h1>
+            <h3 className="text-center mb-4 mt-5">Patient {patientInfo?.patientId}</h3>
             <form className="card mt-2">
-            <div className="card-header"><h1>Personal Details</h1></div>
+            <div className="card-header"><h3>Personal Details</h3></div>
             {
                 patientInfo!==null?
                 (<div className="card-body">
@@ -111,7 +111,7 @@ const PatientInfoDocView=(props)=>{
             </form>
             <div className="card mt-5" style={{width:"50%"}}>
                 <div className="card-header">
-                <h1>Test results of patient</h1>
+                <h3>Test results of patient</h3>
                 </div>
                 <div className="card-body">
                 <div className="list-group">

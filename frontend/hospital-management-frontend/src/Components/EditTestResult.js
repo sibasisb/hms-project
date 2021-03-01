@@ -82,7 +82,7 @@ const EditTestResult = () => {
     return (
         <div className="container">
             <form className="card mt-5" onSubmit={handleEditSubmit}>
-                <div className="card-header"><h1>Edit Test Results</h1></div>
+                <div className="card-header"><h3>Edit Test Results</h3></div>
                 <div className="card-body">
                     {
                         showAlert ?

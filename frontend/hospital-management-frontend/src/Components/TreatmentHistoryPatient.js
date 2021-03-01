@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
+import {useParams} from 'react-router-dom'
 import axios from 'axios'
 
 
 const TreatmentHistoryPatient=()=>{
     const [treatmentHistoryInfo,setTreatmentHistoryInfo]=useState([])
-    const patientId=useParams()
+    const {patientId}=useParams()
     useEffect(()=>{
         axios.get(`http://localhost:8080/treatmenthistory/${patientId}`)
         .then(res=>{
@@ -22,9 +23,9 @@ const TreatmentHistoryPatient=()=>{
         return treatmentHistoryInfo.map((treatmentHistory,index)=>{
             return (
                 <tr key={index}>
-                    <td>treatmentHistory.doctorName</td>
-                    <td>treatmentHistory.doctorSpeciality</td>
-                    <td>treatmentHistory.prescription</td>    
+                    <td className="text-center">{treatmentHistory.doctorName}</td>
+                    <td className="text-center">{treatmentHistory.doctorSpecilaity}</td>
+                    <td className="text-center">{treatmentHistory.prescription}</td>    
                 </tr>   
             )
         })
@@ -32,17 +33,21 @@ const TreatmentHistoryPatient=()=>{
 
     return (
         <div className="container">
-            <h1 className="text-center mb-3 mt-5">Treatment history of patient {patientId}</h1>
-            <table className="table table-responsive table-condensed mx-auto mt-3" style={{width:"60%"}} >
+            <div className="card mx-auto mt-5" style={{width:"80%"}}>
+            <div className="card-header"><h3 className="">Treatment history of patient {patientId}</h3></div>
+            <div className="card-body">
+            <table className="table table-responsive table-bordered mt-3" >
                 <thead>
                     <tr>
-                    <th scope="col">Doctor name</th>
-                    <th scope="col">Doctor speciality</th>
-                    <th scope="col">Prescription</th>
+                    <th className="text-center" scope="col">Doctor name</th>
+                    <th className="text-center" scope="col">Doctor speciality</th>
+                    <th className="text-center" scope="col">Prescription</th>
                     </tr>
                 </thead>
                 {fetchResults()}
             </table>
+            </div>
+            </div>
         </div>
     )
 }
