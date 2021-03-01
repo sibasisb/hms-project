@@ -8,13 +8,18 @@ const TestResults=()=>{
     const [testResultList,setTestResultList]=useState([])
     const {patientId}=useParams()
     const {appointmentId}=useParams()
+    const [showError,setShowError]=useState(false)
+
     useEffect(()=>{
+        setShowError(false)
         //fetch all test result records from test results table for this patient and appointment
 
         axios.get('http://localhost:8080/testresults/fetch/' + appointmentId + "/" + patientId)
         .then(res=>{
             console.log(res)
             setTestResultList(res.data)
+            if(res.data.length==0)
+                setShowError(true)
         })
         .catch(error=>{
             console.log(error)
@@ -66,25 +71,26 @@ const TestResults=()=>{
             <div className="card-header"><h3 className="">Test results of patient {patientId}</h3></div>
             <div className="card-body">
             {
-                testResultList.length==0?
+                showError?
                 (<div className="alert alert-danger">
                     <p>No test result for this patient found</p>
                 </div>):
-                (<></>)
+                (<>
+                <table className="table table-bordered table-responsive table-condensed mt-3" >
+                    <thead>
+                        <tr>
+                        <th className="text-center" scope="col">Result Id</th>
+                        <th className="text-center" scope="col">Test Name</th>
+                        <th className="text-center" scope="col">Test results</th>
+                        <th className="text-center" scope="col">Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {fetchResults()}
+                    </tbody>
+                </table>
+                </>)
             }
-            <table className="table table-bordered table-responsive table-condensed mt-3" >
-                <thead>
-                    <tr>
-                    <th className="text-center" scope="col">Result Id</th>
-                    <th className="text-center" scope="col">Test Name</th>
-                    <th className="text-center" scope="col">Test results</th>
-                    <th className="text-center" scope="col">Update</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {fetchResults()}
-                </tbody>
-            </table>
             </div>
             </div>
         </div>

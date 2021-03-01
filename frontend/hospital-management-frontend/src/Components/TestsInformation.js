@@ -4,12 +4,16 @@ import axios from 'axios';
 
 const TestsInformation=()=>{
     const [testFacilities,setTestFacilities]=useState([])
+    const [showError,setShowError]=useState(false)
     useEffect(()=>{
-        const hospitalAdminId="HAD0998";
+        setShowError(false)
+        const hospitalAdminId=localStorage.getItem("userId");
         axios.get(`http://localhost:8080/getfacility/${hospitalAdminId}`)
         .then(res=>{
             console.log(res)
             setTestFacilities(res.data)
+            if(res.data.length==0)
+                setShowError(true)
         })
         .catch(err=>{
             console.log(err)
@@ -63,21 +67,29 @@ const TestsInformation=()=>{
             <div className="card mt-5 mx-auto" style={{width:"80%"}}>
             <div className="card-header"><h3 className="">Information for all test facilities</h3></div>
             <div className="card-body">
-            <table className="table table-bordered table-responsive table-condensed mt-3" style={{width:"100%"}}>
-                <thead className="mx-auto">
-                    <tr>
-                    <th className="text-center" scope="col">Facility Id</th>
-                    <th className="text-center" scope="col">Facility Name</th>
-                    <th className="text-center" scope="col">Description</th>
-                    <th className="text-center" scope="col">Remarks</th>
-                    <th className="text-center" scope="col">Baseline Values</th>
-                    <th className="text-center" scope="col">Charges</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {fetchResults()}
-                </tbody>
-            </table>
+            {
+                showError?
+                (<div className="alert alert-danger">
+                    <strong>No treatment history found!!!</strong>
+                </div>):
+                (<>
+                <table className="table table-bordered table-responsive table-condensed mt-3" style={{width:"100%"}}>
+                    <thead className="mx-auto">
+                        <tr>
+                        <th className="text-center" scope="col">Facility Id</th>
+                        <th className="text-center" scope="col">Facility Name</th>
+                        <th className="text-center" scope="col">Description</th>
+                        <th className="text-center" scope="col">Remarks</th>
+                        <th className="text-center" scope="col">Baseline Values</th>
+                        <th className="text-center" scope="col">Charges</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {fetchResults()}
+                    </tbody>
+                </table>
+                </>)
+            }
             </div>
             </div>
         </div>

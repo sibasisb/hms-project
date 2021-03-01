@@ -6,13 +6,16 @@ import axios from 'axios'
 const TestResultsUpdate=()=>{
 
     const [appointmentInfoList,setAppointmentInfoList]=useState([])
-
+    const [showError,setShowError]=useState(false)
     useEffect(()=>{
+        setShowError(false)
         const hospitalAdminId=localStorage.getItem("userId");
         axios.get('http://localhost:8080/appointments/pending/' + hospitalAdminId)
         .then(res=>{    
             console.log(res)
             setAppointmentInfoList(res.data);
+            if(res.data.length==0)
+                setShowError(true)
         })
         .catch(error=>{
             console.log(error);
@@ -45,7 +48,7 @@ const TestResultsUpdate=()=>{
                 </div>
                 <div className="card-body">
                 {
-                    appointmentInfoList.length==0?
+                    showError?
                     (<div className="alert alert-danger">
                         <strong>No test result found to update!!!</strong>
                     </div>):

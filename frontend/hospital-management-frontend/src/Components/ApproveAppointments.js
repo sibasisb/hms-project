@@ -33,8 +33,10 @@ const appointments = [
 
 const ApproveAppointments = () => {
 	const [appointments, setAppointments] = useState([]);
+	const [showError,setShowError]=useState(false)
 
 	useEffect(() => {
+		setShowError(false)
 		let url = "";
 		const serviceId = localStorage.getItem("userId");
 
@@ -48,6 +50,8 @@ const ApproveAppointments = () => {
 			.get(url)
 			.then((res) => {
 				setAppointments(res.data);
+				if(res.data.length==0)
+					setShowError(true)
 			})
 			.catch((error) => console.log(error));
 	}, []);
@@ -82,7 +86,13 @@ const ApproveAppointments = () => {
 						List of appointments related to you
 					</h4>
 					<div className="card-body">
-						<div className="card-deck">
+						{
+						showError?
+						(<div className="alert alert-danger">
+							<h5><strong>No appointments to view!!!</strong></h5>
+						</div>):
+						(
+							<div className="card-deck">
 							{appointments.map((appointment) => (
 								<ApproveAppointmentCard
 									appointment={appointment}
@@ -91,7 +101,9 @@ const ApproveAppointments = () => {
 									handleReject={handleReject}
 								/>
 							))}
-						</div>
+							</div>
+						)
+						}
 					</div>
 				</div>
 			</div>
