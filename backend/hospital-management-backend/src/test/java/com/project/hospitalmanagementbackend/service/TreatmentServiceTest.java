@@ -90,7 +90,7 @@ public class TreatmentServiceTest {
 		list.add(treatmentHistory);
 		when(patientRepository.findById("PAT001")).thenReturn(Optional.of(patient));
 		when(treatmentHistoryRepository.findByPatient_PatientId("PAT001")).thenReturn(list);
-		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo("John Doe",35,"male","Munna Bhai","cardio","Mild fever.Take calpol");
+		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo(1,"John Doe",35,"male","Munna Bhai","cardio","Mild fever.Take calpol");
 		ArrayList<TreatmentHistoryInfo> historyList = new ArrayList<TreatmentHistoryInfo>();
 		historyList.add(treatmentHistoryInfo);
 		assertEquals(historyList.size(),treatmentService.getAllTreatmentHistory("PAT001").size());
@@ -109,7 +109,7 @@ public class TreatmentServiceTest {
 		list.add(treatmentHistory);
 		when(patientRepository.findById("PAT001")).thenReturn(Optional.of(patient));
 		when(treatmentHistoryRepository.findByPatient_PatientId("PAT001")).thenReturn(list);
-		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo("John Doe",35,"male","Munna Bhai","cardio","Mild fever.Take calpol");
+		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo(1,"John Doe",35,"male","Munna Bhai","cardio","Mild fever.Take calpol");
 		ArrayList<TreatmentHistoryInfo> historyList = new ArrayList<TreatmentHistoryInfo>();
 		historyList.add(treatmentHistoryInfo);
 		assertThrows(PatientNotFoundException.class,()->treatmentService.getAllTreatmentHistory("PAT002"));
@@ -126,7 +126,7 @@ public class TreatmentServiceTest {
 		when(patientRepository.findById("PAT001")).thenReturn(Optional.of(patient));
 		when(doctorRepository.findById("DOC001")).thenReturn(Optional.of(doctor));
 		when(treatmentHistoryRepository.findByPatient_PatientIdAndDoctor_DoctorId("PAT001","DOC001")).thenReturn(treatmentHistory);
-		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo("John Doe",35,"male","Munna Bhai","cardio","Mild fever.Take calpol");
+		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo(1,"John Doe",35,"male","Munna Bhai","cardio","Mild fever.Take calpol");
 		TreatmentHistoryInfo treatmentHistoryInfo2 = treatmentService.getTreatmentHistory("PAT001","DOC001");
 		assertEquals(treatmentHistoryInfo.getPatientName(),treatmentHistoryInfo.getPatientName());
 		
@@ -143,7 +143,7 @@ public class TreatmentServiceTest {
 		when(patientRepository.findById("PAT001")).thenReturn(Optional.of(patient));
 		when(doctorRepository.findById("DOC001")).thenReturn(Optional.of(doctor));
 		when(treatmentHistoryRepository.findByPatient_PatientIdAndDoctor_DoctorId("PAT001","DOC001")).thenReturn(treatmentHistory);
-		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo("John Doe",35,"male","Munna Bhai","cardio","Mild fever.Take calpol");
+		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo(1,"John Doe",35,"male","Munna Bhai","cardio","Mild fever.Take calpol");
 		TreatmentHistoryInfo treatmentHistoryInfo2 = treatmentService.getTreatmentHistory("PAT001","DOC001");
 		assertThrows(DoctorNotFoundException.class,()->treatmentService.getTreatmentHistory("PAT001","DOC002"));
 	}
@@ -158,7 +158,7 @@ public class TreatmentServiceTest {
 		when(patientRepository.findById("PAT001")).thenReturn(Optional.of(patient));
 		when(doctorRepository.findById("DOC001")).thenReturn(Optional.of(doctor));
 		when(treatmentHistoryRepository.findByPatient_PatientIdAndDoctor_DoctorId("PAT001","DOC001")).thenReturn(treatmentHistory);
-		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo("John Doe",35,"male","Munna Bhai","cardio","Mild fever.Take calpol");
+		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo(1,"John Doe",35,"male","Munna Bhai","cardio","Mild fever.Take calpol");
 		TreatmentHistoryInfo treatmentHistoryInfo2 = treatmentService.getTreatmentHistory("PAT001","DOC001");
 		assertThrows(PatientNotFoundException.class,()->treatmentService.getTreatmentHistory("PAT002","DOC001"));
 		

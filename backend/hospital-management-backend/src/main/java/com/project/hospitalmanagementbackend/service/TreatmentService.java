@@ -38,16 +38,29 @@ public class TreatmentService {
 	public String updateTreatmentHistory(String patientid, String doctorId, TreatmentHistory treatmentHistory) {
 		// TODO Auto-generated method stub
 		Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+		Optional<Patient> patient = patientRepository.findById(patientid);
+		Optional<TreatmentHistory> history = treatmentHistoryRepository.findById(treatmentHistory.getTreatmentId());
+		if(!history.isPresent())
+		{
+		
 		if (doctor.isPresent())
 			treatmentHistory.setDoctor(doctor.get());
 		else
 			throw new DoctorNotFoundException("Doctor not found");
-		Optional<Patient> patient = patientRepository.findById(patientid);
+		
 		if (patient.isPresent())
 			treatmentHistory.setPatient(patient.get());
 		else
 			throw new PatientNotFoundException("Patient not found");
+		
 		treatmentHistoryRepository.save(treatmentHistory);
+		}
+		else
+		{
+			TreatmentHistory treatmentHistoryFound = history.get();
+			treatmentHistoryFound.setPrescription(treatmentHistory.getPrescription());
+			treatmentHistoryRepository.save(treatmentHistoryFound);
+		}
 		return "Treatment history updated successfully";
 	}
 
@@ -61,6 +74,7 @@ public class TreatmentService {
 				TreatmentHistoryInfo historyInfo = new TreatmentHistoryInfo();
 				User patientInfo = history.getPatient().getUser();
 				Doctor doctor = history.getDoctor();
+				historyInfo.setTreatmentId(history.getTreatmentId());
 				historyInfo.setPatientName(patientInfo.getFirstName() + " " + patientInfo.getLastName());
 				historyInfo.setAge(Period.between(patientInfo.getDateOfBirth(), LocalDate.now()).getYears());
 				historyInfo.setGender(patientInfo.getGender());
@@ -91,6 +105,7 @@ public class TreatmentService {
 		TreatmentHistoryInfo historyInfo = new TreatmentHistoryInfo();
 		User patientInfo = history.getPatient().getUser();
 		Doctor doctorInfo = history.getDoctor();
+		historyInfo.setTreatmentId(history.getTreatmentId());
 		historyInfo.setPatientName(patientInfo.getFirstName() + " " + patientInfo.getLastName());
 		historyInfo.setAge(Period.between(patientInfo.getDateOfBirth(), LocalDate.now()).getYears());
 		historyInfo.setGender(patientInfo.getGender());

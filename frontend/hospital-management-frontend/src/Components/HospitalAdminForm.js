@@ -12,7 +12,7 @@ function HospitalAdminForm(props) {
     console.log(props.errors);
     console.log(props.state)
     const initialState = {
-        hospitalName: "",
+        name: "",
         phone: "",
         website: "",
         addr1: "",
@@ -44,10 +44,10 @@ function HospitalAdminForm(props) {
                         Hospital Name</label>
                     <input
                         type="text"
-                        name="hospitalName"
-                        id="hospitalName"
+                        name="name"
+                        id="name"
                         className="form-control"
-                        style={props.errors?.hospitalName ? error : noerror}
+                        style={props.errors?.name ? error : noerror}
                         onChange={changeValue} />
 
                 </div>
@@ -117,7 +117,7 @@ function HospitalAdminForm(props) {
             </div>
 
             <div className="row">
-                <div className="col-md-6 mb-3">
+                <div className="col-md-4 mb-3">
                     <label htmlFor="city">City</label>
                     <input
                         type="text"
@@ -129,7 +129,7 @@ function HospitalAdminForm(props) {
                         style={props.errors?.city ? error : noerror} />
 
                 </div>
-                <div className="col-md-3 mb-3">
+                <div className="col-md-5 mb-3">
                     <label htmlFor="state">State</label>
                     <input
                         type="text"

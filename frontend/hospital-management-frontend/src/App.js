@@ -13,6 +13,14 @@ import RegisterComponent from "./Components/RegisterComponent";
 import LoginComponent from "./Components/LoginComponent";
 import FacilityAddUpdateComponent from "./Components/FacilityAddUpdateComponent";
 import FacilityUpdateList from "./Components/FacilityUpdateListComponent";
+import PatientDashboard from "./Components/PatientDashboard";
+import DoctorDashboard from "./Components/DoctorDashboard";
+import HospitalAdminDashboard from "./Components/HospitalAdminDashboard";
+import SystemAdminDashboard from "./Components/SystemAdminDashboard";
+import PatientTreatmentHistory from "./Components/PatientTreatmentHistory";
+import ProtectedRoute from "./helpers/ProtectedRoute";
+import { roles } from "./helpers/Roles";
+import Unauthorized from "./helpers/Unauthorized";
 
 export const UserContext = createContext();
 
@@ -29,21 +37,23 @@ const Routing = () => {
       <Route path="/testresults/:patientId">
         <TestResults />
       </Route>
-      <Route path="/testresults">
-        <TestResultsUpdate />
-      </Route>
+      <ProtectedRoute roles={[roles.patient,roles.doctor]} path="/testresults" component={TestResults}/>
       <Route path="/edittestresult/:testResultId">
         <EditTestResult />
       </Route>
-      <Route path="/testsinformation">
-        <TestsInformation />
-      </Route>
+      <ProtectedRoute roles={[roles.patient,roles.doctor]} path="/testsinformation" component={TestsInformation}/>
       <Route path="/appointment/:patientId">
         <Appointment />
       </Route>
+      <Route path="/patientdashboard" exact component={PatientDashboard} />
+      <Route path="/doctordashboard" exact component={DoctorDashboard} />
+      <Route path="/hospitaladmindashboard" exact component={HospitalAdminDashboard} />
+      <Route path="/admindashboard" exact component={SystemAdminDashboard} />
+      <ProtectedRoute path="/addtreatmenthistory" component={PatientTreatmentHistory} />
       <Route path="/addfacility" exact component={FacilityAddUpdateComponent} />
       <Route path="/addfacility/:id" component={FacilityAddUpdateComponent} />
       <Route path="/updatefacility" component={FacilityUpdateList} />
+      <Route path="/unauthorized" exact component={Unauthorized}></Route>
     </Switch>
   );
 };

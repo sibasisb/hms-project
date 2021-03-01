@@ -47,7 +47,7 @@ public class TreatmentControllerTest {
 	void getAllTreatmentHistoryTest()
 	{
 	
-		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo("John",18,"male","Munna Bhai","cardio","Mild fever.Take calpol");
+		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo(1,"John",18,"male","Munna Bhai","cardio","Mild fever.Take calpol");
 		ArrayList<TreatmentHistoryInfo> historyList = new ArrayList<TreatmentHistoryInfo>();
 		historyList.add(treatmentHistoryInfo);
 		when(treatmentService.getAllTreatmentHistory("PAT001")).thenReturn(historyList);
@@ -60,7 +60,7 @@ public class TreatmentControllerTest {
 	void getTreatmentHistoryTest()
 	{
 	
-		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo("John",18,"male","Munna Bhai","cardio","Mild fever.Take calpol");
+		TreatmentHistoryInfo treatmentHistoryInfo = new TreatmentHistoryInfo(1,"John",18,"male","Munna Bhai","cardio","Mild fever.Take calpol");
 		when(treatmentService.getTreatmentHistory("PAT001","DOC001")).thenReturn(treatmentHistoryInfo);
 		assertEquals(new ResponseEntity<>(treatmentHistoryInfo, HttpStatus.OK),treatmentController.getTreatmentHistory("PAT001","DOC001"));
 		
