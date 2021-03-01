@@ -76,6 +76,7 @@ const EditTestResult = () => {
         })
         .catch(err=>{
             console.log(err)
+            setShowAlert(false)
         })
     }
 

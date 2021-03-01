@@ -10,8 +10,8 @@ const DoctorViewingPatients = () => {
 
     const [patientInfoList, setPatientInfoList] = useState([])
 
-    useEffect(() => {
-        const doctorId = "DOC0999";
+    useEffect(()=>{
+        const doctorId=localStorage.getItem("userId");
         axios.get(`http://localhost:8080/patients/doc/${doctorId}`)
             .then(res => {
                 console.log(res)

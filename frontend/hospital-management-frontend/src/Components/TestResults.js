@@ -8,7 +8,7 @@ const TestResults=()=>{
     const [testResultList,setTestResultList]=useState([])
     const {patientId}=useParams()
     const {appointmentId}=useParams()
-
+    const [showError,setShowError]=useState(false)
     useEffect(()=>{
         //fetch all test result records from test results table for this patient and appointment
 
@@ -66,6 +66,13 @@ const TestResults=()=>{
             <div className="card mt-5 mx-auto" style={{width:"80%"}}>
             <div className="card-header"><h3 className="">Test results of patient {patientId}</h3></div>
             <div className="card-body">
+            {
+                testResultList.length==0?
+                (<div className="alert alert-success">
+                    <p>No test result for this patient found</p>
+                </div>):
+                (<></>)
+            }
             <table className="table table-bordered table-responsive table-condensed mt-3" >
                 <thead>
                     <tr>
