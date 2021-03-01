@@ -51,15 +51,25 @@ const ApproveAppointments = () => {
 	}, []);
 
 	const handleApprove = (appointmentId) => {
-		axios.get(`http://localhost:8080/appointments/approve/${appointmentId}`).then((res) => {
-			(res.status === 200) ? console.log("approved") : console.log("rejected");
-		}).catch((error) => console.log(error));
+		axios
+			.get(`http://localhost:8080/appointments/approve/${appointmentId}`)
+			.then((res) => {
+				res.status === 200
+					? console.log("approved")
+					: console.log("rejected");
+			})
+			.catch((error) => console.log(error));
 	};
 
 	const handleReject = (appointmentId) => {
-		axios.get(`http://localhost:8080/appointments/reject/${appointmentId}`).then((res) => {
-			(res.status === 200) ? console.log("rejected") : console.log("rejected");
-		}).catch((error) => console.log(error));
+		axios
+			.get(`http://localhost:8080/appointments/reject/${appointmentId}`)
+			.then((res) => {
+				res.status === 200
+					? console.log("rejected")
+					: console.log("rejected");
+			})
+			.catch((error) => console.log(error));
 	};
 
 	return (

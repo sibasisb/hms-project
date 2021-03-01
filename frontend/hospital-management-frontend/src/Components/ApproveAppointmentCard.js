@@ -1,4 +1,9 @@
-import { faCheck, faCross, faSign, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+	faCheck,
+	faCross,
+	faSign,
+	faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ApproveAppointmentCard = ({
@@ -85,7 +90,7 @@ const ApproveAppointmentCard = ({
 								}
 							>
 								<FontAwesomeIcon icon={faTimes} />
-                                {"   "}
+								{"   "}
 								<span>Reject</span>
 							</button>
 						</div>
@@ -103,7 +108,7 @@ const ApproveAppointmentCard = ({
 								disabled={appointment.approved ? true : false}
 							>
 								<FontAwesomeIcon icon={faCheck} />
-                                {"   "}
+								{"   "}
 								<span>Approve</span>
 							</button>
 						</div>

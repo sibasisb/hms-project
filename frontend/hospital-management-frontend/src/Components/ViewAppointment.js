@@ -33,10 +33,13 @@ const ViewAppointment = () => {
 
 	useEffect(() => {
 		const patientId = "PAT99996";
-		axios.get(`http://localhost:8080/appointments/${patientId}`).then((res) => {
-			setAppointments(res.data);
-		}).catch((error) => console.log(error));
-	}, [])
+		axios
+			.get(`http://localhost:8080/appointments/${patientId}`)
+			.then((res) => {
+				setAppointments(res.data);
+			})
+			.catch((error) => console.log(error));
+	}, []);
 
 	return (
 		<div className="container mt-5">
