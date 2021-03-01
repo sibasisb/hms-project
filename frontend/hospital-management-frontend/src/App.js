@@ -80,8 +80,6 @@ const Routing = () => {
       <ProtectedRoute roles={[]} path="/inpatientlist" exact component={InPatientUpdateListComponent} />
       <ProtectedRoute roles={[]} path="/billing" exact component={BillingComponent} />
       <ProtectedRoute roles={[roles.patient,roles.doctor,roles.hospital_admin,roles.sys_admin]} path="/unauthorized" exact component={Unauthorized} />
-      <ProtectedRoute roles={[]} path="/addfacility/:id" component={FacilityAddUpdateComponent} />
-      <ProtectedRoute roles={[]} path="/updatefacility" component={FacilityUpdateList} />
       <ProtectedRoute roles={[roles.patient]} path="/view-appointment/:patientId" exact component={ViewAppointment} />
       <ProtectedRoute roles={[roles.doctor, roles.hospital_admin]} path="/approve-appointment/:serviceId" exact component={ApproveAppointments} />
       <ProtectedRoute roles={[roles.patient]} path="/notifications/:patientId" exact component={Notification} />

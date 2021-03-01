@@ -8,7 +8,7 @@ const TestResultsUpdate=()=>{
     const [appointmentInfoList,setAppointmentInfoList]=useState([])
 
     useEffect(()=>{
-        const hospitalAdminId="HAD0998";
+        const hospitalAdminId=localStorage.getItem("userId");
         axios.get('http://localhost:8080/appointments/pending/' + hospitalAdminId)
         .then(res=>{    
             console.log(res)
