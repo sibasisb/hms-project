@@ -84,54 +84,53 @@ export const LoginComponent = (props) => {
                 .then((res) => {
                     console.log(res)
                     console.log(res.data);
-                    let userData={
+                    let userData = {
                         userId: res.data.userId,
                         token: res.data.token,
                         role: res.data.role,
                     }
-                    if(res.data.role==="hospital admin")
-                    {
-                        
+                    if (res.data.role === "hospital admin") {
+
                         axios.get(`http://localhost:8080//hospitaladmin/${res.data.userId}`)
-                        .then(res=>{
-                            console.log(res)
-                            dispatch(
-                                {
-                                    type: "LOGIN",
-                                    payload: {
-                                        ...userData,
-                                        hospitalId:res.data
+                            .then(res => {
+                                console.log(res)
+                                dispatch(
+                                    {
+                                        type: "LOGIN",
+                                        payload: {
+                                            ...userData,
+                                            hospitalId: res.data
+                                        }
                                     }
-                                }
-                            )
-                        }).catch(err=>console.log(err))
+                                )
+                            }).catch(err => console.log(err))
                     }
-                    else{
-                    dispatch(
-                        {
-                            type: "LOGIN",
-                            payload: {
-                                ...userData
+                    else {
+                        dispatch(
+                            {
+                                type: "LOGIN",
+                                payload: {
+                                    ...userData
+                                }
                             }
-                        }
-                    )
+                        )
                     }
 
-                        switch (res.data.role) {
-                            case "patient":
-                                props.history.push("/patientdashboard")
-                                break;
-                                case "doctor":
-                                props.history.push("/doctordashboard")
-                                break;
-                                case "hospital admin":{
-                                props.history.push("/hospitaladmindashboard")
-                                }
-                                break;
-                        
-                            default:
-                                break;
+                    switch (res.data.role) {
+                        case "patient":
+                            props.history.push("/patientdashboard")
+                            break;
+                        case "doctor":
+                            props.history.push("/doctordashboard")
+                            break;
+                        case "hospital admin": {
+                            props.history.push("/hospitaladmindashboard")
                         }
+                            break;
+
+                        default:
+                            break;
+                    }
 
 
                 })
@@ -170,8 +169,9 @@ export const LoginComponent = (props) => {
                         {
                             type: "LOGIN",
                             payload: {
-                                token: res.data,
-                                role:"admin"
+                                userId: res.data.userId,
+                                token: res.data.token,
+                                role: res.data.role,
                             }
                         }
                     )

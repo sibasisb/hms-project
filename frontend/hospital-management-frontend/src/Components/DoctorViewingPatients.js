@@ -1,49 +1,52 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
-const DoctorViewingPatients=()=>{
+const DoctorViewingPatients = () => {
 
-    const [patientInfoList,setPatientInfoList]=useState([])
+    const [patientInfoList, setPatientInfoList] = useState([])
 
-    useEffect(()=>{
-        const doctorId="DOC0999";
+    useEffect(() => {
+        const doctorId = "DOC0999";
         axios.get(`http://localhost:8080/patients/doc/${doctorId}`)
-        .then(res=>{    
-            console.log(res)
-            setPatientInfoList(res.data);
-        })
-        .catch(error=>{
-            console.log(error);
-        });
-    },[])
+            .then(res => {
+                console.log(res)
+                setPatientInfoList(res.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, [])
 
-    const displayPatientRecords=()=>{
+    const displayPatientRecords = () => {
 
         return (
-            patientInfoList.map((patientInfo,index)=>{
-                let testResultUri="/patientInfoDoc/" + patientInfo.patientId 
-                let testResultUrl={
-                    pathname:"/patientInfoDoc",
-                    state:patientInfo
+            patientInfoList.map((patientInfo, index) => {
+                let testResultUri = "/patientInfoDoc/" + patientInfo.patientId
+                let testResultUrl = {
+                    pathname: "/patientInfoDoc",
+                    state: patientInfo
                 }
                 return (
                     <div className="list-group-item" key={index}>
                         <div className="row">
                             <div className="col-xs-12 col-sm-4 col-md-4">
-                            {patientInfo.patientId}
+                                {patientInfo.patientId}
                             </div>
                             <div className="col-xs-12 col-sm-4 col-md-4">
-                            <Link to={"/treatmenthistory/" + patientInfo.patientId} className="my-auto"><button className="btn btn-sm btn-info">Medical History</button></Link>
+                                <Link to={{
+                                    pathname: `/addtreatmenthistory/${patientInfo.patientId}/${localStorage.getItem("userId")}`,
+                                    state: patientInfo
+                                }} className="my-auto"><button className="btn btn-sm btn-info">Medical History</button></Link>
                             </div>
                             <div className="col-xs-12 col-sm-4 col-md-4">
-                            <Link to={testResultUri} key={index} className="my-auto" style={{color:"black",textDecoration:"none"}}>
-                            <button className="btn btn-sm btn-info">Patient Info</button>
-                            </Link>
+                                <Link to={testResultUri} key={index} className="my-auto" style={{ color: "black", textDecoration: "none" }}>
+                                    <button className="btn btn-sm btn-info">Patient Info</button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -54,15 +57,15 @@ const DoctorViewingPatients=()=>{
 
     return (
         <div className="container">
-            <div className="card mt-5 mx-auto" style={{width:"60%"}}>
+            <div className="card mt-5 mx-auto" style={{ width: "60%" }}>
                 <div className="card-header">
-                <h3>My Patients</h3>
+                    <h3>My Patients</h3>
                 </div>
                 <div className="card-body">
-                <div className="list-group">
-                {displayPatientRecords()}
+                    <div className="list-group">
+                        {displayPatientRecords()}
+                    </div>
                 </div>
-                </div>   
             </div>
         </div>
     )
