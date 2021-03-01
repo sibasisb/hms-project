@@ -6,7 +6,7 @@ const MenuComponent = () => {
     return (
         <div>
             <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
-                <Link to="Companies" className="navbar-brand">
+                <Link to="/" className="navbar-brand">
                     HM System
         </Link>
                 <button

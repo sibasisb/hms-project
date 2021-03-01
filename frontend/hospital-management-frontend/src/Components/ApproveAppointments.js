@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import ApproveAppointmentCard from "./ApproveAppointmentCard";
 
@@ -34,13 +35,14 @@ const ApproveAppointments = () => {
 	const [appointments, setAppointments] = useState([]);
 
 	useEffect(() => {
-		// for doctor
-		const doctorId = "DOC0999";
-		const url = `http://localhost:8080/appointments/view/doctor/${doctorId}`;
+		let url = "";
+		const serviceId = localStorage.getItem("userId");
 
-		// for hospital admin
-		// const hospitalAdminId = "HAD0998";
-		// const url = `http://localhost:8080/appointments/view/facility/${hospitalAdminId}`;
+		if (localStorage.getItem("role") == "doctor") {
+			url = `http://localhost:8080/appointments/view/doctor/${serviceId}`;
+		} else {
+			url = `http://localhost:8080/appointments/view/facility/${serviceId}`;
+		}
 
 		axios
 			.get(url)

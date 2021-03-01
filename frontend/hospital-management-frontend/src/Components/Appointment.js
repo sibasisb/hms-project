@@ -307,7 +307,7 @@ const Appointment = () => {
 								}
 							/>
 						</div>
-						<div className="form-group">
+						{/* <div className="form-group">
 							<label htmlFor="remarks">Medical Records</label>
 							<div className="custom-file">
 								<input
@@ -323,7 +323,7 @@ const Appointment = () => {
 									Choose file
 								</label>
 							</div>
-						</div>
+						</div> */}
 						{type != "" ? (
 							type === "doctor" ? (
 								<div className="form-group">
@@ -349,7 +349,7 @@ const Appointment = () => {
 												key={doctor.doctorId}
 												value={doctor.doctorId}
 											>
-												{`${doctor.user.firstName}  ${doctor.user.lastName} - ${doctor.speciality} Specialist`}
+												{`${doctor.name} - ${doctor.speciality} Specialist`}
 											</option>
 										))}
 									</select>
