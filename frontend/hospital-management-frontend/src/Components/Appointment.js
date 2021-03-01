@@ -27,7 +27,7 @@ const Appointment = () => {
 	const [appointmentDate, setAppointmentDate] = useState("");
 	const [appointmentTime, setAppointmentTime] = useState("");
 	const [remarks, setRemarks] = useState("");
-	const [report, setReport] = useState();
+	const [report, setReport] = useState(undefined);
 
 	const [doctor, setDoctor] = useState("");
 	const [facility, setFacility] = useState("");
@@ -45,30 +45,40 @@ const Appointment = () => {
 	const { patientId } = useParams();
 
 	useEffect(() => {
-		axios.get("http://localhost:8080/hospitals").then((res) => {
-			setHospitals(res.data);
-		}).catch((error) => console.log(error));
-	}, [])
+		axios
+			.get("http://localhost:8080/hospitals")
+			.then((res) => {
+				setHospitals(res.data);
+			})
+			.catch((error) => console.log(error));
+	}, []);
 
 	useEffect(() => {
-		if(hospital !== '' && type != '') {
-			if(type === 'doctor') {
+		if (hospital !== "" && type != "") {
+			if (type === "doctor") {
 				// add this to db before testing
-				// DOCTOR_ID  	HOSPITAL_ID  
+				// DOCTOR_ID  	HOSPITAL_ID
 				// DOC0999	HOS0995
 				// by using: INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0999', 'HOS0995');
 
-				axios.get(`http://localhost:8080/hospitals/doctors/${hospital}`).then((res) => {
-					setDoctors(res.data);
-				}).catch((error) => console.log(error));
-			}
-			else {
-				axios.get(`http://localhost:8080/hospitals/facilities/${hospital}`).then((res) => {
-					setFacilities(res.data);
-				}).catch((error) => console.log(error));
+				axios
+					.get(`http://localhost:8080/hospitals/doctors/${hospital}`)
+					.then((res) => {
+						setDoctors(res.data);
+					})
+					.catch((error) => console.log(error));
+			} else {
+				axios
+					.get(
+						`http://localhost:8080/hospitals/facilities/${hospital}`
+					)
+					.then((res) => {
+						setFacilities(res.data);
+					})
+					.catch((error) => console.log(error));
 			}
 		}
-	}, [hospital, type])
+	}, [hospital, type]);
 
 	const validateFields = () => {
 		let areThereErrors = false;
@@ -113,21 +123,36 @@ const Appointment = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		console.log({
-			patientId,
-			type,
-			hospital,
-			appointmentDate,
-			appointmentTime,
-			remarks,
-			report,
-			doctor,
-			facility,
-		});
+		// console.log({
+		// 	patientId,
+		// 	type,
+		// 	hospital,
+		// 	appointmentDate,
+		// 	appointmentTime,
+		// 	remarks,
+		// 	report,
+		// 	doctor,
+		// 	facility,
+		// });
 
 		if (!validateFields()) {
-			setValidate(true);
-			// TODO: Add REST implementation
+			const serviceId = type == "doctor" ? doctor : facility;
+			const payload = {
+				appointmentDate: appointmentDate,
+				appointmentTime: appointmentTime,
+				remarks: remarks,
+				medicalRecords: null,
+			};
+			axios
+				.post(
+					`http://localhost:8080/appointments/${patientId}/${hospital}/${serviceId}`,
+					payload
+				)
+				.then((res) => {
+					if (res.status == 201) setValidate(true);
+					else setValidate(false);
+				})
+				.catch((error) => console.log(error));
 		}
 	};
 
@@ -299,64 +324,78 @@ const Appointment = () => {
 								</label>
 							</div>
 						</div>
-						{type != '' ? (type === "doctor") ? (
-							<div className="form-group">
-								<label htmlFor="doctor_name">Doctor</label>
-								<select
-									className={
-										error.additional
-											? "is-invalid form-control"
-											: "form-control"
-									}
-									id="doctor_name"
-									value={doctor}
-									onChange={(event) =>
-										setDoctor(event.target.value)
-									}
-								>
-									<option value=""> choose a doctor </option>
-									{doctors.map((doctor) => (
-										<option
-											key={doctor.doctorId}
-											value={doctor.doctorId}
-										>
-											{`${doctor.user.firstName}  ${doctor.user.lastName} - ${doctor.speciality} Specialist`}
+						{type != "" ? (
+							type === "doctor" ? (
+								<div className="form-group">
+									<label htmlFor="doctor_name">Doctor</label>
+									<select
+										className={
+											error.additional
+												? "is-invalid form-control"
+												: "form-control"
+										}
+										id="doctor_name"
+										value={doctor}
+										onChange={(event) =>
+											setDoctor(event.target.value)
+										}
+									>
+										<option value="">
+											{" "}
+											choose a doctor{" "}
 										</option>
-									))}
-								</select>
-							</div>
+										{doctors.map((doctor) => (
+											<option
+												key={doctor.doctorId}
+												value={doctor.doctorId}
+											>
+												{`${doctor.user.firstName}  ${doctor.user.lastName} - ${doctor.speciality} Specialist`}
+											</option>
+										))}
+									</select>
+								</div>
+							) : (
+								<div className="form-group">
+									<label htmlFor="facility_name">
+										Facilities
+									</label>
+									<select
+										className={
+											error.additional
+												? "is-invalid form-control"
+												: "form-control"
+										}
+										id="facility_name"
+										value={facility}
+										onChange={(event) =>
+											setFacility(event.target.value)
+										}
+									>
+										<option value="">
+											choose an facility
+										</option>
+										{facilities.map((facility) => (
+											<option
+												key={
+													facility.hospitalFacilityId
+												}
+												value={
+													facility.hospitalFacilityId
+												}
+											>
+												{facility.facility.name}
+											</option>
+										))}
+									</select>
+								</div>
+							)
 						) : (
-							<div className="form-group">
-								<label htmlFor="facility_name">
-									Facilities
-								</label>
-								<select
-									className={
-										error.additional
-											? "is-invalid form-control"
-											: "form-control"
-									}
-									id="facility_name"
-									value={facility}
-									onChange={(event) =>
-										setFacility(event.target.value)
-									}
-								>
-									<option value="">
-										choose an facility
-									</option>
-									{facilities.map((facility) => (
-										<option
-											key={facility.hospitalFacilityId}
-											value={facility.hospitalFacilityId}
-										>
-											{facility.facility.name}
-										</option>
-									))}
-								</select>
+							<div className="text text-danger mb-3">
+								{" "}
+								Please choose your type of appointment{" "}
 							</div>
-						) : <div className="text text-danger mb-3"> Please choose your type of appointment </div>}
-						
+						)}
+
 						<input type="submit" className="btn btn-primary" />
 					</form>
 				</div>
