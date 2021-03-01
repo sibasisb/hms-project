@@ -90,7 +90,6 @@ export const LoginComponent = (props) => {
                         role: res.data.role,
                     }
                     if (res.data.role === "hospital admin") {
-
                         axios.get(`http://localhost:8080//hospitaladmin/${res.data.userId}`)
                             .then(res => {
                                 console.log(res)
@@ -170,8 +169,8 @@ export const LoginComponent = (props) => {
                             type: "LOGIN",
                             payload: {
                                 userId: res.data.userId,
-                                token: res.data.token,
-                                role: res.data.role,
+                                token: res.data,
+                                role: "admin",
                             }
                         }
                     )
