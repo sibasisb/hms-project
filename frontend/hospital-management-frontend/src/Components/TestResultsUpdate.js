@@ -41,7 +41,7 @@ const TestResultsUpdate=()=>{
         <div className="container">
             <div className="card mt-5 mx-auto" style={{width:"60%"}}>
                 <div className="card-header">
-                <h3>Requests for facilities</h3>
+                <h3>Update test results</h3>
                 </div>
                 <div className="card-body">
                 <div className="list-group">

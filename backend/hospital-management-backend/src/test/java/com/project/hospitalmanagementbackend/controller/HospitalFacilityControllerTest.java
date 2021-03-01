@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.project.hospitalmanagementbackend.dto.HospitalFacilityInfo;
 import com.project.hospitalmanagementbackend.model.HospitalFacility;
 import com.project.hospitalmanagementbackend.service.HospitalFacilityService;
 import static org.mockito.Mockito.when;
@@ -46,5 +48,14 @@ public class HospitalFacilityControllerTest {
 		when(hospitalFacilityService.getFacilitiesHospitalId(hospitalAdminId)).thenReturn(hospitalFacilityList);
 		assertEquals(new ResponseEntity<>(hospitalFacilityList,HttpStatus.OK),hospitalFacilityController.getTestFacilities(hospitalAdminId));
 	}
+	
+	@Test
+	public void testGetHospitalFacility() {
+		
+		HospitalFacilityInfo hospitalFacilityInfo = new HospitalFacilityInfo();
+		when(hospitalFacilityService.getHospitalFacilityById(1L)).thenReturn(hospitalFacilityInfo);
+		assertEquals(new ResponseEntity<>(hospitalFacilityInfo,HttpStatus.OK), hospitalFacilityController.getHospitalFacilityById(1L));
+	}
+	
 
 }

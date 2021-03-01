@@ -13,7 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.project.hospitalmanagementbackend.dto.HospitalFacilityInfo;
 import com.project.hospitalmanagementbackend.exception.FacilityNotFoundException;
+import com.project.hospitalmanagementbackend.exception.HospitalFacilityNotFoundException;
 import com.project.hospitalmanagementbackend.model.Facility;
 import com.project.hospitalmanagementbackend.model.Hospital;
 import com.project.hospitalmanagementbackend.model.HospitalFacility;
@@ -88,6 +90,30 @@ public class HospitalFacilityServiceTest {
 		when(hospitalFacilityRepository.findById(1L)).thenReturn(Optional.of(hospitalFacility));
 		when(hospitalFacilityRepository.save(hospitalFacility)).thenReturn(hospitalFacility);
 		assertThrows(FacilityNotFoundException.class,()->hospitalFacilityService.updateHospitalFacility(hospitalFacility,"hId",2L));
+	}
+	
+	@Test
+	void testGetHospitalFacilityById() {
+		
+		Facility facility = new Facility(1L,"name",new ArrayList<>());
+		HospitalFacility hospitalFacility = new HospitalFacility();
+		hospitalFacility.setFacility(facility);
+		HospitalFacilityInfo hospitalFacilityInfo = new HospitalFacilityInfo();
+		hospitalFacilityInfo.setFacilityName("name");
+		when(hospitalFacilityRepository.findById(1L)).thenReturn(Optional.of(hospitalFacility));
+		assertEquals(hospitalFacilityInfo.getFacilityName(),hospitalFacilityService.getHospitalFacilityById(1l).getFacilityName());
+	}
+	
+	@Test
+	void testGetHospitalFacilityByIdFailure() {
+		
+		Facility facility = new Facility(1L,"name",new ArrayList<>());
+		HospitalFacility hospitalFacility = new HospitalFacility();
+		hospitalFacility.setFacility(facility);
+		HospitalFacilityInfo hospitalFacilityInfo = new HospitalFacilityInfo();
+		hospitalFacilityInfo.setFacilityName("name");
+		when(hospitalFacilityRepository.findById(1L)).thenReturn(Optional.of(hospitalFacility));
+		assertThrows(HospitalFacilityNotFoundException.class,()->hospitalFacilityService.getHospitalFacilityById(2L).getFacilityName());
 	}
 	
 
