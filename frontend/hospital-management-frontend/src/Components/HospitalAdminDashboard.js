@@ -8,6 +8,7 @@ import result from '../images/testresult.png'
 import facility from '../images/facility.png'
 import inpatient from '../images/inpatient.png'
 import '../styles/mystyle.css'
+import {Link} from 'react-router-dom'
 
 function HospitalAdminDashboard() {
     const imageStyle={
@@ -34,12 +35,24 @@ function HospitalAdminDashboard() {
                 </div>
                 </div>
                 <div className="col-md-4">
+                <Link to={"/testresults"}>
                 <div class="card    m-4" >
                     <img class="card-img-top  embed-responsive-item" src={result} alt="Card image cap" style={imageStyle}/>
                     <div class="card-body">
-                        <p class="card-text font-weight-bold">View Test Results</p>
+                        <p class="card-text font-weight-bold">Update Test Results</p>
                     </div>
                 </div>
+                </Link>
+                </div>
+                <div className="col-md-4">
+                <Link to={"/testsinformation"}>
+                <div class="card    m-4" >
+                    <img class="card-img-top  embed-responsive-item" src={result} alt="Card image cap" style={imageStyle}/>
+                    <div class="card-body">
+                        <p class="card-text font-weight-bold">View all facilities</p>
+                    </div>
+                </div>
+                </Link>
                 </div>
                
             </div>
