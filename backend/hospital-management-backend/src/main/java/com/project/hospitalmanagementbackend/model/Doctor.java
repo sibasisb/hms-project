@@ -35,7 +35,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @JsonIgnoreProperties(value = { "hospital" })
 public class Doctor {
 

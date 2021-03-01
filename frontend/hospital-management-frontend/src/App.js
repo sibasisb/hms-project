@@ -34,6 +34,9 @@ import PatientTreatmentHistory from "./Components/PatientTreatmentHistory";
 import ProtectedRoute from "./helpers/ProtectedRoute";
 import { roles } from "./helpers/Roles";
 import Unauthorized from "./helpers/Unauthorized";
+import ViewAppointment from "./Components/ViewAppointment";
+import ApproveAppointments from "./Components/ApproveAppointments";
+import Notification from "./Components/Notification";
 
 export const UserContext = createContext();
 
@@ -77,6 +80,17 @@ const Routing = () => {
       <Route path="/inpatientlist" exact component={InPatientUpdateListComponent} />
       <Route path="/billing" exact component={BillingComponent} />
       <Route path="/unauthorized" exact component={Unauthorized}></Route>
+      <Route path="/addfacility/:id" component={FacilityAddUpdateComponent} />
+      <Route path="/updatefacility" component={FacilityUpdateList} />
+      <Route path="/view-appointment/:patientId">
+        <ViewAppointment />
+      </Route>
+      <Route path="/approve-appointment/:serviceId">
+        <ApproveAppointments />
+      </Route>
+      <Route path="/notifications/:patientId">
+        <Notification />
+      </Route>
     </Switch>
   );
 };
