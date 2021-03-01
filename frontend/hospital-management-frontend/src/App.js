@@ -66,22 +66,20 @@ const Routing = () => {
       <ProtectedRoute roles={[roles.hospital_admin]} path="/hospitaladmindashboard" exact component={HospitalAdminDashboard} />
       <ProtectedRoute roles={[roles.sys_admin]} path="/admindashboard" exact component={SystemAdminDashboard} />
       <ProtectedRoute roles={[roles.doctor]} path="/addtreatmenthistory" exact component={PatientTreatmentHistory} />
-      <ProtectedRoute roles={[]} path="/addfacility" exact component={FacilityAddUpdateComponent} />
-      <ProtectedRoute roles={[]} path="/addfacility/:id" exact component={FacilityAddUpdateComponent} />
-      <ProtectedRoute roles={[]} path="/updatefacility" exact component={FacilityUpdateList} />
+      <ProtectedRoute roles={[roles.hospital_admin]} path="/addfacility" exact component={FacilityAddUpdateComponent} />
+      <ProtectedRoute roles={[roles.hospital_admin]} path="/addfacility/:id" exact component={FacilityAddUpdateComponent} />
+      <ProtectedRoute roles={[roles.hospital_admin]} path="/updatefacility" exact component={FacilityUpdateList} />
       <ProtectedRoute roles={[roles.patient]} path="/hospitals"  exact component={AllHospitalsListComponent} />
-      <ProtectedRoute roles={[]} path="/viewhospital/:id" exact exact component={HospitalDetailsComponent} />
-      <ProtectedRoute roles={[]} path="/facilities/:id"  exact component={AllFacilitiesDocotorsComponent} />
-      <ProtectedRoute roles={[]} path="/doctors/:id"  exact component={AllFacilitiesDocotorsComponent} />
-      <ProtectedRoute roles={[]} path="/viewfacility/:id" exact component={FacilityDoctorDetailsComponent} />
-      <ProtectedRoute roles={[]} path="/viewdoctor/:id" exact component={FacilityDoctorDetailsComponent} />
-      <ProtectedRoute roles={[]} path="/inpatientform" exact component={InPatientFormComponent} />
-      <ProtectedRoute roles={[]} path="/inpatientform/:id" exact component={InPatientFormComponent} />
-      <ProtectedRoute roles={[]} path="/inpatientlist" exact component={InPatientUpdateListComponent} />
-      <ProtectedRoute roles={[]} path="/billing" exact component={BillingComponent} />
+      <ProtectedRoute roles={[roles.patient]} path="/viewhospital/:id" exact exact component={HospitalDetailsComponent} />
+      <ProtectedRoute roles={[roles.patient]} path="/facilities/:id"  exact component={AllFacilitiesDocotorsComponent} />
+      <ProtectedRoute roles={[roles.patient]} path="/doctors/:id"  exact component={AllFacilitiesDocotorsComponent} />
+      <ProtectedRoute roles={[roles.patient]} path="/viewfacility/:id" exact component={FacilityDoctorDetailsComponent} />
+      <ProtectedRoute roles={[roles.patient]} path="/viewdoctor/:id" exact component={FacilityDoctorDetailsComponent} />
+      <ProtectedRoute roles={[roles.hospital_admin]} path="/inpatientform" exact component={InPatientFormComponent} />
+      <ProtectedRoute roles={[roles.hospital_admin]} path="/inpatientform/:id" exact component={InPatientFormComponent} />
+      <ProtectedRoute roles={[roles.hospital_admin]} path="/inpatientlist" exact component={InPatientUpdateListComponent} />
+      <ProtectedRoute roles={[roles.hospital_admin]} path="/billing" exact component={BillingComponent} />
       <ProtectedRoute roles={[roles.patient,roles.doctor,roles.hospital_admin,roles.sys_admin]} path="/unauthorized" exact component={Unauthorized} />
-      <ProtectedRoute roles={[]} path="/addfacility/:id" component={FacilityAddUpdateComponent} />
-      <ProtectedRoute roles={[]} path="/updatefacility" component={FacilityUpdateList} />
       <ProtectedRoute roles={[roles.patient]} path="/view-appointment/:patientId" exact component={ViewAppointment} />
       <ProtectedRoute roles={[roles.doctor, roles.hospital_admin]} path="/approve-appointment/:serviceId" exact component={ApproveAppointments} />
       <ProtectedRoute roles={[roles.patient]} path="/notifications/:patientId" exact component={Notification} />
