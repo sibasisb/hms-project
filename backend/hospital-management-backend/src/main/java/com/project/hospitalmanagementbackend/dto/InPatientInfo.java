@@ -1,7 +1,8 @@
 package com.project.hospitalmanagementbackend.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,8 +22,10 @@ public class InPatientInfo {
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private LocalDateTime admissionDate;
-	private LocalDateTime dischargeDate;
+	private LocalDate admissionDate;
+	private LocalTime admissionTime;
+	private LocalDate dischargeDate;
+	private LocalTime dischargeTime;
 	private BigDecimal roomCharges;
 	private boolean paid;
 

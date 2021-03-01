@@ -32,7 +32,7 @@ public class HospitalFacilityController {
 			@PathVariable("hospitalId") String hospitalId,@PathVariable("facilityId") long facilityId) {
 		return new ResponseEntity<>(hospitalFacilityService.updateHospitalFacility(hospitalFacility,hospitalId,facilityId), HttpStatus.OK);
 	}
-
+	
 	@GetMapping("/{hospitalAdminId}")
 	public ResponseEntity<?> getTestFacilities(@PathVariable("hospitalAdminId") String hospitalAdminId) {
 		List<HospitalFacility> hospitalFacilities = hospitalFacilityService.getFacilitiesHospitalId(hospitalAdminId);

@@ -50,10 +50,10 @@ public class BillingService {
 			BillingInfo billingInfo = new BillingInfo();
 			billingInfo.setPatientId(appointment.getPatient().getPatientId());
 			billingInfo.setPatientName(appointment.getPatient().getUser().getFirstName()
-					+ appointment.getPatient().getUser().getLastName());
+					+" "+ appointment.getPatient().getUser().getLastName());
 			if (appointment.getDoctor() != null) {
 				billingInfo.setDoctorName(appointment.getDoctor().getUser().getFirstName()
-						+ appointment.getDoctor().getUser().getLastName());
+						+" "+ appointment.getDoctor().getUser().getLastName());
 				billingInfo.setDoctorCharge(appointment.getDoctor().getCharge());
 			}
 
@@ -68,7 +68,7 @@ public class BillingService {
 			BillingInfo billingInfo = new BillingInfo();
 			billingInfo.setPatientId(inPatient.getPatient().getPatientId());
 			billingInfo.setPatientName(
-					inPatient.getPatient().getUser().getFirstName() + inPatient.getPatient().getUser().getLastName());
+					inPatient.getPatient().getUser().getFirstName() +" "+ inPatient.getPatient().getUser().getLastName());
 			billingInfo.setAdmissionDate(inPatient.getAdmissionDate());
 			billingInfo.setDischargeDate(inPatient.getDischargeDate());
 			billingInfo.setRoomCharges(inPatient.getRoomCharges());

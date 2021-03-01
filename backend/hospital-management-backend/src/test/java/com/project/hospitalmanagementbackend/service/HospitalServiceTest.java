@@ -1,5 +1,7 @@
 package com.project.hospitalmanagementbackend.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -12,12 +14,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.project.hospitalmanagementbackend.dto.HospitalInfo;
 import com.project.hospitalmanagementbackend.exception.HospitalNotFoundException;
+import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Hospital;
+import com.project.hospitalmanagementbackend.model.HospitalFacility;
+import com.project.hospitalmanagementbackend.model.User;
 import com.project.hospitalmanagementbackend.repository.HospitalRepository;
 
 @SpringBootTest
@@ -67,17 +70,27 @@ public class HospitalServiceTest {
 	void testGetHospitalFacilities() {
 		
 		Hospital hospital = new Hospital();
+		HospitalFacility hospitalFacility= new HospitalFacility();
+		Set<HospitalFacility> hospitalFacilityList= new HashSet<HospitalFacility>();
+		hospitalFacilityList.add(hospitalFacility);
+		hospital.setHospitalFacilities(hospitalFacilityList);
 		when(hospitalRepository.getHospitalById("hId")).thenReturn(Optional.of(hospital));
-		assertEquals(hospital, hospitalService.getHospitalById("hId"));
+		assertEquals(hospitalFacilityList.size(), hospitalService.getHospitalFacilities("hId").size());
 		
 	}
 	
 	@Test
 	void testGetHospitalDoctors() {
 		
+		User user = new User(null,"f","l",null,"","","","","");
 		Hospital hospital = new Hospital();
+		Doctor doctor = new Doctor();
+		doctor.setUser(user);
+		Set<Doctor> doctorList = new HashSet<Doctor>();
+		doctorList.add(doctor);
+		hospital.setDoctors(doctorList);
 		when(hospitalRepository.getHospitalById("hId")).thenReturn(Optional.of(hospital));
-		assertEquals(hospital, hospitalService.getHospitalById("hId"));
+		assertEquals(doctorList.size(), hospitalService.getHospitalDoctors("hId").size());
 		
 	}
 	

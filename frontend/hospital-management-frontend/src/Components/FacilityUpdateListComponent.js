@@ -1,13 +1,34 @@
-import React, { Component } from 'react';
-import {Link} from 'react-router-dom'
+import React, { Component,useEffect,useState } from 'react';
+import {Link} from 'react-router-dom';
+import axios from 'axios';
+import { faList, faPen } from "@fortawesome/free-solid-svg-icons";
+
+const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
 const FacilityUpdateList = () => {
-    const facilityList=[
-        {facility_id:"F001" ,facility_name:"XRay"},
-        {facility_id:"F002",facility_name:"ECG"},
-        {facility_id:"F003",facility_name:"Blood Test"},
-        {facility_id:"F004",facility_name:"Physiotherapy"}
-]
+    
+    const [facilityList, setFacilityList] = useState([]);
+    const [display, setDisplay] = useState(false);
+    useEffect(() => {
+        
+        axios.get("http://localhost:8080/hospitals/facilities/HOS0995")
+        .then(res=>{
+            console.log(res.data);
+            setFacilityList(res.data);
+            setDisplay(true);
+        })
+        .catch(err=>console.log(err));
+
+      },[]);
+    if(display===true && facilityList.length===0)
+      return(
+        <div className="container">
+            <div className="alert alert-danger mt-5" role="alert">
+                <h3>No Facilities available at your hospital yet!</h3>
+            </div>
+        </div>
+      );
+    else
     return ( 
         <div className="container">
 
@@ -20,13 +41,14 @@ const FacilityUpdateList = () => {
                     <ul className="list-group" >
                         
                         {
-                            facilityList.map((facility)=>{
-                                let link = "/addfacility/"+facility.facility_id;
+                            facilityList.map((hospitalFacility)=>{
+                                let link = "/addfacility/"+hospitalFacility.hospitalFacilityId;
                                 console.log(link);
                                 return(
-                                    <li key={facility.facility_id} className="list-group-item">
-                                        <Link to={link} className="h5 text-muted" style={{textDecoration:"none"}}>{facility.facility_name}</Link>
-                                        <i className="material-icons float-right">create</i>
+                                    <li key={hospitalFacility.hospitalFacilityId} className="list-group-item">
+                                        <span className="h5 text-muted">{hospitalFacility.facility.name}</span>
+                                        <Link to={link} className="float-right text-black" > <FontAwesomeIcon style={{color:"black"}} icon={faPen} /></Link>
+                                       
                                     </li>
                                 )})
                         }
