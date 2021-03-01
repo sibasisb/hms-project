@@ -116,6 +116,7 @@ public class UserService {
 		{
 			Doctor doctor=userInfo.getDoctor();
 			doctor.setUser(userInfo.getUser());
+			System.out.println(userInfo.getHospital().getHospitalId());
 			doctor.getHospital().add(hospitalRepository.findById(userInfo.getHospital().getHospitalId()).get());
 			Doctor savedDoctor = doctorRepository.save(doctor);
 			userId=savedDoctor.getDoctorId();

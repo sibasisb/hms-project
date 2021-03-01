@@ -13,9 +13,9 @@ function PatientForm(props) {
     console.log(props.errors);
     console.log(props.state)
     const initialState = {
-        fName: "",
-        lName: "",
-        dob: "",
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
         contact: "",
         gender: "male",
         email: "",
@@ -45,20 +45,20 @@ function PatientForm(props) {
             <div className="row">
                 <div className="form-group col-md-6">
                     <label htmlFor="inputFName">First Name</label>
-                    <input type="text" className="form-control" name="fName" placeholder="First name" style={props.errors?.fName ? error : noerror} onChange={changeValue} />
-                    <small className="text-danger">{props.errors?.fName}</small>
+                    <input type="text" className="form-control" name="firstName" placeholder="First name" style={props.errors?.firstName ? error : noerror} onChange={changeValue} />
+                    <small className="text-danger">{props.errors?.firstName}</small>
                 </div>
                 <div className="form-group col-md-6">
                     <label htmlFor="inputLName">Last Name</label>
-                    <input type="text" className="form-control" name="lName" placeholder="Last name" style={props.errors?.lName ? error : noerror} onChange={changeValue} />
-                    <small className="text-danger">{props.errors?.lName}</small>
+                    <input type="text" className="form-control" name="lastName" placeholder="Last name" style={props.errors?.lastName ? error : noerror} onChange={changeValue} />
+                    <small className="text-danger">{props.errors?.lastName}</small>
                 </div>
             </div>
             <div className="row">
                 <div className="form-group col-md-6">
                     <label htmlFor="inputDOB">Date of Birth</label>
-                    <input type="date" className="form-control" name="dob" placeholder="Date of Birth" style={props.errors?.dob ? error : noerror} onChange={changeValue} />
-                    <small className="text-danger">{props.errors?.dob}</small>
+                    <input type="date" className="form-control" name="dateOfBirth" placeholder="Date of Birth" style={props.errors?.dateOfBirth ? error : noerror} onChange={changeValue} />
+                    <small className="text-danger">{props.errors?.dateOfBirth}</small>
                 </div>
                 <div className="form-group col-md-6">
                     <label htmlFor="inputContact">Contact Number</label>

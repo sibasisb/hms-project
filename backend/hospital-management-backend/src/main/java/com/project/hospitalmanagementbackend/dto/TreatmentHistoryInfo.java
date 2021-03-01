@@ -16,6 +16,7 @@ import lombok.ToString;
 @ToString
 public class TreatmentHistoryInfo {
 
+	long treatmentId;
 	String patientName;
 	int age;
 	String gender;

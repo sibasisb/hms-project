@@ -37,6 +37,7 @@ public class UserController {
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@RequestBody UserInfo userInfo) {
 		// TODO Auto-generated method stub
+		System.out.println("in controller");
 		return new ResponseEntity<>(userService.register(userInfo), HttpStatus.OK);
 	}
 

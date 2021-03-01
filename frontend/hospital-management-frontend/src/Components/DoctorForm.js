@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import MultiSelect from "react-multi-select-component";
 //import { Multiselect } from 'multiselect-react-dropdown';
@@ -17,15 +18,30 @@ function DoctorForm(props) {
         speciality: "",
         experience: "",
         quality: "",
-        hospitalName: "",
+        hospitalID: "",
         dates: [],
         startTime: "",
         endTime: "",
         charge:""
     }
+
+    const [hospitals,setHospitalsInfo]=useState([]);
+
     const [state,
         setstate] = useState(initialState)
 
+        useEffect(()=>
+        {
+            axios.get("http://localhost:8080/hospitals")
+            .then(res=>
+                {
+                    console.log(res.data);
+                    setHospitalsInfo(res.data)
+                }).catch(err=>
+                    {
+                        console.log(err);
+                    })
+        },[] )
     useEffect(() => {
 
         props.changeDoctorDetails(state)
@@ -57,6 +73,8 @@ function DoctorForm(props) {
             [event.target.name]: event.target.value
         })
     }
+
+    
     return (
         <div>
 
@@ -98,11 +116,15 @@ function DoctorForm(props) {
                     <select
                         id="inputState"
                         className="form-control"
-                        name="hospitalName"
-                        style={props.errors?.hospitalName ? error : noerror}
+                        name="hospitalID"
+                        style={props.errors?.hospitalID ? error : noerror}
+                        //value={state.hospitalID}
                         onChange={changeValue}>
                         <option value="" defaultValue>Choose</option>
-                        <option value="any">Hospital 1</option>
+                        {hospitals.map(hospitalInfo=>{
+                            console.log(hospitalInfo.hospitalId);
+                           return <option key={hospitalInfo.hospitalId} value={hospitalInfo.hospitalId}>{hospitalInfo.name}</option>
+})}
                     </select>
 
                 </div>
