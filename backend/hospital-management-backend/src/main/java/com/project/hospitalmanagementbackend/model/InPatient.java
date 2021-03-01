@@ -1,7 +1,8 @@
 package com.project.hospitalmanagementbackend.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,10 +41,16 @@ public class InPatient {
 	private Hospital hospital;
 	
 	@Column(name="admission_date")
-	private LocalDateTime admissionDate;
+	private LocalDate admissionDate;
+	
+	@Column(name="admission_time")
+	private LocalTime admissionTime;
 	
 	@Column(name="discharge_date")
-	private LocalDateTime dischargeDate;
+	private LocalDate dischargeDate;
+	
+	@Column(name="discharge_time")
+	private LocalTime dischargeTime;
 	
 	@Column(name="room_charges")
 	private BigDecimal roomCharges;

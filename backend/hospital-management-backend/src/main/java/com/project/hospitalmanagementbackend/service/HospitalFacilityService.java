@@ -1,12 +1,14 @@
 package com.project.hospitalmanagementbackend.service;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.hospitalmanagementbackend.exception.FacilityNotFoundException;
 import com.project.hospitalmanagementbackend.model.Facility;
 import com.project.hospitalmanagementbackend.model.Hospital;
 import com.project.hospitalmanagementbackend.model.HospitalFacility;
@@ -57,8 +59,10 @@ public class HospitalFacilityService {
 			hospitalFacilityRepository.save(hospitalFacility);
 			return "Facility Updated Successfully!";
 		} else
-			throw new RuntimeException("Facility Not Found!");
+			throw new FacilityNotFoundException("Facility Not Found!");
 
 	}
+	
+	
 
 }

@@ -15,8 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.project.hospitalmanagementbackend.dto.DoctorInfo;
 import com.project.hospitalmanagementbackend.dto.HospitalInfo;
-import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Hospital;
 import com.project.hospitalmanagementbackend.model.HospitalFacility;
 import com.project.hospitalmanagementbackend.service.HospitalService;
@@ -55,9 +55,9 @@ public class HospitalControllerTest {
 	
 	@Test 
 	void testGetHospitalDoctors(){
-		 Set<Doctor> hospitalDoctors = new HashSet<>();
+		 List<DoctorInfo> hospitalDoctors = new ArrayList<>();
 		 when(hospitalService.getHospitalDoctors("hId")).thenReturn(hospitalDoctors);
-		 assertEquals(new ResponseEntity<>(hospitalDoctors,HttpStatus.OK), hospitalController.getHospitalFacilities("hId"));
+		 assertEquals(new ResponseEntity<>(hospitalDoctors,HttpStatus.OK), hospitalController.getHospitalDocotors("hId"));
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.project.hospitalmanagementbackend.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,16 +13,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BillingInfo {
+public class HospitalFacilityInfo {
 
-	private String patientId;
-	private String patientName;
-	private LocalDate admissionDate;
-	private LocalDate dischargeDate;
-	private BigDecimal roomCharges;
+	private long hospitalFacilityId;
 	private String facilityName;
-	private String doctorName;
-	private BigDecimal facilityCharge;
-	private BigDecimal doctorCharge;
+	private String description;
+	private String remarks;
+	private BigDecimal charges;
 
 }

@@ -32,11 +32,31 @@ insert into review_questionnaire values(2, 'On a scale of 1-5,how good was the h
 
 -- insert into facility table
 insert into facility values(1,'Thyroid Test');
+insert into facility values(2,'Dental facility');
+insert into facility values(3,'Ward/ In Patient facility');
+insert into facility values(4,'Minor OT/ Dressing Room');
+insert into facility values(5,'Physiotherapy');
+insert into facility values(6,'ECG Services');
+insert into facility values(7,'Blood Sugar Test');
+insert into facility values(8,'Radiology/X-ray facility');
+insert into facility values(9,'Lipid Profile Test');
+
 
 -- insert into baselines table
 insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(1,'TSH','0.40 - 4.50 mIU/mL',1);
 insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(2,'T3','100 - 200 ng/dL',1);
 insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(3,'T4','5.0 – 11.0 ug/dL',1);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(4,'Fasting','< 100 mg/dl',7);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(5,'PP','< 140 mg/dl',7);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(6,'LDL','< 70 mg/dL',9);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(7,'HDL','> 60 mg/dL',9);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(8,'Triglyceride','< 150 mg/dL',9);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(9,'remarks','none',2);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(10,'remarks','none',3);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(11,'remarks','none',4);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(12,'remarks','none',5);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(13,'remarks','none',6);
+insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(14,'remarks','none',8);
 
 -- insert into patient table
 insert into patient(patient_id,user_id) values('PAT99996',1);

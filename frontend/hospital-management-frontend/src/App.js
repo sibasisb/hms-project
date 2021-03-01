@@ -19,6 +19,13 @@ import TestInfoDocView from "./Components/TestInfoDocView";
 import AddReviewQuestion from "./Components/AddReviewQuestion";
 import PatientReview from "./Components/PatientReview";
 import TreatmentHistoryPatient from "./Components/TreatmentHistoryPatient";
+import AllHospitalsListComponent from "./Components/AllHospitalsListComponent";
+import HospitalDetailsComponent from "./Components/HospitalDetailsComponent";
+import AllFacilitiesDocotorsComponent  from "./Components/AllfacilitiesDoctorsListComponent";
+import FacilityDoctorDetailsComponent from "./Components/FacilityDoctorDetailsComponent";
+import InPatientFormComponent from "./Components/InPatientAddUpdateComponent";
+import InPatientUpdateListComponent from "./Components/InPatientUpdateListComponent";
+import BillingComponent from "./Components/BillingComponent";
 
 export const UserContext = createContext();
 
@@ -67,6 +74,16 @@ const Routing = () => {
       <Route path="/addfacility" exact component={FacilityAddUpdateComponent} />
       <Route path="/addfacility/:id" component={FacilityAddUpdateComponent} />
       <Route path="/updatefacility" component={FacilityUpdateList} />
+      <Route path="/hospitals"  component={AllHospitalsListComponent} />
+      <Route path="/viewhospital/:id" exact component={HospitalDetailsComponent} />
+      <Route path="/facilities/:id"  component={AllFacilitiesDocotorsComponent} />
+      <Route path="/doctors/:id"  component={AllFacilitiesDocotorsComponent} />
+      <Route path="/viewfacility/:id" exact component={FacilityDoctorDetailsComponent} />
+      <Route path="/viewdoctor/:id" exact component={FacilityDoctorDetailsComponent} />
+      <Route path="/inpatientform" exact component={InPatientFormComponent} />
+      <Route path="/inpatientform/:id" component={InPatientFormComponent} />
+      <Route path="/inpatientlist" exact component={InPatientUpdateListComponent} />
+      <Route path="/billing" component={BillingComponent} />
     </Switch>
   );
 };

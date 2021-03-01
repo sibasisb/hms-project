@@ -1,6 +1,7 @@
 package com.project.hospitalmanagementbackend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.project.hospitalmanagementbackend.dto.InPatientInfo;
+import com.project.hospitalmanagementbackend.exception.InPatientNotFoundException;
 import com.project.hospitalmanagementbackend.model.Hospital;
 import com.project.hospitalmanagementbackend.model.InPatient;
 import com.project.hospitalmanagementbackend.model.Patient;
@@ -41,7 +43,7 @@ public class InPatientServiceTest {
 		
 		User user = new User(1L,"f","l",null,null,"female","","","");
 		Patient p = new Patient("PAT001",user);
-		InPatient inPatient = new InPatient(1L,p,null,null,null,new BigDecimal(2000),false);
+		InPatient inPatient = new InPatient(1L,p,null,null,null,null,null,new BigDecimal(2000),false);
 		List<InPatient> inPatientList = new ArrayList<>();
 		inPatientList.add(inPatient);
 		InPatientInfo inPatientInfo = new InPatientInfo();
@@ -67,7 +69,7 @@ public class InPatientServiceTest {
 	@Test
 	void testUpdateInPatient() {
 		
-		InPatient inPatient= new InPatient(1L,null,null,null,null,new BigDecimal(2000),false);
+		InPatient inPatient= new InPatient(1L,null,null,null,null,null,null,new BigDecimal(2000),false);
 		Hospital hospital = new Hospital();
 		Patient patient = new Patient();
 		when(hospitalService.getHospitalById("hId")).thenReturn(hospital);
@@ -76,6 +78,20 @@ public class InPatientServiceTest {
 		when(inPatientRepository.save(inPatient)).thenReturn(inPatient);
 		when(inPatientRepository.findById(1L)).thenReturn(Optional.of(inPatient));
 		assertEquals("Patient details updated !!", inPatientService.updateInPatient(inPatient, "hId", "pId"));
+	}
+	
+	@Test
+	void testUpdateInPatientFailure() {
+		
+		InPatient inPatient= new InPatient(3L,null,null,null,null,null,null,new BigDecimal(2000),false);
+		Hospital hospital = new Hospital();
+		Patient patient = new Patient();
+		when(hospitalService.getHospitalById("hId")).thenReturn(hospital);
+		when(patientRepository.findById("pId")).thenReturn(Optional.of(patient));
+		when(inPatientRepository.save(inPatient)).thenReturn(inPatient);
+		when(inPatientRepository.save(inPatient)).thenReturn(inPatient);
+		when(inPatientRepository.findById(1L)).thenReturn(Optional.of(inPatient));
+		assertThrows(InPatientNotFoundException.class, ()->inPatientService.updateInPatient(inPatient, "hId", "pId"));
 	}
 
 }

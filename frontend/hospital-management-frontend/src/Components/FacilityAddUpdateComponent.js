@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
+import axios from 'axios';
 
 class FacilityAddUpdateComponent extends Component {
+
     constructor(props) {
         super(props);
         this.state = { 
-            hospitalId:"HOS0001",
-            hospitalName:"City Hospital",
+            hospitalId:"HOS0995",
+            hospitalName:"Fortis",
             facility:"",
-            charge:"",
+            charges:"",
             desc:"",
             remarks:"",
-           
+            facilityList:[],
             facilityId:Object.keys(this.props.match.params).length === 0?"":this.props.match.params.id,
             errors:{
                 hospitalId:"",
                 hospitalName:"",
                 facility:"",
-                charge:"",
+                charges:"",
                 desc:"",
                 display_success:false,
                 display_error:false
@@ -32,14 +34,24 @@ class FacilityAddUpdateComponent extends Component {
     componentDidMount(){
 
         if(this.state.facilityId !== ""){
-        this.setState({
-            hospitalId:"HOS0001",
-            hospitalName:"City Hospital",
-            facility:"Radiology/X-ray facility",
-            charge:"6000",
-            desc:"Nicee",
-            remarks:"hgh",
-        });
+        axios.get(`http://localhost:8080/hospitalfacility/${this.props.match.params.id}`)
+        .then(res=>{
+            this.setState({
+               facility: res.data.facilityName,
+               desc:res.data.description,
+               charges:res.data.charges,
+               remarks:res.data.remarks
+            })
+        })
+        .catch(err=>console.log(err));
+     }
+     else{
+         axios.get("http://localhost:8080/facilities/")
+         .then(res=>{
+             this.setState({facilityList:res.data});
+             console.log(res.data);
+            })
+         .catch(err=>console.log(err));
      }
     }
     
@@ -47,7 +59,39 @@ class FacilityAddUpdateComponent extends Component {
        
         let res=this.handleValidation();
         if(res)
-            console.log("Your details are submitted successfully");
+        {
+            if(this.state.facilityId === "")
+            {
+                const body={
+                    "description":this.state.desc,
+                    "remarks":this.state.remarks,
+                    "charges":this.state.charges
+                }
+                const url="http://localhost:8080/addfacility/HOS0995/"+this.state.facility;
+                console.log(url);
+                console.log(body);
+                axios.post(url,body)
+                .then(res=>console.log(res.data))
+                .catch(err=>console.log(err));
+            }
+            else
+            {
+                const body={
+                    "hospitalFacilityId":this.props.match.params.id,
+                    "description":this.state.desc,
+                    "remarks":this.state.remarks,
+                    "charges":this.state.charges
+                }
+                const url=`http://localhost:8080/updatefacility/HOS0995/${this.props.match.params.id}`
+                console.log(url);
+                console.log(body);
+                axios.put(url,body)
+                .then(res=>console.log(res.data))
+                .catch(err=>console.log(err));
+
+            }
+
+        }
         event.preventDefault();
     }
 
@@ -57,7 +101,7 @@ class FacilityAddUpdateComponent extends Component {
             hospitalId:"",
             hospitalName:"",
             facility:"",
-            charge:"",
+            charges:"",
             desc:"",
             display_success:false,
             display_error:false
@@ -77,15 +121,15 @@ class FacilityAddUpdateComponent extends Component {
             valid=false;
             temp.facility="Please choose a facility to add";
         }
-        if(this.state.charge=="")
+        if(this.state.charges=="")
         {
             valid=false;
-            temp.charge="Please provide the charge of the facilty";
+            temp.charges="Please provide the charges of the facilty";
         }
-        if(isNaN(this.state.charge))
+        if(isNaN(this.state.charges))
         {
             valid=false;
-            temp.charge="Amount should be a number in Rupees";
+            temp.charges="Amount should be a number in Rupees";
         }
         if(this.state.desc=="")
         {
@@ -117,13 +161,33 @@ class FacilityAddUpdateComponent extends Component {
       
         if(this.state.errors.display_success)
             return(
-                <div class="alert alert-success" role="alert">
+                <div className="alert alert-success" role="alert">
                     Form has been successfully submitted!
                 </div>
             )
         else
             return null;
     }
+
+    reset=()=>{
+        this.setState({
+            facility:"",
+            charges:"",
+            desc:"",
+            remarks:"",
+            errors:{
+                hospitalId:"",
+                hospitalName:"",
+                facility:"",
+                charges:"",
+                desc:"",
+                display_success:false,
+                display_error:false
+            }
+
+        });
+    }
+
     render() { 
         if(this.state.facilityId==="")
         {
@@ -142,11 +206,11 @@ class FacilityAddUpdateComponent extends Component {
                         <div className="row">
                             <div className="form-group col-md-6 col-sm-12">
                                 <label >Hospital ID</label>
-                                <input type="text" className={this.state.errors.hospitalId===""?"form-control":"form-control is-invalid"} id="hospitalId" name="hospitalId" value={this.state.hospitalId} onChange={this.handleChange} />
+                                <input type="text" className={this.state.errors.hospitalId===""?"form-control":"form-control is-invalid"} id="hospitalId" name="hospitalId" value={this.state.hospitalId} onChange={()=>{}} disabled />
                             </div>
                             <div className="form-group col-md-6 col-sm-12">
                                 <label >Hospital Name</label>
-                                <input type="text" className={this.state.errors.hospitalName===""?"form-control":"form-control is-invalid"} id="hospitalName" name="hospitalName" value={this.state.hospitalName}  onChange={this.handleChange}/>
+                                <input type="text" className={this.state.errors.hospitalName===""?"form-control":"form-control is-invalid"} id="hospitalName" name="hospitalName" value={this.state.hospitalName}  onChange={()=>{}} disabled/>
                                
                             </div>
                         </div>
@@ -155,23 +219,18 @@ class FacilityAddUpdateComponent extends Component {
                                 <label >Select Facility</label>
                                 <select className={this.state.errors.facility===""?"custom-select":"custom-select is-invalid"} name="facility" onChange={this.handleChange}>
                                     <option  value="choose">choose..</option>
-                                    <option value="OPD">OPD</option>
-                                    <option value="Dental facility">Dental facility</option>
-                                    <option value="Ward/ Indoor facility">Ward/ Indoor facility</option>
-                                    <option value="Minor OT/ Dressing Room">Minor OT/ Dressing Room</option>
-                                    <option value="Physiotherapy">Physiotherapy</option>
-                                    <option value="Laboratory services">Laboratory services</option>
-                                    <option value="ECG Services">ECG Services</option>
-                                    <option value="Pharmacy">Pharmacy</option>
-                                    <option value="Radiology/X-ray facility">Radiology/X-ray facility</option>
-                                    <option value="Ambulance Services">Ambulance Services</option>
+                                    {this.state.facilityList.map((facility) =>{
+                                        return(<option key={facility.facilityId} value={facility.facilityId}>
+                                            {facility.name}
+                                        </option>);
+                                    })}
                                 </select>
                                
                             </div>
                             <div className="form-group col-md-6 col-sm-12">
-                                <label>Charge of the Facilty</label>
-                                <input type="text" className={this.state.errors.charge===""?"form-control":"form-control is-invalid"} id="charge" name="charge"  onChange={this.handleChange} />
-                                <p className="text-danger text-small">{this.state.errors.charge==="Amount should be a number in Rupees"?this.state.errors.charge:null}</p>
+                                <label>charges of the Facilty</label>
+                                <input type="text" className={this.state.errors.charges===""?"form-control":"form-control is-invalid"} id="charges" name="charges"  onChange={this.handleChange} />
+                                <p className="text-danger text-small">{this.state.errors.charges==="Amount should be a number in Rupees"?this.state.errors.charges:null}</p>
                             </div>
                         </div>
                         <div className="row">
@@ -188,7 +247,8 @@ class FacilityAddUpdateComponent extends Component {
                         </div>
                         <div className=" row">
                             <div className="form-group col-md-6 col-sm-12">
-                                <input type="submit" className ="btn btn-primary" value="Add Facility"/>
+                                <input type="submit" className ="btn btn-primary" value="Add Facility"/><span>  </span>
+                                <input type="reset" onClick={this.reset} className ="btn btn-primary" value="Reset"/>
                             </div>
                         </div>
                     </div>
@@ -207,11 +267,11 @@ class FacilityAddUpdateComponent extends Component {
                     
                     
                     <form className="card" onSubmit={this.handleSubmit}>
-                        <div class="card-header">
+                        <div className="card-header">
                             <h3>Update facility</h3>
                             <h4 className="text-muted">{this.state.facility}</h4>
                         </div>
-                        <div class="card-body">
+                        <div className="card-body">
                         {this.displayAlert()}
                         {this.displaySuccess()}
                         <div className="row">
@@ -228,9 +288,9 @@ class FacilityAddUpdateComponent extends Component {
                         </div>
                         <div className="row">
                             <div className="form-group col-md-6 col-sm-12">
-                                <label>Charge of the Facilty</label>
-                                <input type="text" className={this.state.errors.charge===""?"form-control":"form-control is-invalid"} id="charge" name="charge" value={this.state.charge} onChange={this.handleChange} />
-                                <p className="text-danger text-small">{this.state.errors.charge==="Amount should be a number in Rupees"?this.state.errors.charge:null}</p>
+                                <label>charges of the Facilty</label>
+                                <input type="text" className={this.state.errors.charges===""?"form-control":"form-control is-invalid"} id="charges" name="charges" value={this.state.charges} onChange={this.handleChange} />
+                                <p className="text-danger text-small">{this.state.errors.charges==="Amount should be a number in Rupees"?this.state.errors.charges:null}</p>
                             </div>
                             <div className="form-group col-md-6 col-sm-12">
                                 <label>Description</label>
