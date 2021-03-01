@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const appointmentList = [
 	{
@@ -141,6 +142,19 @@ const ViewAppointment = () => {
 										{appointment.approved
 											? "approved"
 											: "not yet approved"}
+									</small>
+									<small className="float-right">
+										{appointment.paid ? (
+											<Link
+												to={`/patientreview/${appointment.appointmentId}`}
+											>
+												<button className="btn btn-primary">
+													Provide Feedback{" "}
+												</button>
+											</Link>
+										) : (
+											""
+										)}
 									</small>
 								</div>
 							</div>
