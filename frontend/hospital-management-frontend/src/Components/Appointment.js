@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const hopitalList = [
@@ -17,9 +18,9 @@ const facilityList = [
 ];
 
 const Appointment = () => {
-	const [hospitals] = useState(hopitalList);
-	const [doctors] = useState(doctorList);
-	const [facilities] = useState(facilityList);
+	const [hospitals, setHospitals] = useState([]);
+	const [doctors, setDoctors] = useState([]);
+	const [facilities, setFacilities] = useState([]);
 
 	const [type, setType] = useState("");
 	const [hospital, setHospital] = useState("");
@@ -42,6 +43,32 @@ const Appointment = () => {
 	const [validate, setValidate] = useState(false);
 
 	const { patientId } = useParams();
+
+	useEffect(() => {
+		axios.get("http://localhost:8080/hospitals").then((res) => {
+			setHospitals(res.data);
+		}).catch((error) => console.log(error));
+	}, [])
+
+	useEffect(() => {
+		if(hospital !== '' && type != '') {
+			if(type === 'doctor') {
+				// add this to db before testing
+				// DOCTOR_ID  	HOSPITAL_ID  
+				// DOC0999	HOS0995
+				// by using: INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0999', 'HOS0995');
+
+				axios.get(`http://localhost:8080/hospitals/doctors/${hospital}`).then((res) => {
+					setDoctors(res.data);
+				}).catch((error) => console.log(error));
+			}
+			else {
+				axios.get(`http://localhost:8080/hospitals/facilities/${hospital}`).then((res) => {
+					setFacilities(res.data);
+				}).catch((error) => console.log(error));
+			}
+		}
+	}, [hospital, type])
 
 	const validateFields = () => {
 		let areThereErrors = false;
@@ -196,8 +223,8 @@ const Appointment = () => {
 								<option value=""> choose an hospital </option>
 								{hospitals.map((hopital) => (
 									<option
-										key={hopital.hospital_id}
-										value={hopital.hospital_id}
+										key={hopital.hospitalId}
+										value={hopital.hospitalId}
 									>
 										{hopital.name}
 									</option>
@@ -272,7 +299,7 @@ const Appointment = () => {
 								</label>
 							</div>
 						</div>
-						{type === "doctor" ? (
+						{type != '' ? (type === "doctor") ? (
 							<div className="form-group">
 								<label htmlFor="doctor_name">Doctor</label>
 								<select
@@ -290,10 +317,10 @@ const Appointment = () => {
 									<option value=""> choose a doctor </option>
 									{doctors.map((doctor) => (
 										<option
-											key={doctor.user_id}
-											value={doctor.user_id}
+											key={doctor.doctorId}
+											value={doctor.doctorId}
 										>
-											{doctor.first_name}
+											{`${doctor.user.firstName}  ${doctor.user.lastName} - ${doctor.speciality} Specialist`}
 										</option>
 									))}
 								</select>
@@ -316,20 +343,20 @@ const Appointment = () => {
 									}
 								>
 									<option value="">
-										{" "}
-										choose an facility{" "}
+										choose an facility
 									</option>
 									{facilities.map((facility) => (
 										<option
-											key={facility.facility_id}
-											value={facility.facility_id}
+											key={facility.hospitalFacilityId}
+											value={facility.hospitalFacilityId}
 										>
-											{facility.facility_name}
+											{facility.facility.name}
 										</option>
 									))}
 								</select>
 							</div>
-						)}
+						) : <div className="text text-danger mb-3"> Please choose your type of appointment </div>}
+						
 						<input type="submit" className="btn btn-primary" />
 					</form>
 				</div>
