@@ -65,7 +65,7 @@ const DoctorViewingPatients = () => {
                 {
                     patientInfoList.length==0?
                     (<div className="alert alert-danger">
-                        <h1>No patient found!!!</h1>
+                        <strong>No patient found!!!</strong>
                     </div>):
                     (<></>)
                 }

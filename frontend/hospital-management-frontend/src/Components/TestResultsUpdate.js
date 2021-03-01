@@ -47,7 +47,7 @@ const TestResultsUpdate=()=>{
                 {
                     appointmentInfoList.length==0?
                     (<div className="alert alert-danger">
-                        <h2>No test result found to update!!!</h2>
+                        <strong>No test result found to update!!!</strong>
                     </div>):
                     (<></>)
                 }

@@ -39,7 +39,7 @@ const TreatmentHistoryPatient=()=>{
             {
                 treatmentHistoryInfo.length==0?
                 (<div className="alert alert-danger">
-                    <h3>No treatment history found!!!</h3>
+                    <strong>No treatment history found!!!</strong>
                 </div>):
                 (<></>)
             }

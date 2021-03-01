@@ -117,7 +117,7 @@ const PatientInfoDocView=(props)=>{
                 {
                     testResultList.length==0?
                     (<div className="alert alert-danger">
-                        <h3>No tests found!!!</h3>
+                        <strong>No tests found!!!</strong>
                     </div>):
                     (<></>)
                 }
