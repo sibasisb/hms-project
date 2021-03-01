@@ -1,21 +1,19 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 
 function PatientTreatmentHistory(props) {
 
-    
-
-    console.log(props.location.pathname.split("/"))
-    let params = props.location.pathname.split("/");
+    let patientInfo=props.location.state;
+    patientInfo.age=Math.floor((new Date() - new Date(patientInfo.dateOfBirth).getTime()) / 3.15576e+10)
+    const {patientId,doctorId}=useParams();
 
     const [data, setData] = useState({});
     const [prescription, changePrescription] = useState();
     useEffect(() => {
 
-        console.log(`http://localhost/treatmenthistory/${[params[2], params[3]].join("/")}`);
-        axios.get(`http://localhost:8080/treatmenthistory/${[params[2], params[3]].join("/")}`)
+        axios.get(`http://localhost:8080/treatmenthistory/${patientId}/${doctorId}`)
             .then(res => {
-                //  console.log(res.data.prescription)
                 setData(res.data)
                 changePrescription(res.data?.prescription)
 
@@ -23,13 +21,6 @@ function PatientTreatmentHistory(props) {
                 console.log(err)
             })
     }, [])
-
-
-    useEffect(
-        () => {
-            console.log(prescription, data)
-        }, [prescription, data]
-    )
 
 
     function saveTreatmentHistory() {
@@ -40,8 +31,8 @@ function PatientTreatmentHistory(props) {
         }
 
         console.log(dataToSend)
-        console.log(`http://localhost:8080/treatmenthistory/${[params[2], params[3]].join("/")}`);
-        axios.post(`http://localhost:8080/treatmenthistory/${[params[2], params[3]].join("/")}`, dataToSend)
+      
+        axios.post(`http://localhost:8080/treatmenthistory/${patientId}/${doctorId}`, dataToSend)
             .then(res => {
                 console.log(res)
             }).catch(err => console.log(err))
@@ -57,9 +48,9 @@ function PatientTreatmentHistory(props) {
                 </div>
                 <div className="card-body p-5">
                     <h5 className="card-title">
-                        <div className="pb-3">Patient Name : {data?.patientName}</div>
-                        <div className="pb-3">Age : {data?.age}</div>
-                        <div className="pb-3">Sex : {data?.gender}</div>
+                        <div className="pb-3">Patient Name : {patientInfo.firstName} {patientInfo.lastName}</div>
+                        <div className="pb-3">Age : {patientInfo.age}</div>
+                        <div className="pb-3">Sex : {patientInfo.gender}</div>
                     </h5>
                     <div className="card-text pb-3"><div><textarea type="text" name="prescription" value={prescription} onChange={(event) => changePrescription(event.target.value)}
 

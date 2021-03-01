@@ -62,7 +62,7 @@ const Routing = () => {
       <Route path="/doctordashboard" exact component={DoctorDashboard} />
       <Route path="/hospitaladmindashboard" exact component={HospitalAdminDashboard} />
       <Route path="/admindashboard" exact component={SystemAdminDashboard} />
-      <ProtectedRoute path="/addtreatmenthistory" exact component={PatientTreatmentHistory} />
+      <ProtectedRoute path="/addtreatmenthistory/:patientId/:doctorId" exact component={PatientTreatmentHistory} />
       <Route path="/addfacility" exact component={FacilityAddUpdateComponent} />
       <Route path="/addfacility/:id" exact component={FacilityAddUpdateComponent} />
       <Route path="/updatefacility" exact component={FacilityUpdateList} />
