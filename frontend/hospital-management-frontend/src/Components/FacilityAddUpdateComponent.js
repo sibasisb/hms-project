@@ -4,10 +4,12 @@ import axios from 'axios';
 
 class FacilityAddUpdateComponent extends Component {
 
+
+
     constructor(props) {
         super(props);
         this.state = { 
-            hospitalId:"HOS0995",
+            hospitalId: localStorage.getItem("hospitalId"),
             hospitalName:"Fortis",
             facility:"",
             charges:"",
@@ -33,26 +35,34 @@ class FacilityAddUpdateComponent extends Component {
 
     componentDidMount(){
 
-        if(this.state.facilityId !== ""){
-        axios.get(`http://localhost:8080/hospitalfacility/${this.props.match.params.id}`)
-        .then(res=>{
-            this.setState({
-               facility: res.data.facilityName,
-               desc:res.data.description,
-               charges:res.data.charges,
-               remarks:res.data.remarks
-            })
+        axios.get(`http://localhost:8080/hospitals/${this.state.hospitalId}`)
+        .then(res1=>{
+
+            if(this.state.facilityId !== ""){
+                axios.get(`http://localhost:8080/hospitalfacility/${this.props.match.params.id}`)
+                .then(res=>{
+                    this.setState({
+                       facility: res.data.facilityName,
+                       hospitalName:res1.data.name,
+                       desc:res.data.description,
+                       charges:res.data.charges,
+                       remarks:res.data.remarks
+                    })
+                })
+                .catch(err=>console.log(err));
+             }
+             else{
+                 axios.get("http://localhost:8080/facilities/")
+                 .then(res=>{
+                     this.setState({facilityList:res.data,hospitalName:res1.data.name});
+                     console.log(res.data);
+                    })
+                 .catch(err=>console.log(err));
+             }
+
         })
         .catch(err=>console.log(err));
-     }
-     else{
-         axios.get("http://localhost:8080/facilities/")
-         .then(res=>{
-             this.setState({facilityList:res.data});
-             console.log(res.data);
-            })
-         .catch(err=>console.log(err));
-     }
+        
     }
     
     handleSubmit=(event)=> {

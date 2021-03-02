@@ -10,7 +10,7 @@ const InPatientFormComponent = (props) => {
         dischargeTime:"",
         roomCharges:"",
         patientId:"",
-        hospitalId:"HOS0995",
+        hospitalId:localStorage.getItem("hospitalId"),
         inPatientId:Object.keys(props.match.params).length === 0?"":props.match.params.id,
         errors:{
             hospitalId:"",

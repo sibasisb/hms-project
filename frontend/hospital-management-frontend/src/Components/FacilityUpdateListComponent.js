@@ -9,9 +9,12 @@ const FacilityUpdateList = () => {
     
     const [facilityList, setFacilityList] = useState([]);
     const [display, setDisplay] = useState(false);
+    let hospitalId =localStorage.getItem("hospitalId");
+    
     useEffect(() => {
-        
-        axios.get("http://localhost:8080/hospitals/facilities/HOS0995")
+        const url=`http://localhost:8080/hospitals/facilities/${hospitalId}`;
+        console.log(url);
+        axios.get(url)
         .then(res=>{
             console.log(res.data);
             setFacilityList(res.data);
