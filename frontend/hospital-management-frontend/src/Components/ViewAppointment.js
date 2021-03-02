@@ -51,13 +51,13 @@ const ViewAppointment = () => {
 			<div className="card">
 				<h4 className="card-header"> List of your appointments </h4>
 				<div className="card-body">
-					<div className="card-deck">
+					
 						{
 							showError ?
 								(<div className="alert alert-danger">
-									<h5><strong>No appointments to view!!!</strong></h5>
+									<h5><strong>No appointments to view yet!!!</strong></h5>
 								</div>) :
-								(<>
+								(<div className="card-deck">
 									{appointments.map((appointment) => (
 										<div
 											className={
@@ -169,10 +169,8 @@ const ViewAppointment = () => {
 											</div>
 										</div>
 									))}
-								</>)
+								</div>)
 						}
-
-					</div>
 				</div>
 			</div>
 		</div>
