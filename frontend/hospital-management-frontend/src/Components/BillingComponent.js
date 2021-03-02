@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 const BillingComponent = (props) => {
 
@@ -22,7 +23,7 @@ const BillingComponent = (props) => {
         event.preventDefault();
             console.log("submit called");
             console.log(`http://localhost:8080/billing/${hospitalId}/${patientId}`)
-            axios.get(`http://localhost:8080/billing/${hospitalId}/${patientId}`)
+            axios.get(`http://localhost:8080/billing/${hospitalId}/${patientId}`,getHeader())
             .then(res=>{
                 console.log(res.data);
                setBills(res.data);
@@ -109,7 +110,7 @@ const BillingComponent = (props) => {
 
     const payBills=()=>{
 
-        axios.put(`http://localhost:8080/billing/pay/${hospitalId}/${patientId}`)
+        axios.put(`http://localhost:8080/billing/pay/${hospitalId}/${patientId}`,getHeader())
         .then(res=>{console.log(res);
             setState({...state,showPaid:true});
         })

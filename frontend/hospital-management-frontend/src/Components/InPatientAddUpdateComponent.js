@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import axios from 'axios';
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 const InPatientFormComponent = (props) => {
 
@@ -100,7 +101,7 @@ const InPatientFormComponent = (props) => {
                     roomCharges:state.roomCharges,
                     paid:false
                     }
-                axios.post(`http://localhost:8080/inpatients/add/${localStorage.getItem("hospitalId")}/${state.patientId}`,body)
+                axios.post(`http://localhost:8080/inpatients/add/${localStorage.getItem("hospitalId")}/${state.patientId}`,getHeader(),body)
                 .then(res=>{console.log(res)
                 setState({...state,errors:{...state.errors,display_success:true,display_error:false,patientId:""}})
                 })
@@ -120,7 +121,7 @@ const InPatientFormComponent = (props) => {
                     roomCharges:state.roomCharges,
                     paid:false
                     }
-                axios.post(`http://localhost:8080/inpatients/update/${localStorage.getItem("hospitalId")}/${state.patientId}`,body)
+                axios.post(`http://localhost:8080/inpatients/update/${localStorage.getItem("hospitalId")}/${state.patientId}`,getHeader(),body)
                 .then(res=>{console.log(res)
                     setState({...state,errors:{...state.errors,display_success:true,display_error:false,patientId:""}})
                     })

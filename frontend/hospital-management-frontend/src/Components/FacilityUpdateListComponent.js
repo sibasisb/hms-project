@@ -2,6 +2,7 @@ import React, { Component,useEffect,useState } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { faList, faPen } from "@fortawesome/free-solid-svg-icons";
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
@@ -14,7 +15,7 @@ const FacilityUpdateList = () => {
     useEffect(() => {
         const url=`http://localhost:8080/hospitals/facilities/${hospitalId}`;
         console.log(url);
-        axios.get(url)
+        axios.get(url,getHeader())
         .then(res=>{
             console.log(res.data);
             setFacilityList(res.data);
