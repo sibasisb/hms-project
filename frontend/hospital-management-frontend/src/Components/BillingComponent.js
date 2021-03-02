@@ -13,7 +13,7 @@ const BillingComponent = (props) => {
     const[bills,setBills]=useState([]);
     const[state,setState]= useState(initialState);
     const[patientId,setPatientId]=useState("");
-
+    const hospitalId = localStorage.getItem("hospitalId");
     const handleChange = (event) => {
         setPatientId(event.target.value);
     }
@@ -21,7 +21,7 @@ const BillingComponent = (props) => {
    function getBills(event){
         event.preventDefault();
             console.log("submit called");
-            axios.get(`http://localhost:8080/billing/HOS0995/${patientId}`)
+            axios.get(`http://localhost:8080/billing/${hospitalId}/${patientId}`)
             .then(res=>{
                 console.log(res.data);
                setBills(res.data);
