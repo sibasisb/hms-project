@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import ReactPaginate from "react-paginate";
+import { getHeader } from '../helpers/AuthorizationHeader';
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
 const PER_PAGE = 4;
@@ -14,7 +15,7 @@ const AllHospitalsList = (props) => {
 
     useEffect(() => {
         
-        axios.get("http://localhost:8080/hospitals")
+        axios.get("http://localhost:8080/hospitals", getHeader())
         .then(res=>{
             console.log(res.data);
             setHospitalList(res.data)

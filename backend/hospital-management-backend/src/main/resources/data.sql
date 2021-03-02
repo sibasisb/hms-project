@@ -39,7 +39,7 @@ insert into hospital values('HOS0591','Elgin, Kolkata, West Bengal 700017','AMRI
 insert into hospital values('HOS0592','10,U. N. Road, Elgin, Kolkata, West Bengal 700017','CMRI Hospital','098361 93420','http://www.bellevueclinic.com/');
 insert into hospital values('HOS0593','Dr. U. N. Brahmachari Street (Formerly Loudon Street), Elgin, Kolkata, West Bengal 700017','Apollo Hospitals','098361 93420','http://www.bellevueclinic.com/');
 insert into hospital values('HOS0594','Loudon Street, Elgin, Kolkata, West Bengal 700017','Sum','098361 93420','http://www.bellevueclinic.com/');
-insert into hospital values('HOS0595','S.K.Bose Raod,(Formerly Loudon Street), Elgin, Kolkata, West Bengal 700017','Narayana Eye Hospital','098361 93420','http://www.bellevueclinic.com/');
+insert into hospital values('HOS0595','S.K.Bose Raod,(Formerly Loudon Street), Elgin, Kolkata, West Bengal 700017','Narayana Hospital','098361 93420','http://www.bellevueclinic.com/');
 insert into hospital values('HOS0596','Behala,Elgin, Kolkata, West Bengal 700017','Disha Eye Hospital','098361 93420','http://www.bellevueclinic.com/');
 insert into hospital values('HOS0598','Camac Street, Elgin, Kolkata, West Bengal 700017','B.M.Birla Hospital','098361 93420','http://www.bellevueclinic.com/');
 

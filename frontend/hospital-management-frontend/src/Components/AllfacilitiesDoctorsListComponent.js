@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import ReactPaginate from "react-paginate";
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
@@ -20,7 +21,7 @@ const AllFacilitiesDoctorsListComponent = (props) => {
         if(props.match.path.includes("facilities"))
         {
             console.log("fetching facilities");
-            axios.get(`http://localhost:8080/hospitals/facilities/${props.match.params.id}`)
+            axios.get(`http://localhost:8080/hospitals/facilities/${props.match.params.id}`,getHeader())
             .then(res=>{
                 setData(res.data);
                 setShow("facilities");
@@ -29,7 +30,7 @@ const AllFacilitiesDoctorsListComponent = (props) => {
         }
         else
         {
-            axios.get(`http://localhost:8080/hospitals/doctors/${props.match.params.id}`)
+            axios.get(`http://localhost:8080/hospitals/doctors/${props.match.params.id}`,getHeader())
             .then(res=>{
                 setData(res.data);
                 setShow("doctors");

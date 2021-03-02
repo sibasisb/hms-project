@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import { UserContext } from "../App";
 import hmslogonew from '../images/hmslogonew.jpg'
 import { faClinicMedical } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { getHeader } from "../helpers/AuthorizationHeader";
 
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
@@ -14,9 +16,14 @@ const MenuComponent = () => {
 
     function logout()
     {
-        dispatch({
-            type: "LOGOUT"
-          })
+        axios.get("http://localhost:8080/users/logout",getHeader())
+        .then(res=>{
+            console.log(res);
+            dispatch({
+                type: "LOGOUT"
+              })
+
+        }).catch(err=>console.log(err))
     }
 
     let menuItems="";

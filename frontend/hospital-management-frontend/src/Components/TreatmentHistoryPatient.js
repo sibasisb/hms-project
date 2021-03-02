@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { getHeader } from '../helpers/AuthorizationHeader'
 
 
 const TreatmentHistoryPatient = () => {
@@ -10,7 +11,7 @@ const TreatmentHistoryPatient = () => {
     const [showError, setShowError] = useState(false)
     useEffect(() => {
         setShowError(false)
-        axios.get(`http://localhost:8080/treatmenthistory/${patientId}`)
+        axios.get(`http://localhost:8080/treatmenthistory/${patientId}`,getHeader())
             .then(res => {
                 console.log(res)
                 setTreatmentHistoryInfo(res.data)

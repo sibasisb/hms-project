@@ -1,10 +1,19 @@
 package com.project.hospitalmanagementbackend.service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.project.hospitalmanagementbackend.dto.AuthRequestUser;
@@ -22,13 +31,22 @@ import com.project.hospitalmanagementbackend.repository.HospitalRepository;
 import com.project.hospitalmanagementbackend.repository.PatientRepository;
 import com.project.hospitalmanagementbackend.repository.SystemAdminRepository;
 import com.project.hospitalmanagementbackend.repository.UserRepository;
+import com.project.hospitalmanagementbackend.util.BlacklistedTokenHandler;
+import com.project.hospitalmanagementbackend.util.JwtUtil;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import lombok.extern.java.Log;
 
-
 @Log
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
+
+	@Autowired
+	JwtUtil jwtutil;
+
+	@Autowired
+	AuthenticationManager authenticationManager;
 
 	@Autowired
 	SystemAdminRepository sysAdminRepository;
@@ -44,62 +62,134 @@ public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	HospitalRepository hospitalRepository;
 
+	@Autowired
+	BlacklistedTokenHandler blacklistTokenHandler;
+	
+	String userType="user";
+
 	@Transactional
-	public String getAdmin(SystemAdmin sysadmin) {
-		// TODO Auto-generated method stub
-		Optional<SystemAdmin> admin = sysAdminRepository.findById(sysadmin.getUserId());
-		if (admin.isPresent()) {
-			return "jwttoken";
-		} else {
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		String password = "";
+		String role = "";
+		if (username.length() > 3 && userType.equals("user")) {
+			String userPrefix = username.substring(0, 3);
+			switch (userPrefix) {
+			case "PAT": {
+				Optional<Patient> patient = patientRepository.findById(username);
+				if (patient.isPresent()) {
+					User userFound = patient.get().getUser();
+					role = userFound.getRole();
+					password = userFound.getPassword();
+				}
+				break;
+			}
+			case "DOC": {
+				Optional<Doctor> doctor = doctorRepository.findById(username);
+				if (doctor.isPresent()) {
+					User userFound = doctor.get().getUser();
+					role = userFound.getRole();
+					password = userFound.getPassword();
+				}
+				break;
+			}
+			case "HAD": {
+				Optional<HospitalAdmin> hospitalAdmin = hospitalAdminRepository.findById(username);
+				if (hospitalAdmin.isPresent()) {
+					User userFound = hospitalAdmin.get().getUser();
+					role = userFound.getRole();
+					password = userFound.getPassword();
+				}
+				break;
+			}
+			}
+		}
+		if ((role.equals("") || password.equals("")) && userType.equals("admin")) {
+			SystemAdmin systemAdmin = null;
+			Optional<SystemAdmin> admin = sysAdminRepository.findById(username);
+			if (admin.isPresent()) {
+				systemAdmin = admin.get();
+				role = "admin";
+				password = systemAdmin.getPassword();
+			}
+		}
+
+		if (role.equals("") || password.equals(""))
+			throw new InvalidUserException("Invalid UserId/Password");
+		else {
+			ArrayList<SimpleGrantedAuthority> list = new ArrayList<>();
+			list.add(new SimpleGrantedAuthority(role));
+			return new org.springframework.security.core.userdetails.User(username, password, list);
+
+		}
+	}
+
+	public String authenticate(AuthRequestUser user) {
+		try {
+			Authentication auth = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(user.getUserId(), user.getPassword()));
+		} catch (Exception e) {
 			throw new InvalidUserException("Invalid UserId/Password");
 		}
+
+		return jwtutil.generateToken(user.getUserId());
+
+	}
+
+	@Transactional
+	public AuthResponseUser getAdmin(SystemAdmin sysadmin) {
+		// TODO Auto-generated method stub
+		userType="admin";
+		String token = authenticate(new AuthRequestUser(sysadmin.getUserId(), sysadmin.getPassword()));
+		blacklistTokenHandler.unsetBlacklistToken(token);
+
+		return new AuthResponseUser(sysadmin.getUserId(), null, "admin", token);
 	}
 
 	@Transactional
 	public AuthResponseUser getUser(AuthRequestUser user) {
 		// TODO Auto-generated method stub
-		int found=0;
-		if(user.getUserId().length()>3) 
-		{
-		String userPrefix = user.getUserId().substring(0, 3);
-		switch (userPrefix) {
-		case "PAT": {
-			Optional<Patient> patient = patientRepository.findById(user.getUserId());
-			if (patient.isPresent()) {
-				found=1;
-				User userFound = patient.get().getUser();
-				return new AuthResponseUser(patient.get().getPatientId(),userFound.getFirstName(), userFound.getRole(), "jwttoken");
-			}
-			break;
+		userType="user";
+		String username = "";
+		String role = "";
+		if (user.getUserId().length() > 3) {
+			String userPrefix = user.getUserId().substring(0, 3);
+			if (userPrefix.equals("PAT") || userPrefix.equals("DOC") || userPrefix.equals("HAD")) {
+				String token = authenticate(user);
+				blacklistTokenHandler.unsetBlacklistToken(token);
+				switch (userPrefix) {
+				case "PAT": {
+					User userInfo = patientRepository.findById(user.getUserId()).get().getUser();
+					username = userInfo.getFirstName() + " " + userInfo.getLastName();
+					role = userInfo.getRole();
+
+					break;
+				}
+				case "DOC": {
+					User userInfo = doctorRepository.findById(user.getUserId()).get().getUser();
+					username = userInfo.getFirstName() + " " + userInfo.getLastName();
+					role = userInfo.getRole();
+					break;
+				}
+				case "HAD": {
+					User userInfo = hospitalAdminRepository.findById(user.getUserId()).get().getUser();
+					username = userInfo.getFirstName() + " " + userInfo.getLastName();
+					role = userInfo.getRole();
+					break;
+				}
+
+				default:
+					break;
+				}
+				return new AuthResponseUser(user.getUserId(), username, role, token);
+			} else
+				throw new InvalidUserException("Invalid UserId/Password");
 		}
-		case "DOC": {
-			Optional<Doctor> doctor = doctorRepository.findById(user.getUserId());
-			if (doctor.isPresent()) {
-				found=1;
-				User userFound = doctor.get().getUser();
-				return new AuthResponseUser(doctor.get().getDoctorId(),userFound.getFirstName(), userFound.getRole(), "jwttoken");
-			}
-			break;
-		}
-		case "HAD": {
-			Optional<HospitalAdmin> hospitalAdmin = hospitalAdminRepository.findById(user.getUserId());
-			if (hospitalAdmin.isPresent()) {
-				found=1;
-				User userFound = hospitalAdmin.get().getUser();
-				return new AuthResponseUser(hospitalAdmin.get().getHospitalAdminId(),userFound.getFirstName(), userFound.getRole(), "jwttoken");
-			}
-			break;
-		}
-		default:
-			throw new InvalidUserException("Invalid UserId/Password");
-		}
-		}
-		if(found==0)
-			throw new InvalidUserException("Invalid UserId/Password");
+
 		return null;
 
 	}
@@ -108,40 +198,43 @@ public class UserService {
 	public String register(UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		log.info(userInfo.toString());
-		String role=userInfo.getUser().getRole();
-		String userId="";
-		switch(role)
-		{
-		case "doctor":
-		{
-			Doctor doctor=userInfo.getDoctor();
+		String role = userInfo.getUser().getRole();
+		String userId = "";
+		switch (role) {
+		case "doctor": {
+			Doctor doctor = userInfo.getDoctor();
 			doctor.setUser(userInfo.getUser());
-			System.out.println(userInfo.getHospital().getHospitalId());
 			doctor.getHospital().add(hospitalRepository.findById(userInfo.getHospital().getHospitalId()).get());
 			Doctor savedDoctor = doctorRepository.save(doctor);
-			userId=savedDoctor.getDoctorId();
+			userId = savedDoctor.getDoctorId();
 			break;
 		}
-		case "hospital admin":
-		{
+		case "hospital admin": {
 			log.info("something");
-			HospitalAdmin hosAdmin=new HospitalAdmin();
+			HospitalAdmin hosAdmin = new HospitalAdmin();
 			hosAdmin.setHospital(userInfo.getHospital());
 			hosAdmin.setUser(userInfo.getUser());
 			HospitalAdmin savedHospitalAdmin = hospitalAdminRepository.save(hosAdmin);
-			userId=savedHospitalAdmin.getHospitalAdminId();
+			userId = savedHospitalAdmin.getHospitalAdminId();
 			break;
 		}
-		default :
-		{
+		default: {
 			Patient patient = new Patient();
 			patient.setUser(userInfo.getUser());
 			Patient savedPatient = patientRepository.save(patient);
-			userId=savedPatient.getPatientId();
+			userId = savedPatient.getPatientId();
 		}
 		}
-		return "User Registered Successfully.Your User ID is "+userId;
-		
+		return "User Registered Successfully.Your User ID is " + userId;
+
+	}
+
+	@Transactional
+	public String logout(String header) {
+		SecurityContextHolder.getContext().setAuthentication(null);
+		String token = header.substring(7);
+		blacklistTokenHandler.setBlacklistToken(token);
+		return "User logged out";
 	}
 
 }

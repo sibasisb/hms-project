@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 function PatientTreatmentHistory(props) {
 
@@ -13,7 +14,7 @@ function PatientTreatmentHistory(props) {
     const [alert,setalert]=useState("");
     useEffect(() => {
 
-        axios.get(`http://localhost:8080/treatmenthistory/${patientId}/${doctorId}`)
+        axios.get(`http://localhost:8080/treatmenthistory/${patientId}/${doctorId}`,getHeader())
             .then(res => {
                 setData(res.data)
                 changePrescription(res.data?.prescription)
@@ -33,7 +34,7 @@ function PatientTreatmentHistory(props) {
 
         console.log(dataToSend)
       
-        axios.post(`http://localhost:8080/treatmenthistory/${patientId}/${doctorId}`, dataToSend)
+        axios.post(`http://localhost:8080/treatmenthistory/${patientId}/${doctorId}`,getHeader(), dataToSend)
             .then(res => {
                 console.log(res)
                 const alertmsg=<div className="alert alert-success text-bold">Prescription updated successfully.</div>
