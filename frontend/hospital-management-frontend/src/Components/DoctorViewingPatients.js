@@ -17,9 +17,18 @@ const DoctorViewingPatients = () => {
         axios.get(`http://localhost:8080/patients/doc/${doctorId}`)
             .then(res => {
                 console.log(res)
-                setPatientInfoList(res.data);
-                if (res.data.length == 0)
+                let nlist=res.data
+                let newInfoList=[]
+                let idSet=[]
+                for(let obj of nlist){
+                    if(!idSet.includes(obj.patientId)){
+                        newInfoList.push(obj)
+                    }
+                    idSet.push(obj.patientId)
+                }
+                if (newInfoList.length == 0)
                     setShowError(true)
+                setPatientInfoList(newInfoList)
             })
             .catch(error => {
                 console.log(error);
