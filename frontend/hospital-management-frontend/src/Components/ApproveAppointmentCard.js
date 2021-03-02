@@ -5,12 +5,15 @@ import {
 	faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
 const ApproveAppointmentCard = ({
 	appointment,
 	handleApprove,
 	handleReject,
 }) => {
+	const [approved, setApproved] = useState(false);
+
 	return (
 		<div
 			className={
@@ -41,13 +44,13 @@ const ApproveAppointmentCard = ({
 							<div className="col">{appointment.doctorName}</div>
 						</div>
 					) : (
-						<div className="row">
-							<div className="col">Facility Name:</div>
-							<div className="col">
-								{appointment.facilityName}
+							<div className="row">
+								<div className="col">Facility Name:</div>
+								<div className="col">
+									{appointment.facilityName}
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 					<div className="row">
 						<div className="col">Hospital Name:</div>
 						<div className="col">{appointment.hospitalName}</div>
@@ -75,8 +78,8 @@ const ApproveAppointmentCard = ({
 							<div className="col">{appointment.remarks}</div>
 						</div>
 					) : (
-						" "
-					)}
+							" "
+						)}
 
 					<br />
 
@@ -85,8 +88,10 @@ const ApproveAppointmentCard = ({
 							<button
 								className="btn btn-danger"
 								title="Reject"
-								onClick={() =>
-									handleReject(appointment.appointmentId)
+								onClick={() => {
+									handleReject(appointment.appointmentId);
+									setApproved(false);
+								}
 								}
 							>
 								<FontAwesomeIcon icon={faTimes} />
@@ -102,8 +107,10 @@ const ApproveAppointmentCard = ({
 										: "btn btn-primary"
 								}
 								title="Approve"
-								onClick={() =>
-									handleApprove(appointment.appointmentId)
+								onClick={() => {
+									handleApprove(appointment.appointmentId);
+									setApproved(true);
+								}
 								}
 								disabled={appointment.approved ? true : false}
 							>
