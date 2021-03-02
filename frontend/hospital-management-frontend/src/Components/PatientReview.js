@@ -11,8 +11,10 @@ const PatientReview=()=>{
     const {appointmentId}=useParams()
     const [showSuccessAlert,setShowSuccessAlert]=useState(false)
     const [showFailureAlert,setShowFailureAlert]=useState(false)
+    const [showError,setShowError]=useState(false)
 
     useEffect(()=>{
+        setShowError(false)
         setShowSuccessAlert(false)
         setShowFailureAlert(false)
         axios.get(`http://localhost:8080/reviewquestion/get`)
@@ -28,6 +30,8 @@ const PatientReview=()=>{
                 newAnswersList.push(answer)
             });
             setAnswersList(newAnswersList)
+            if(res.data.length==0)
+                setShowError(true)
         })
         .catch(err=>{
             console.log(err);
@@ -116,7 +120,13 @@ const PatientReview=()=>{
         <div className="container">
             <form className="card mt-5" onSubmit={handleSubmit}>
                 <div className="card-header"><h3>Patient Feedback</h3></div>
-                <div className="card-body">
+                {
+                    showError?
+                    (<div className="alert alert-danger">
+                        <h3><strong>No questions to show!!!</strong></h3>
+                    </div>):
+                    (
+                        <div className="card-body">
                     {
                         showSuccessAlert ?
                         (
@@ -139,7 +149,10 @@ const PatientReview=()=>{
                     {displayQuestions()}
                     </div>
                     <button className="btn btn-primary btn-md mt-3">Submit feedback</button>
-                </div>
+                    </div>
+                    )
+                }
+                
             </form>
         </div>
     )

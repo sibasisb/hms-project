@@ -9,13 +9,17 @@ const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 const DoctorViewingPatients = () => {
 
     const [patientInfoList, setPatientInfoList] = useState([])
+    const [showError, setShowError] = useState(false)
 
-    useEffect(()=>{
-        const doctorId=localStorage.getItem("userId");
+    useEffect(() => {
+        setShowError(false)
+        const doctorId = localStorage.getItem("userId");
         axios.get(`http://localhost:8080/patients/doc/${doctorId}`)
             .then(res => {
                 console.log(res)
                 setPatientInfoList(res.data);
+                if (res.data.length == 0)
+                    setShowError(true)
             })
             .catch(error => {
                 console.log(error);
@@ -62,9 +66,17 @@ const DoctorViewingPatients = () => {
                     <h3>My Patients</h3>
                 </div>
                 <div className="card-body">
-                    <div className="list-group">
-                        {displayPatientRecords()}
-                    </div>
+                    {
+                        showError ?
+                            (<div className="alert alert-danger">
+                                <h3><strong>No patient found!!!</strong></h3>
+                            </div>) :
+                            (
+                                <div className="list-group">
+                                    {displayPatientRecords()}
+                                </div>
+                            )
+                    }
                 </div>
             </div>
         </div>
