@@ -77,7 +77,7 @@ const ApproveAppointments = () => {
 									<h5><strong>No appointments to view!!!</strong></h5>
 								</div>) :
 								(
-									<div className="card-deck">
+									<div className="row">
 										{appointments.map((appointment) => (
 											<ApproveAppointmentCard
 												appointment={appointment}
