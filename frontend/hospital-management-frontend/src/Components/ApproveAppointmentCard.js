@@ -18,8 +18,8 @@ const ApproveAppointmentCard = ({
 		<div
 			className={
 				appointment.approved
-					? "card bg-light border-success mb-3"
-					: "card bg-light border-secondary mb-3"
+					? "cols-md-4 card bg-light border-success m-2"
+					: "cols-md-4 card bg-light border-secondary m-2"
 			}
 			key={appointment.appointmentId}
 		>
