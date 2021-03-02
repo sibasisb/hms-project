@@ -2,33 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const appointmentList = [
-	{
-		appointmentId: 1,
-		appointmentDate: "0218-05-31",
-		appointmentTime: "20:04",
-		patientName: "Zer0",
-		doctorName: "Doctor Strange",
-		facilityName: null,
-		hospitalName: "St. Peters",
-		remarks: "meh",
-		medicalRecords: null,
-		approved: false,
-	},
-	{
-		appointmentId: 2,
-		appointmentDate: "2018-05-31",
-		appointmentTime: "02:04",
-		patientName: "Zer0",
-		doctorName: "Watson",
-		facilityName: null,
-		hospitalName: "Thomas",
-		remarks: "grr",
-		medicalRecords: null,
-		approved: true,
-	},
-];
-
 const ViewAppointment = () => {
 	const [appointments, setAppointments] = useState([]);
 	const [showError, setShowError] = useState(false)
@@ -79,8 +52,7 @@ const ViewAppointment = () => {
 													{appointment.appointmentId}
 												</h5>
 												<h6 className="card-subtitle mb-2 text-muted">
-													{appointment.appointmentTime} ,{" "}
-													{appointment.appointmentDate}{" "}
+													{`On ${appointment.appointmentDate[2]}-${appointment.appointmentDate[1]}-${appointment.appointmentDate[0]} at ${appointment.appointmentTime[0]}:${appointment.appointmentTime[1]}`}
 												</h6>
 												<div className="card-text">
 													{appointment.doctorName != null ? (
