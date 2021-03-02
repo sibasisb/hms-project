@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import { UserContext } from "../App";
+import hmslogonew from '../images/hmslogonew.jpg'
+import { faClinicMedical } from "@fortawesome/free-solid-svg-icons";
+
+const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
 const MenuComponent = () => {
 
@@ -24,18 +28,19 @@ const MenuComponent = () => {
             role=localStorage.getItem("role")
             if(role==="hospital admin")
             role=role.split(" ").join("")
-            menuItems=(<><li className="nav-item">
-            <NavLink className="nav-link text-white text-muted" to={`/${role}dashboard`} >Dashboard</NavLink>
+            menuItems=(<><li className="nav-item" style={{listStyleType:"none"}}>
+            <NavLink className="nav-link text-white " to={`/${role}dashboard`} >Dashboard</NavLink>
         </li>
-        <li className="nav-item">
-        <NavLink className="nav-link text-white text-muted" to="/login" onClick={logout}>Logout</NavLink>
+        <li className="nav-item" style={{listStyleType:"none"}}>
+        <NavLink className="nav-link text-white " to="/login" onClick={logout}>Logout</NavLink>
     </li></>)
     }
     return (
         <div>
-            <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-sm navbar-dark bg-dark pt-3">
                 <Link to="/" className="navbar-brand">
-                    HM System
+                <FontAwesomeIcon icon={faClinicMedical} className="mr-2 mb-1" size="2x" />
+                   <span style={{fontSize:"xx-large",fontWeight:"bold"}}> HCrux</span>
         </Link>
                 <button
                     className="navbar-toggler"
@@ -49,7 +54,7 @@ const MenuComponent = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav ml-auto"></ul>
+                    <ul className="navbar-nav ml-auto" ></ul>
                     {menuItems}
                 </div>
             </nav>
