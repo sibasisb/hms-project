@@ -19,7 +19,7 @@ import TestInfoDocView from "./Components/TestInfoDocView";
 import AddReviewQuestion from "./Components/AddReviewQuestion";
 import PatientReview from "./Components/PatientReview";
 import TreatmentHistoryPatient from "./Components/TreatmentHistoryPatient";
-import AllHospitalsListComponent from "./Components/AllHospitalsListComponent2";
+import AllHospitalsListComponent from "./Components/AllHospitalsListComponent";
 import HospitalDetailsComponent from "./Components/HospitalDetailsComponent";
 import AllFacilitiesDocotorsComponent  from "./Components/AllfacilitiesDoctorsListComponent";
 import FacilityDoctorDetailsComponent from "./Components/FacilityDoctorDetailsComponent";
