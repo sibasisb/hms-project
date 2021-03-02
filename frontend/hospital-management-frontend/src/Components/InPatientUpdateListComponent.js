@@ -11,7 +11,7 @@ const InPatientUpdateListComponent = (props) => {
     const[display,setDisplay]=useState(false);
     useEffect(()=>{
 
-            axios.get("http://localhost:8080/inpatients/HOS0995")
+            axios.get(`http://localhost:8080/inpatients/${localStorage.getItem("hospitalId")}`)
             .then(res=>{
                 setData(res.data);
                 setDisplay(true);

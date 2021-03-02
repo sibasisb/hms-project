@@ -77,7 +77,7 @@ class FacilityAddUpdateComponent extends Component {
                     "remarks":this.state.remarks,
                     "charges":this.state.charges
                 }
-                const url="http://localhost:8080/addfacility/HOS0995/"+this.state.facility;
+                const url=`http://localhost:8080/addfacility/${this.state.hospitalId}/${this.state.facility}`;
                 console.log(url);
                 console.log(body);
                 axios.post(url,body)
@@ -92,7 +92,7 @@ class FacilityAddUpdateComponent extends Component {
                     "remarks":this.state.remarks,
                     "charges":this.state.charges
                 }
-                const url=`http://localhost:8080/updatefacility/HOS0995/${this.props.match.params.id}`
+                const url=`http://localhost:8080/updatefacility/${this.state.hospitalId}/${this.props.match.params.id}`
                 console.log(url);
                 console.log(body);
                 axios.put(url,body)

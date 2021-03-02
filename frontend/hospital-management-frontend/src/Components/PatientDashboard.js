@@ -7,6 +7,7 @@ import treatment from "../images/treatment.png";
 import "../styles/mystyle.css";
 import testresult from "../images/testresult.png";
 import { Link } from "react-router-dom";
+import notification from '../images/notification.png'
 
 function PatientDashboard() {
 	const imageStyle = {
@@ -102,6 +103,24 @@ function PatientDashboard() {
 						<div className="card-body">
 							<p className="card-text font-weight-bold">
 								View Test Results
+							</p>
+						</div>
+					</div>
+				</Link>
+				<Link
+					to={`/notifications/${localStorage.getItem("userId")}`}
+					className="col-md-4"
+				>
+					<div className="card m-4">
+						<img
+							className="card-img-top  embed-responsive-item"
+							src={notification}
+							alt="Card image cap"
+							style={imageStyle}
+						/>
+						<div className="card-body">
+							<p className="card-text font-weight-bold">
+								Notification
 							</p>
 						</div>
 					</div>

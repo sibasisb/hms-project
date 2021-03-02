@@ -100,8 +100,10 @@ const InPatientFormComponent = (props) => {
                     roomCharges:state.roomCharges,
                     paid:false
                     }
-                axios.post(`http://localhost:8080/inpatients/add/HOS0995/${state.patientId}`,body)
-                .then(res=>console.log(res))
+                axios.post(`http://localhost:8080/inpatients/add/${localStorage.getItem("hospitalId")}/${state.patientId}`,body)
+                .then(res=>{console.log(res)
+                setState({...state,errors:{...state.errors,display_success:true,display_error:false,patientId:""}})
+                })
                 .catch(err=>{
                     console.log(err);
                     setState({...state,errors:{...state.errors,patientId:"Invalid Patient Id"}});
@@ -118,7 +120,7 @@ const InPatientFormComponent = (props) => {
                     roomCharges:state.roomCharges,
                     paid:false
                     }
-                axios.post(`http://localhost:8080/inpatients/update/HOS0995/${state.patientId}`,body)
+                axios.post(`http://localhost:8080/inpatients/update/${localStorage.getItem("hospitalId")}/${state.patientId}`,body)
                 .then(res=>console.log(res))
                 .catch(err=>console.log(err));
 
@@ -185,7 +187,7 @@ const InPatientFormComponent = (props) => {
 
 
         temp.display_error = !valid;
-        temp.display_success  = valid;
+      //  temp.display_success  = valid;
        // console.log(temp);
         setState({...state,errors:temp})
         if(valid)

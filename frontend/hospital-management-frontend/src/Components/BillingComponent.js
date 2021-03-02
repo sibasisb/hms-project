@@ -21,6 +21,7 @@ const BillingComponent = (props) => {
    function getBills(event){
         event.preventDefault();
             console.log("submit called");
+            console.log(`http://localhost:8080/billing/${hospitalId}/${patientId}`)
             axios.get(`http://localhost:8080/billing/${hospitalId}/${patientId}`)
             .then(res=>{
                 console.log(res.data);
@@ -101,7 +102,7 @@ const BillingComponent = (props) => {
 
     const payBills=()=>{
 
-        axios.put(`http://localhost:8080/billing/pay/HOS0995/${patientId}`)
+        axios.put(`http://localhost:8080/billing/pay/${hospitalId}/${patientId}`)
         .then(res=>{console.log(res);
             setState({...state,showPaid:true});
         })

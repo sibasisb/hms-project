@@ -23,11 +23,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 	public List<Appointment> findByHospitalFacility_HospitalFacilityId(long hospitalFacilityId);
 
 	
-	@Query("select a from Appointment a where a.paid=false and a.hospital.hospitalId= ?1 and a.patient.patientId = ?2")
+	@Query("select a from Appointment a where a.paid=false and a.approved=true and a.hospital.hospitalId= ?1 and a.patient.patientId = ?2")
 	public List<Appointment> findUnpaidAppointments(String hospitalId, String patientId);
 	
 	@Modifying
-	@Query("update Appointment a set a.paid=true  where a.paid=false and a.hospital.hospitalId= ?1 and a.patient.patientId = ?2")
+	@Query("update Appointment a set a.paid=true  where a.paid=false and a.approved=true and a.hospital.hospitalId= ?1 and a.patient.patientId = ?2")
 	public void payForAppointments(String hospitalId, String patientId);
 
 	@Query("from Appointment a where a.approved=true and a.paid=false and a.hospitalFacility.hospitalFacilityId is not null and a.hospital.hospitalId=:hospitalId")
