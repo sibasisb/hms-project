@@ -102,6 +102,9 @@ export const LoginComponent = (props) => {
                                         }
                                     }
                                 )
+
+                                props.history.push("/hospitaladmindashboard")
+
                             }).catch(err => console.log(err))
                     }
                     else {
@@ -122,11 +125,6 @@ export const LoginComponent = (props) => {
                         case "doctor":
                             props.history.push("/doctordashboard")
                             break;
-                        case "hospital admin": {
-                            props.history.push("/hospitaladmindashboard")
-                        }
-                            break;
-
                         default:
                             break;
                     }
