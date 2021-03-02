@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import {Link, useParams} from 'react-router-dom'
 import axios from 'axios'
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 const TestResults=()=>{
 
@@ -14,7 +15,7 @@ const TestResults=()=>{
         setShowError(false)
         //fetch all test result records from test results table for this patient and appointment
 
-        axios.get('http://localhost:8080/testresults/fetch/' + appointmentId + "/" + patientId)
+        axios.get('http://localhost:8080/testresults/fetch/' + appointmentId + "/" + patientId,getHeader())
         .then(res=>{
             console.log(res)
             setTestResultList(res.data)

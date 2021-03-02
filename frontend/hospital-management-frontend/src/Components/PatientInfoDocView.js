@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
@@ -16,7 +17,7 @@ const PatientInfoDocView = (props) => {
         setShowError(false)
         //fetch all test result records from test results table for this patient
         console.log(patientId)
-        axios.get("http://localhost:8080/testresults/" + patientId)
+        axios.get("http://localhost:8080/testresults/" + patientId,getHeader())
             .then(res => {
                 console.log(res)
                 setTestResultList(res.data)
@@ -28,7 +29,7 @@ const PatientInfoDocView = (props) => {
             })
 
         //fetch patient info for this patient
-        axios.get("http://localhost:8080/patients/pat/" + patientId)
+        axios.get("http://localhost:8080/patients/pat/" + patientId,getHeader())
             .then(res => {
                 console.log(res)
                 setPatientInfo(res.data)

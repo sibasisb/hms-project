@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
@@ -14,7 +15,7 @@ const DoctorViewingPatients = () => {
     useEffect(() => {
         setShowError(false)
         const doctorId = localStorage.getItem("userId");
-        axios.get(`http://localhost:8080/patients/doc/${doctorId}`)
+        axios.get(`http://localhost:8080/patients/doc/${doctorId}`,getHeader())
             .then(res => {
                 console.log(res)
                 let nlist=res.data

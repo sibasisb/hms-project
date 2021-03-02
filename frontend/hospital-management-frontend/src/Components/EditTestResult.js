@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 import { faList } from "@fortawesome/free-solid-svg-icons";
+import { getHeader } from '../helpers/AuthorizationHeader';
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
 const EditTestResult = () => {
@@ -14,7 +15,7 @@ const EditTestResult = () => {
     const [showAlert, setShowAlert] = useState(false)
 
     useEffect(() => {
-        axios.get('http://localhost:8080/testresults/getbyid/' + testResultId)
+        axios.get('http://localhost:8080/testresults/getbyid/' + testResultId,getHeader())
         .then(res=>{
             let testResultInfo=res.data
             setPatientId(testResultInfo.patientId)
@@ -54,7 +55,7 @@ const EditTestResult = () => {
     const handleEditSubmit = (e) => {
         e.preventDefault()
         console.log(result)
-        console.log(`http://localhost:8080/testresults/update/${appointmentId}/${patientId}/${testResultId}`)
+        console.log(`http://localhost:8080/testresults/update/${appointmentId}/${patientId}/${testResultId}`,getHeader())
         let infoList=[]
         for(let i in result){
             const infoObj={

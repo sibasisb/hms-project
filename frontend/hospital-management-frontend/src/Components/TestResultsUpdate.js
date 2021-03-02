@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 const TestResultsUpdate=()=>{
 
@@ -10,7 +11,7 @@ const TestResultsUpdate=()=>{
     useEffect(()=>{
         setShowError(false)
         const hospitalAdminId=localStorage.getItem("userId");
-        axios.get('http://localhost:8080/appointments/pending/' + hospitalAdminId)
+        axios.get('http://localhost:8080/appointments/pending/' + hospitalAdminId,getHeader())
         .then(res=>{    
             console.log(res)
             setAppointmentInfoList(res.data);

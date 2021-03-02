@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios';
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 const TestsInformation=()=>{
     const [testFacilities,setTestFacilities]=useState([])
@@ -8,7 +9,7 @@ const TestsInformation=()=>{
     useEffect(()=>{
         setShowError(false)
         const hospitalAdminId=localStorage.getItem("userId");
-        axios.get(`http://localhost:8080/getfacility/${hospitalAdminId}`)
+        axios.get(`http://localhost:8080/getfacility/${hospitalAdminId}`,getHeader())
         .then(res=>{
             console.log(res)
             setTestFacilities(res.data)

@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { getHeader } from '../helpers/AuthorizationHeader'
 
 const PatientReview=()=>{
 
@@ -17,7 +18,7 @@ const PatientReview=()=>{
         setShowError(false)
         setShowSuccessAlert(false)
         setShowFailureAlert(false)
-        axios.get(`http://localhost:8080/reviewquestion/get`)
+        axios.get(`http://localhost:8080/reviewquestion/get`,getHeader())
         .then(res=>{
             setQuestionList(res.data)
             let newQuestionList=res.data
@@ -69,7 +70,7 @@ const PatientReview=()=>{
         if(flag===1)
             return
 
-        axios.post(`http://localhost:8080/feedback/add`,answersList)
+        axios.post(`http://localhost:8080/feedback/add`,getHeader(),answersList)
         .then(res=>{
             console.log(res);
             setShowSuccessAlert(true)

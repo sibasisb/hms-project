@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { UserContext } from '../App'
 import axios from 'axios';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { getHeader } from '../helpers/AuthorizationHeader';
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
 
@@ -93,7 +94,11 @@ export const LoginComponent = (props) => {
                         role: res.data.role,
                     }
                     if (res.data.role === "hospital admin") {
-                        axios.get(`http://localhost:8080/hospitaladmin/${res.data.userId}`)
+                        axios.get(`http://localhost:8080/hospitaladmin/${res.data.userId}`,{
+                            headers:{
+                                "Authorization":`Bearer ${res.data.token}`
+                            }
+                        })
                             .then(res => {
                                 console.log(res)
                                 dispatch(

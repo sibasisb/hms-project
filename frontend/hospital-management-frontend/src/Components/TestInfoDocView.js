@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import {Link,useParams} from 'react-router-dom'
 import axios from 'axios'
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
@@ -12,7 +13,7 @@ const TestInfoDocView=()=>{
     const [testResultInfo,setTestResultInfo]=useState(null)
     const [result,setResult]=useState([])
     useEffect(() => {
-        axios.get('http://localhost:8080/testresults/getbyid/' + testResultId)
+        axios.get('http://localhost:8080/testresults/getbyid/' + testResultId,getHeader())
         .then(res=>{
             let testResult=res.data
             setTestResultInfo(testResult)

@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 import { faList } from "@fortawesome/free-solid-svg-icons";
+import { getHeader } from '../helpers/AuthorizationHeader';
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
 const AddTestResult = () => {
@@ -14,7 +15,7 @@ const AddTestResult = () => {
 
     useEffect(() => {
         setShowAlert(false)
-        axios.get(`http://localhost:8080/testresults/testinfo/${appointmentId}`)
+        axios.get(`http://localhost:8080/testresults/testinfo/${appointmentId}`,getHeader())
         .then(res=>{
             console.log(res)
             let testResultInfo=res.data
@@ -53,7 +54,7 @@ const AddTestResult = () => {
     const handleAddSubmit = (e) => {
         e.preventDefault()
         console.log(result)
-        console.log(`localhost:8080/testresults/add/${appointmentId}/${patientId}`)
+        console.log(`localhost:8080/testresults/add/${appointmentId}/${patientId}`,getHeader())
         let infoList=[]
         for(let i in result){
             const infoObj={

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios'
+import { getHeader } from '../helpers/AuthorizationHeader'
 
 const AddReviewQuestion=()=>{
 
@@ -19,7 +20,7 @@ const AddReviewQuestion=()=>{
             setShowFailureAlert(true)
             return
         }
-        axios.post(`http://localhost:8080/reviewquestion/add`,{
+        axios.post(`http://localhost:8080/reviewquestion/add`,getHeader(),{
             question:question
         })
         .then(res=>{
