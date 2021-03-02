@@ -69,7 +69,7 @@ const DoctorViewingPatients = () => {
                     {
                         showError ?
                             (<div className="alert alert-danger">
-                                <strong>No patient found!!!</strong>
+                                <h3><strong>No patient found!!!</strong></h3>
                             </div>) :
                             (
                                 <div className="list-group">

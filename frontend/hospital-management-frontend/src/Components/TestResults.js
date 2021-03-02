@@ -73,7 +73,7 @@ const TestResults=()=>{
             {
                 showError?
                 (<div className="alert alert-danger">
-                    <p>No test result for this patient found</p>
+                    <h3><strong>No test result for this patient found</strong></h3>
                 </div>):
                 (<>
                 <table className="table table-bordered table-responsive table-condensed mt-3" >

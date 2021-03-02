@@ -50,7 +50,7 @@ const TestResultsUpdate=()=>{
                 {
                     showError?
                     (<div className="alert alert-danger">
-                        <strong>No test result found to update!!!</strong>
+                        <h3><strong>No test result found to update!!!</strong></h3>
                     </div>):
                     (<></>)
                 }

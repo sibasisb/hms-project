@@ -70,7 +70,7 @@ const TestsInformation=()=>{
             {
                 showError?
                 (<div className="alert alert-danger">
-                    <strong>No treatment history found!!!</strong>
+                    <h3><strong>No facility found!!!</strong></h3>
                 </div>):
                 (<>
                 <table className="table table-bordered table-responsive table-condensed mt-3" style={{width:"100%"}}>

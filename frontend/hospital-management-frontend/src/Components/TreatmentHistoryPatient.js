@@ -43,7 +43,7 @@ const TreatmentHistoryPatient = () => {
                     {
                         showError ?
                             (<div className="alert alert-danger">
-                                <strong>No treatment history found!!!</strong>
+                                <h3><strong>No treatment history found!!!</strong></h3>
                             </div>) :
                             (<table className="table table-responsive table-bordered mt-3" >
                                 <thead>
