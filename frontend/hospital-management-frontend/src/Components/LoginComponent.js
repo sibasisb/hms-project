@@ -3,6 +3,8 @@ import userReducer from '../Reducers/userReducer'
 import { Redirect } from 'react-router-dom';
 import { UserContext } from '../App'
 import axios from 'axios';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
 
 
@@ -29,7 +31,8 @@ export const LoginComponent = (props) => {
         invalidLogin: ""
     }
 
-    const [state, setState] = useState(initialState)
+    const [state, setState] = useState(initialState);
+    const [show ,setShow]=useState(false);
 
     let passError, emailError;
     const validateForm = () => {
@@ -191,7 +194,10 @@ export const LoginComponent = (props) => {
         }
     }
 
-
+    function toggleShow(event) {
+        event.preventDefault();
+        setShow(!show);
+      }
 
     return (
         <div>
@@ -216,8 +222,14 @@ export const LoginComponent = (props) => {
                             <div className="form-row mb-2 ">
                                 <div className="form-group col-12 ">
                                     <label htmlFor="inputPassword">Password<span style={{ color: "#ff0000" }}>*</span></label>
-                                    <input type="password" className="form-control" name="password" value={state.password} onChange={handleChange} style={state.errors.pass ? error : noerror} placeholder="Password" />
-
+                                    <div class="input-group">
+                                        <input type={show ?"text":"password"} className="form-control" name="password" value={state.password} onChange={handleChange} style={state.errors.pass ? error : noerror} placeholder="Password" />
+                                        <div className="input-group-append">
+                                            <button className="btn" style={{borderColor:"#ced4da"}} onClick={toggleShow}>
+                                                <FontAwesomeIcon className="float-right" icon={faEye} />
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div id="id2" className="text-danger"></div>
                                 </div>
                             </div>

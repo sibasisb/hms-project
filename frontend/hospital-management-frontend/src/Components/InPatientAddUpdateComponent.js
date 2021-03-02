@@ -106,7 +106,7 @@ const InPatientFormComponent = (props) => {
                 })
                 .catch(err=>{
                     console.log(err);
-                    setState({...state,errors:{...state.errors,patientId:"Invalid Patient Id"}});
+                    setState({...state,errors:{...state.errors,display_success:false,display_error:true,patientId:"Invalid Patient Id"}});
                 });
             }
             else{
@@ -121,8 +121,13 @@ const InPatientFormComponent = (props) => {
                     paid:false
                     }
                 axios.post(`http://localhost:8080/inpatients/update/${localStorage.getItem("hospitalId")}/${state.patientId}`,body)
-                .then(res=>console.log(res))
-                .catch(err=>console.log(err));
+                .then(res=>{console.log(res)
+                    setState({...state,errors:{...state.errors,display_success:true,display_error:false,patientId:""}})
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                        setState({...state,errors:{...state.errors,display_success:false,display_error:true,patientId:"Invalid Patient Id"}});
+                    });
 
             }
         }
@@ -345,7 +350,7 @@ const InPatientFormComponent = (props) => {
                     <div className="form-group col-md-6 col-sm-12">
                         <label>Room Charge</label>
                         <input type="text" className={state.errors.roomCharges===""?"form-control":"form-control is-invalid"} id="roomCharges" name="roomCharges" value={state.roomCharges} onChange={handleChange} />
-                        {/* <p className="text-danger text-small">{state.errors.roomCharges==="Amount should be a number in Rupees"?state.errors.roomCharges:null}</p> */}
+                        <p className="text-danger text-small">{state.errors.patientId==="Invalid Patient Id"?state.errors.patientId:null}</p>
                     </div>
                 </div>
                 
