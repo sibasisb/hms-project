@@ -72,8 +72,13 @@ const TestResults=()=>{
             <div className="card-body">
             {
                 showError?
-                (<div className="alert alert-danger">
+                (<div>
+                    <div className="alert alert-danger">
                     <h3><strong>No test result for this patient found</strong></h3>
+                    </div>
+                    <Link to={`/addtestresult/${patientId}/${appointmentId}`} style={{width:"40%"}}>
+                    <button className="btn btn-md btn-primary m-2">Add test result</button>
+                    </Link>
                 </div>):
                 (<>
                 <table className="table table-bordered table-responsive table-condensed mt-3" >

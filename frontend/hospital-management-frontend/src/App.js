@@ -37,6 +37,7 @@ import Unauthorized from "./helpers/Unauthorized";
 import ViewAppointment from "./Components/ViewAppointment";
 import ApproveAppointments from "./Components/ApproveAppointments";
 import Notification from "./Components/Notification";
+import AddTestResult from "./Components/AddTestResult";
 
 export const UserContext = createContext();
 
@@ -54,6 +55,7 @@ const Routing = () => {
       <ProtectedRoute roles={[roles.doctor,roles.patient]} path="/patientInfoDoc/:patientId" exact component={PatientInfoDocView}/>
       <ProtectedRoute roles={[roles.hospital_admin]} path="/testresults" exact component={TestResultsUpdate}/>
       <ProtectedRoute roles={[roles.hospital_admin]} path="/edittestresult/:testResultId" exact component={EditTestResult}/>
+      <ProtectedRoute roles={[roles.hospital_admin]} path="/addtestresult/:patientId/:appointmentId" exact component={AddTestResult}/>
       <ProtectedRoute roles={[roles.doctor,roles.patient]} path="/testinfodocview/:testResultId" exact component={TestInfoDocView}/>
       <ProtectedRoute roles={[roles.sys_admin]} path="/addreviewquestion" exact component={AddReviewQuestion} />
       <ProtectedRoute roles={[roles.patient]} path="/patientreview/:appointmentId" exact component={PatientReview}/>
