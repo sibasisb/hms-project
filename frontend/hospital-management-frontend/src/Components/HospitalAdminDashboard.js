@@ -13,6 +13,7 @@ import viewInPatients from '../images/view-inpatients.jpg';
 import "../styles/mystyle.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { getHeader } from "../helpers/AuthorizationHeader";
 
 function HospitalAdminDashboard() {
 	const imageStyle = {
@@ -23,7 +24,7 @@ function HospitalAdminDashboard() {
 
 	useEffect(()=>{
 
-		axios.get(`http://localhost:8080/hospitals/${localStorage.getItem("hospitalId")}`)
+		axios.get(`http://localhost:8080/hospitals`)
 		.then(res=>{
 			setName(res.data.name);
 		})
