@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import addFacility from '../images/add-facility.jpg'
 import hospital from "../images/hospital.png";
 import appointment from "../images/appointment.png";
@@ -12,14 +12,27 @@ import inpatient from "../images/inpatient.png";
 import viewInPatients from '../images/view-inpatients.jpg';
 import "../styles/mystyle.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function HospitalAdminDashboard() {
 	const imageStyle = {
 		height: "18vh",
 	};
+
+	const[name,setName]=useState("");
+
+	useEffect(()=>{
+
+		axios.get(`http://localhost:8080/hospitals/${localStorage.getItem("hospitalId")}`)
+		.then(res=>{
+			setName(res.data.name);
+		})
+		.catch(err=>console.log(err));
+
+	},[]);
 	return (
 		<div className="container ">
-			<h1 className="mt-5 mb-5"> Hospital Admin Dashboard</h1>
+			<h1 className="mt-5 mb-5"> Hospital Admin Dashboard, {name}</h1>
 			<div className="row">
 				<Link to={"/addfacility"} className="col-md-4">
 					<div className="card m-4">

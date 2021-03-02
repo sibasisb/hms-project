@@ -56,7 +56,16 @@ const BillingComponent = (props) => {
                             bills.map((bill,index)=>{
                                 let serviceName = bill.facilityName||bill.doctorName||"In Patient Services";
                                 let serviceCharge = bill.facilityCharge||bill.doctorCharge||bill.roomCharges;
-                                charges+=serviceCharge;
+                                let daysCount=1;
+                                if(serviceName==="In Patient Services")
+                                {
+                                    const d1=Date.parse(bill.admissionDate);
+                                    const d2=Date.parse(bill.dischargeDate);
+                                    daysCount=(d2-d1)/(60 * 60 * 24 * 1000);
+                                    serviceName = serviceName+" : Stay duration : "+daysCount+ " day(s)";
+
+                                }
+                                charges+=(daysCount*serviceCharge);
 
                                 return(
                                 <React.Fragment key={index}>
@@ -66,7 +75,7 @@ const BillingComponent = (props) => {
                                     </div>
                                     <div>
                                         <span className="font-weight-bold">{bill.doctorName?"Doctor Consultation" :"Service"} Charge :</span>
-                                        <span className="float-right"> Rs. {serviceCharge}</span>
+                                        <span className="float-right"> Rs. {serviceCharge} {serviceName.includes("Stay")?"/day" : ""}</span>
                                     </div>
                                     <hr/>
                                 </React.Fragment>
@@ -76,8 +85,6 @@ const BillingComponent = (props) => {
                         } 
                     </div> 
                     <div className="card-footer">
-                        {/* <span className="btn btn-primary btn-lg" onClick={calculateSum(charges)}>Calculate Total</span>
-                        <span>{state.displayTotal?state.total:null}</span> */}
                         <div>
                             <span className="font-weight-bold">Total Amount : </span>
                             <span className="float-right text-success"> Rs. {charges}</span>

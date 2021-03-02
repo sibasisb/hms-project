@@ -2,14 +2,18 @@ import React,{useEffect,useState } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
+import ReactPaginate from "react-paginate";
 
 
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
+
+const PER_PAGE = 4;
 
 const AllFacilitiesDoctorsListComponent = (props) => {
 
     const [data,setData] = useState([]);
     const [show,setShow] = useState("");
+    const [currentPage, setCurrentPage] = useState(0);
     
     useEffect(() => {
        
@@ -33,8 +37,17 @@ const AllFacilitiesDoctorsListComponent = (props) => {
             .catch(err=>console.log(err));
         }
     },[]);
+
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage);
+    }
+
+    const offset = currentPage * PER_PAGE;
+
+    const pageCount = Math.ceil(data.length / PER_PAGE);
+
         
-    const name = props.location.state.name;
+    //const name = props.location.state.name;
     if(show==="facilities")
     {
         if(data.length===0)
@@ -55,7 +68,9 @@ const AllFacilitiesDoctorsListComponent = (props) => {
                     <div className="card-body">
                         <ul className="list-group" >    
                             {
-                                data.map((hospitalFacility)=>{
+                                data
+                                .slice(offset, offset + PER_PAGE)
+                                .map((hospitalFacility)=>{
                                     let link = "/viewfacility/"+hospitalFacility.hospitalFacilityId;
                                     console.log(hospitalFacility);
                                     return(
@@ -67,6 +82,21 @@ const AllFacilitiesDoctorsListComponent = (props) => {
                                     )})
                             }
                         </ul>
+                        <ReactPaginate
+                            previousLabel={"<<"}
+                            nextLabel={">>"}
+                            pageCount={pageCount}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination justify-content-center mt-2"}
+                            pageClassName={"page-item"}
+                            pageLinkClassName={"page-link"}
+                            activeClassName={"page-item active"}
+                            disabledClassName={"page-item disabled"}
+                            previousClassName={"page-item"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={"page-item"}
+                            nextLinkClassName={"page-link"}
+                        />
                     </div>
                 </div>
             </div>
@@ -92,17 +122,34 @@ const AllFacilitiesDoctorsListComponent = (props) => {
                     <div className="card-body">
                         <ul className="list-group" >    
                             {
-                                data.map((doctor)=>{
+                                data
+                                .slice(offset, offset + PER_PAGE)
+                                .map((doctor)=>{
                                     let link = "/viewdoctor/"+doctor.doctorId;
                                     return(
                                         <li key={doctor.doctorId} className="list-group-item">
-                                            <div className="h5">Dr. {doctor.name} </div>
-                                            <span className="h5 text-muted">{doctor.qualification}, {doctor.speciality} Specialist</span>
+                                            <div className="h6">Dr. {doctor.name} </div>
+                                            <span className="h6 text-muted">{doctor.qualification}, {doctor.speciality} Specialist</span>
                                             <Link to={{pathname: link,state:{doctorDetails : doctor}}} className="float-right text-black" > <FontAwesomeIcon style={{color:"black"}} icon={faEye} /></Link>  
                                         </li>
                                     )})
                             }
                         </ul>
+                        <ReactPaginate
+                            previousLabel={"<<"}
+                            nextLabel={">>"}
+                            pageCount={pageCount}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination justify-content-center mt-2"}
+                            pageClassName={"page-item"}
+                            pageLinkClassName={"page-link"}
+                            activeClassName={"page-item active"}
+                            disabledClassName={"page-item disabled"}
+                            previousClassName={"page-item"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={"page-item"}
+                            nextLinkClassName={"page-link"}
+                        />
                     </div>
                 </div>
             </div>

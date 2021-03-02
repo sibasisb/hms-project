@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
 function PatientForm(props) {
 
@@ -25,6 +27,8 @@ function PatientForm(props) {
     const [state,
         setstate] = useState(initialState)
 
+    const [show ,setShow]=useState(false);
+
     useEffect(() => {
         console.log(state)
         props.changeUserDetails(state)
@@ -38,6 +42,10 @@ function PatientForm(props) {
         })
     }
 
+    function toggleShow(event) {
+        event.preventDefault();
+        setShow(!show);
+      }
 
     return (
 
@@ -114,15 +122,22 @@ function PatientForm(props) {
             </div>
             <div className="form-group">
                 <label htmlFor="inputPassword">Password</label>
-                <input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    id="inputPassword"
-                    placeholder="Password"
-                    style={props.errors?.password ? error : noerror}
-                    onChange={changeValue} />
-                <small className="text-danger">{props.errors?.password}</small>
+                <div className="input-group">
+                    <input
+                        type={show ?"text":"password"}
+                        className="form-control"
+                        name="password"
+                        id="inputPassword"
+                        placeholder="Password"
+                        style={props.errors?.password ? error : noerror}
+                        onChange={changeValue} />
+                    <small className="text-danger">{props.errors?.password}</small>
+                    <div className="input-group-append">
+                        <button className="btn" style={{borderColor:"#ced4da"}} onClick={toggleShow}>
+                            <FontAwesomeIcon className="float-right" icon={faEye} />
+                        </button>
+                    </div>
+                </div>
             </div>
 
         </div>
