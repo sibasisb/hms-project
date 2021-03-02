@@ -1,4 +1,5 @@
 import React from "react";
+import addFacility from '../images/add-facility.jpg'
 import hospital from "../images/hospital.png";
 import appointment from "../images/appointment.png";
 import status from "../images/status.png";
@@ -6,7 +7,9 @@ import billing from "../images/billing.png";
 import treatment from "../images/treatment.png";
 import result from "../images/testresult.png";
 import facility from "../images/facility.png";
+import viewAllFacilities from '../images/view-all-facilities.jpg';
 import inpatient from "../images/inpatient.png";
+import viewInPatients from '../images/view-inpatients.jpg';
 import "../styles/mystyle.css";
 import { Link } from "react-router-dom";
 
@@ -22,8 +25,8 @@ function HospitalAdminDashboard() {
 					<div className="card m-4">
 						<img
 							className="card-img-top  embed-responsive-item"
-							src={facility}
-							alt="Card image cap"
+							src={addFacility}
+							alt="Image by Arseny Togulev"
 							style={imageStyle}
 						/>
 						<div className="card-body">
@@ -84,8 +87,8 @@ function HospitalAdminDashboard() {
 					<div className="card m-4">
 						<img
 							className="card-img-top  embed-responsive-item"
-							src={result}
-							alt="Card image cap"
+							src={viewAllFacilities}
+							alt="Image by 🇮🇩 Irwan"
 							style={imageStyle}
 						/>
 						<div className="card-body">
@@ -117,8 +120,8 @@ function HospitalAdminDashboard() {
 					<div className="card m-4">
 						<img
 							className="card-img-top  embed-responsive-item"
-							src={inpatient}
-							alt="Card image cap"
+							src={viewInPatients}
+							alt="Image By National Cancer Institute"
 							style={imageStyle}
 						/>
 						<div className="card-body">
