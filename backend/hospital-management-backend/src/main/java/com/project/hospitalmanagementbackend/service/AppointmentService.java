@@ -151,7 +151,7 @@ public class AppointmentService {
 	}
 
 	@Transactional
-	public List<AppointmentInfo> getAllAppointmentsByDoctor(String doctorId) {
+	public List<AppointmentInfo> getAllAppointmentsByDoctor(String doctorId) throws DoctorNotFoundException {
 		doctorRepository.findById(doctorId).orElseThrow(() -> new DoctorNotFoundException("Invalid Doctor"));
 		List<Appointment> appointments = appointmentRepository.findByDoctor_DoctorId(doctorId);
 		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
@@ -177,7 +177,7 @@ public class AppointmentService {
 	}
 
 	@Transactional
-	public List<AppointmentInfo> getAllAppointmentsByHospitalAdmin(String hospitalAdminId) {
+	public List<AppointmentInfo> getAllAppointmentsByHospitalAdmin(String hospitalAdminId) throws HospitalAdminNotFoundException {
 		HospitalAdmin hospitalAdmin = hospitalAdminRepository.findById(hospitalAdminId)
 				.orElseThrow(() -> new HospitalAdminNotFoundException("Invalid Facility"));
 		Hospital hospital = hospitalRepository.findById(hospitalAdmin.getHospital().getHospitalId()).get();
@@ -206,7 +206,7 @@ public class AppointmentService {
 	}
 
 	@Transactional
-	public String approveAppointment(Long appointmentId) {
+	public String approveAppointment(Long appointmentId) throws AppointmentNotFoundException {
 		Appointment appointment = appointmentRepository.findById(appointmentId)
 				.orElseThrow(() -> new AppointmentNotFoundException("No such appointment"));
 		appointment.setApproved(true);
@@ -215,7 +215,7 @@ public class AppointmentService {
 	}
 
 	@Transactional
-	public String rejectAppointment(Long appointmentId) {
+	public String rejectAppointment(Long appointmentId) throws AppointmentNotFoundException {
 		Appointment appointment = appointmentRepository.findById(appointmentId)
 				.orElseThrow(() -> new AppointmentNotFoundException("No such appointment"));
 		appointment.setApproved(false);

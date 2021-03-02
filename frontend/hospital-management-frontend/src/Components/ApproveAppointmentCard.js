@@ -5,12 +5,15 @@ import {
 	faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
 const ApproveAppointmentCard = ({
 	appointment,
 	handleApprove,
 	handleReject,
 }) => {
+	const [approved, setApproved] = useState(appointment.approved);
+
 	return (
 		<div
 			className={
@@ -23,7 +26,7 @@ const ApproveAppointmentCard = ({
 			<div className="card-body">
 				<h5
 					className={
-						appointment.approved
+						approved
 							? "card-title text-success"
 							: "card-title"
 					}
@@ -31,8 +34,7 @@ const ApproveAppointmentCard = ({
 					Appointment Id: {appointment.appointmentId}
 				</h5>
 				<h6 className="card-subtitle mb-2 text-muted">
-					{appointment.appointmentTime} ,{" "}
-					{appointment.appointmentDate}{" "}
+					{`On ${appointment.appointmentDate[2]}-${appointment.appointmentDate[1]}-${appointment.appointmentDate[0]} at ${appointment.appointmentTime[0]}:${appointment.appointmentTime[1]}`}
 				</h6>
 				<div className="card-text">
 					{appointment.doctorName != null ? (
@@ -41,13 +43,13 @@ const ApproveAppointmentCard = ({
 							<div className="col">{appointment.doctorName}</div>
 						</div>
 					) : (
-						<div className="row">
-							<div className="col">Facility Name:</div>
-							<div className="col">
-								{appointment.facilityName}
+							<div className="row">
+								<div className="col">Facility Name:</div>
+								<div className="col">
+									{appointment.facilityName}
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 					<div className="row">
 						<div className="col">Hospital Name:</div>
 						<div className="col">{appointment.hospitalName}</div>
@@ -75,8 +77,8 @@ const ApproveAppointmentCard = ({
 							<div className="col">{appointment.remarks}</div>
 						</div>
 					) : (
-						" "
-					)}
+							" "
+						)}
 
 					<br />
 
@@ -85,8 +87,10 @@ const ApproveAppointmentCard = ({
 							<button
 								className="btn btn-danger"
 								title="Reject"
-								onClick={() =>
-									handleReject(appointment.appointmentId)
+								onClick={() => {
+									handleReject(appointment.appointmentId);
+									setApproved(false);
+								}
 								}
 							>
 								<FontAwesomeIcon icon={faTimes} />
@@ -97,15 +101,17 @@ const ApproveAppointmentCard = ({
 						<div className="col">
 							<button
 								className={
-									appointment.approved
+									approved
 										? "btn btn-secondary"
 										: "btn btn-primary"
 								}
 								title="Approve"
-								onClick={() =>
-									handleApprove(appointment.appointmentId)
+								onClick={() => {
+									handleApprove(appointment.appointmentId);
+									setApproved(true);
 								}
-								disabled={appointment.approved ? true : false}
+								}
+								disabled={approved ? true : false}
 							>
 								<FontAwesomeIcon icon={faCheck} />
 								{"   "}
@@ -118,7 +124,7 @@ const ApproveAppointmentCard = ({
 
 			<div className="card-footer text-muted">
 				<small>
-					{appointment.approved ? "approved" : "not yet approved"}
+					{approved ? "approved" : "not yet approved"}
 				</small>
 			</div>
 		</div>

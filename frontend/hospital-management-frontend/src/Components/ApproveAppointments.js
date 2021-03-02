@@ -4,39 +4,14 @@ import { useParams } from "react-router-dom";
 
 import ApproveAppointmentCard from "./ApproveAppointmentCard";
 
-const appointments = [
-	{
-		appointmentId: 1,
-		appointmentDate: "0218-05-31",
-		appointmentTime: "20:04",
-		patientName: "Zer0",
-		doctorName: "Doctor Strange",
-		facilityName: null,
-		hospitalName: "St. Peters",
-		remarks: "meh",
-		medicalRecords: null,
-		approved: false,
-	},
-	{
-		appointmentId: 2,
-		appointmentDate: "2018-05-31",
-		appointmentTime: "02:04",
-		patientName: "Zer0",
-		doctorName: "Watson",
-		facilityName: null,
-		hospitalName: "Thomas",
-		remarks: "grr",
-		medicalRecords: null,
-		approved: true,
-	},
-];
-
 const ApproveAppointments = () => {
 	const [appointments, setAppointments] = useState([]);
-	const [showError,setShowError]=useState(false)
+	const [showError, setShowError] = useState(false);
+	const [showReject, setShowReject] = useState(false);
+	const [showApprove, setShowApprove] = useState(false);
 
 	useEffect(() => {
-		setShowError(false)
+		setShowError(false);
 		let url = "";
 		const serviceId = localStorage.getItem("userId");
 
@@ -50,30 +25,34 @@ const ApproveAppointments = () => {
 			.get(url)
 			.then((res) => {
 				setAppointments(res.data);
-				if(res.data.length==0)
+				if (res.data.length == 0)
 					setShowError(true)
 			})
 			.catch((error) => console.log(error));
 	}, []);
 
 	const handleApprove = (appointmentId) => {
+		setShowApprove(false);
+		setShowReject(false);
 		axios
 			.get(`http://localhost:8080/appointments/approve/${appointmentId}`)
 			.then((res) => {
 				res.status === 200
-					? console.log("approved")
-					: console.log("rejected");
+					? setShowApprove(true)
+					: console.log("not approved");
 			})
 			.catch((error) => console.log(error));
 	};
 
 	const handleReject = (appointmentId) => {
+		setShowApprove(false);
+		setShowReject(false);
 		axios
 			.get(`http://localhost:8080/appointments/reject/${appointmentId}`)
 			.then((res) => {
 				res.status === 200
-					? console.log("rejected")
-					: console.log("rejected");
+					? setShowReject(true)
+					: console.log("not rejected");
 			})
 			.catch((error) => console.log(error));
 	};
@@ -86,23 +65,29 @@ const ApproveAppointments = () => {
 						List of appointments related to you
 					</h4>
 					<div className="card-body">
+						{showApprove ? (
+							<div className="alert alert-success"> Appointment approved successfully</div>
+						) : ""}
+						{showReject ? (
+							<div className="alert alert-danger">Appointment rejected successfully</div>
+						) : ""}
 						{
-						showError?
-						(<div className="alert alert-danger">
-							<h5><strong>No appointments to view!!!</strong></h5>
-						</div>):
-						(
-							<div className="card-deck">
-							{appointments.map((appointment) => (
-								<ApproveAppointmentCard
-									appointment={appointment}
-									key={appointment.appointmentId}
-									handleApprove={handleApprove}
-									handleReject={handleReject}
-								/>
-							))}
-							</div>
-						)
+							showError ?
+								(<div className="alert alert-danger">
+									<h5><strong>No appointments to view!!!</strong></h5>
+								</div>) :
+								(
+									<div className="card-deck">
+										{appointments.map((appointment) => (
+											<ApproveAppointmentCard
+												appointment={appointment}
+												key={appointment.appointmentId}
+												handleApprove={handleApprove}
+												handleReject={handleReject}
+											/>
+										))}
+									</div>
+								)
 						}
 					</div>
 				</div>

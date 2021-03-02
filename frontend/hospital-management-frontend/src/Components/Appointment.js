@@ -2,21 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const hopitalList = [
-	{ hospital_id: "H001", name: "some hospital" },
-	{ hospital_id: "H002", name: "that hospital" },
-];
-
-const doctorList = [
-	{ user_id: "D001", first_name: "foo" },
-	{ user_id: "D002", first_name: "bar" },
-];
-
-const facilityList = [
-	{ facility_id: "F001", facility_name: "more" },
-	{ facility_id: "F002", facility_name: "wow" },
-];
-
 const Appointment = () => {
 	const [hospitals, setHospitals] = useState([]);
 	const [doctors, setDoctors] = useState([]);

@@ -1,6 +1,7 @@
 package com.project.hospitalmanagementbackend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -18,6 +19,13 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.project.hospitalmanagementbackend.dto.AppointmentInfo;
+import com.project.hospitalmanagementbackend.exception.AppointmentNotFoundException;
+import com.project.hospitalmanagementbackend.exception.DoctorNotFoundException;
+import com.project.hospitalmanagementbackend.exception.FacilityNotFoundException;
+import com.project.hospitalmanagementbackend.exception.HospitalAdminNotFoundException;
+import com.project.hospitalmanagementbackend.exception.HospitalFacilityNotFoundException;
+import com.project.hospitalmanagementbackend.exception.HospitalNotFoundException;
+import com.project.hospitalmanagementbackend.exception.PatientNotFoundException;
 import com.project.hospitalmanagementbackend.model.Appointment;
 import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Facility;
@@ -136,6 +144,44 @@ public class AppointmentServiceTest {
 	}
 
 	@Test
+	public void getAllAppointmentsByUserTestFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+		Set<Appointment> appointments = new HashSet<>();
+		appointments.add(appointment);
+
+		List<AppointmentInfo> appointmentInfoList = new ArrayList<>();
+		appointments.forEach((appointmentV -> {
+			AppointmentInfo appointmentInfo = new AppointmentInfo();
+			appointmentInfo.setAppointmentDate(appointmentV.getAppointmentDate());
+			appointmentInfo.setAppointmentTime(appointmentV.getAppointmentTime());
+			if (appointmentV.getHospitalFacility() == null)
+				appointmentInfo.setDoctorName(appointmentV.getDoctor().getUser().getFirstName() + " "
+						+ appointmentV.getDoctor().getUser().getLastName());
+			else
+				appointmentInfo.setFacilityName(appointmentV.getHospitalFacility().getFacility().getName());
+
+			appointmentInfo.setHospitalName(appointmentV.getHospital().getName());
+			appointmentInfoList.add(appointmentInfo);
+		}));
+
+		when(patientRepository.findById(patient.getPatientId())).thenReturn(Optional.of(patient));
+		when(appointmentRepository.getAllAppointmentsByPatient(patient.getPatientId())).thenReturn(appointments);
+
+		assertThrows(PatientNotFoundException.class, () -> appointmentService.getAllAppointmentsByUser("PAT0009"));
+
+	}
+
+	@Test
 	void bookDoctorAppointmentTestSuccess() {
 		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
 				"7894561230", "john@doe.com", "incorrect", "patient"));
@@ -153,6 +199,66 @@ public class AppointmentServiceTest {
 
 		assertEquals(appointmentService.bookAnAppointment(patient.getPatientId(), hospital.getHospitalId(),
 				doctor.getDoctorId(), appointment), "created");
+	}
+
+	@Test
+	void bookDoctorAppointmentTestPatientFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Appointment appointment = new Appointment(121l, patient, null, hospital, null, LocalDate.of(2021, 02, 14),
+				LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(patientRepository.findById(patient.getPatientId())).thenReturn(Optional.of(patient));
+		when(hospitalRepository.findById(hospital.getHospitalId())).thenReturn(Optional.of(hospital));
+		when(doctorRepository.findById(doctor.getDoctorId())).thenReturn(Optional.of(doctor));
+		when(appointmentRepository.save(appointment)).thenReturn(appointment);
+
+		assertThrows(PatientNotFoundException.class, () -> appointmentService.bookAnAppointment("PAT419",
+				hospital.getHospitalId(), doctor.getDoctorId(), appointment));
+	}
+
+	@Test
+	void bookDoctorAppointmentTestHospitalFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Appointment appointment = new Appointment(121l, patient, null, hospital, null, LocalDate.of(2021, 02, 14),
+				LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(patientRepository.findById(patient.getPatientId())).thenReturn(Optional.of(patient));
+		when(hospitalRepository.findById(hospital.getHospitalId())).thenReturn(Optional.of(hospital));
+		when(doctorRepository.findById(doctor.getDoctorId())).thenReturn(Optional.of(doctor));
+		when(appointmentRepository.save(appointment)).thenReturn(appointment);
+
+		assertThrows(HospitalNotFoundException.class, () -> appointmentService.bookAnAppointment(patient.getPatientId(),
+				"HOS419", doctor.getDoctorId(), appointment));
+	}
+
+	@Test
+	void bookDoctorAppointmentTestDoctorFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Appointment appointment = new Appointment(121l, patient, null, hospital, null, LocalDate.of(2021, 02, 14),
+				LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(patientRepository.findById(patient.getPatientId())).thenReturn(Optional.of(patient));
+		when(hospitalRepository.findById(hospital.getHospitalId())).thenReturn(Optional.of(hospital));
+		when(doctorRepository.findById(doctor.getDoctorId())).thenReturn(Optional.of(doctor));
+		when(appointmentRepository.save(appointment)).thenReturn(appointment);
+
+		assertThrows(DoctorNotFoundException.class, () -> appointmentService.bookAnAppointment(patient.getPatientId(),
+				hospital.getHospitalId(), "DOC419", appointment));
 	}
 
 	@Test
@@ -174,6 +280,69 @@ public class AppointmentServiceTest {
 
 		assertEquals(appointmentService.bookAnAppointment(patient.getPatientId(), hospital.getHospitalId(),
 				String.valueOf(hospitalFacility.getHospitalFacilityId()), appointment), "created");
+	}
+
+	@Test
+	void bookFacilityAppointmentTestPatientFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, null, hospital, null, LocalDate.of(2021, 02, 14),
+				LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(patientRepository.findById(patient.getPatientId())).thenReturn(Optional.of(patient));
+		when(hospitalRepository.findById(hospital.getHospitalId())).thenReturn(Optional.of(hospital));
+		when(hospitalFacilityRepository.findById(hospitalFacility.getHospitalFacilityId()))
+				.thenReturn(Optional.of(hospitalFacility));
+		when(appointmentRepository.save(appointment)).thenReturn(appointment);
+
+		assertThrows(PatientNotFoundException.class, () -> appointmentService.bookAnAppointment("PAT419",
+				hospital.getHospitalId(), String.valueOf(hospitalFacility.getHospitalFacilityId()), appointment));
+	}
+
+	@Test
+	void bookFacilityAppointmentTestHospitalFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, null, hospital, null, LocalDate.of(2021, 02, 14),
+				LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(patientRepository.findById(patient.getPatientId())).thenReturn(Optional.of(patient));
+		when(hospitalRepository.findById(hospital.getHospitalId())).thenReturn(Optional.of(hospital));
+		when(hospitalFacilityRepository.findById(hospitalFacility.getHospitalFacilityId()))
+				.thenReturn(Optional.of(hospitalFacility));
+		when(appointmentRepository.save(appointment)).thenReturn(appointment);
+
+		assertThrows(HospitalNotFoundException.class, () -> appointmentService.bookAnAppointment(patient.getPatientId(),
+				"HOS419", String.valueOf(hospitalFacility.getHospitalFacilityId()), appointment));
+	}
+
+	@Test
+	void bookFacilityAppointmentTestFacilityFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, null, hospital, null, LocalDate.of(2021, 02, 14),
+				LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(patientRepository.findById(patient.getPatientId())).thenReturn(Optional.of(patient));
+		when(hospitalRepository.findById(hospital.getHospitalId())).thenReturn(Optional.of(hospital));
+		when(hospitalFacilityRepository.findById(hospitalFacility.getHospitalFacilityId()))
+				.thenReturn(Optional.of(hospitalFacility));
+		when(appointmentRepository.save(appointment)).thenReturn(appointment);
+
+		assertThrows(HospitalFacilityNotFoundException.class, () -> appointmentService.bookAnAppointment(patient.getPatientId(),
+				hospital.getHospitalId(), "419", appointment));
 	}
 
 	@Test
@@ -221,6 +390,45 @@ public class AppointmentServiceTest {
 			assertEquals(expected.get(i).getDoctorName(), actual.get(i).getDoctorName());
 			assertEquals(expected.get(i).getFacilityName(), actual.get(i).getFacilityName());
 		}
+	}
+
+	@Test
+	void getAllAppointmentsByDoctorTestFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointmentN = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+		List<Appointment> appointments = new ArrayList<>();
+		appointments.add(appointmentN);
+
+		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
+		appointments.forEach((appointment -> {
+			AppointmentInfo appointmentInfo = new AppointmentInfo();
+			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
+					+ appointment.getPatient().getUser().getLastName());
+			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
+			appointmentInfo.setAppointmentTime(appointment.getAppointmentTime());
+			appointmentInfo.setDoctorName(appointment.getDoctor().getUser().getFirstName() + " "
+					+ appointment.getDoctor().getUser().getLastName());
+
+			appointmentInfo.setHospitalName(appointment.getHospital().getName());
+			appointmentInfo.setRemarks(appointment.getRemarks());
+			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfoList.add(appointmentInfo);
+		}));
+
+		when(doctorRepository.findById(doctor.getDoctorId())).thenReturn(Optional.of(doctor));
+		when(appointmentRepository.findByDoctor_DoctorId(doctor.getDoctorId())).thenReturn(appointments);
+
+		assertThrows(DoctorNotFoundException.class, () -> appointmentService.getAllAppointmentsByDoctor("DOC854"));
 	}
 
 	@Test
@@ -277,6 +485,52 @@ public class AppointmentServiceTest {
 	}
 
 	@Test
+	void getAllAppointmentsByHospitalAdminTestFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Set<HospitalFacility> facilities = new HashSet<>();
+		facilities.add(hospitalFacility);
+		hospital.setHospitalFacilities(facilities);
+		HospitalAdmin hospitalAdmin = new HospitalAdmin();
+		hospitalAdmin.setHospital(hospital);
+		Appointment appointmentN = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+		List<Appointment> appointments = new ArrayList<>();
+		appointments.add(appointmentN);
+
+		List<AppointmentInfo> appointmentInfoList = new ArrayList<AppointmentInfo>();
+		appointments.forEach((appointment -> {
+			AppointmentInfo appointmentInfo = new AppointmentInfo();
+			appointmentInfo.setAppointmentId(appointment.getAppointmentId());
+			appointmentInfo.setPatientName(appointment.getPatient().getUser().getFirstName() + " "
+					+ appointment.getPatient().getUser().getLastName());
+			appointmentInfo.setAppointmentDate(appointment.getAppointmentDate());
+			appointmentInfo.setAppointmentTime(appointment.getAppointmentTime());
+			appointmentInfo.setFacilityName(appointment.getHospitalFacility().getFacility().getName());
+			appointmentInfo.setHospitalName(appointment.getHospital().getName());
+			appointmentInfo.setRemarks(appointment.getRemarks());
+			appointmentInfo.setMedicalRecords(appointment.getMedicalRecords());
+			appointmentInfoList.add(appointmentInfo);
+		}));
+
+		when(hospitalAdminRepository.findById("HOS001")).thenReturn(Optional.of(hospitalAdmin));
+		when(hospitalRepository.findById(hospitalAdmin.getHospital().getHospitalId()))
+				.thenReturn(Optional.of(hospital));
+		when(appointmentRepository.findByHospitalFacility_HospitalFacilityId(hospitalFacility.getHospitalFacilityId()))
+				.thenReturn(appointments);
+
+		assertThrows(HospitalAdminNotFoundException.class,
+				() -> appointmentService.getAllAppointmentsByHospitalAdmin("HAD0542"));
+	}
+
+	@Test
 	public void approveAppointmentTestSuccess() {
 		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
 				"7894561230", "john@doe.com", "incorrect", "patient"));
@@ -296,6 +550,25 @@ public class AppointmentServiceTest {
 	}
 
 	@Test
+	public void approveAppointmentTestFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(appointmentRepository.findById(appointment.getAppointmentId())).thenReturn(Optional.of(appointment));
+
+		assertThrows(AppointmentNotFoundException.class, () -> appointmentService.approveAppointment(120l));
+	}
+
+	@Test
 	public void rejectAppointmentTestSuccess() {
 		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
 				"7894561230", "john@doe.com", "incorrect", "patient"));
@@ -312,5 +585,24 @@ public class AppointmentServiceTest {
 		when(appointmentRepository.findById(appointment.getAppointmentId())).thenReturn(Optional.of(appointment));
 
 		assertEquals(appointmentService.rejectAppointment(appointment.getAppointmentId()), "rejected");
+	}
+
+	@Test
+	public void rejectAppointmentTestFailure() {
+		Patient patient = new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male",
+				"7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null,
+				new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs",
+						"circiut", "Doctor"));
+		Facility facility = new Facility(4l, "this", null);
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility, "desc", "rem",
+				new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor, hospital, hospitalFacility,
+				LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+
+		when(appointmentRepository.findById(appointment.getAppointmentId())).thenReturn(Optional.of(appointment));
+
+		assertThrows(AppointmentNotFoundException.class, () -> appointmentService.rejectAppointment(120l));
 	}
 }
