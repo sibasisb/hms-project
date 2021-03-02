@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import axios from 'axios';
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 class FacilityAddUpdateComponent extends Component {
 
@@ -35,11 +36,11 @@ class FacilityAddUpdateComponent extends Component {
 
     componentDidMount(){
 
-        axios.get(`http://localhost:8080/hospitals/${this.state.hospitalId}`)
+        axios.get(`http://localhost:8080/hospitals/${this.state.hospitalId}`,getHeader())
         .then(res1=>{
 
             if(this.state.facilityId !== ""){
-                axios.get(`http://localhost:8080/hospitalfacility/${this.props.match.params.id}`)
+                axios.get(`http://localhost:8080/hospitalfacility/${this.props.match.params.id}`,getHeader())
                 .then(res=>{
                     this.setState({
                        facility: res.data.facilityName,
@@ -52,7 +53,7 @@ class FacilityAddUpdateComponent extends Component {
                 .catch(err=>console.log(err));
              }
              else{
-                 axios.get("http://localhost:8080/facilities/")
+                 axios.get("http://localhost:8080/facilities/",getHeader())
                  .then(res=>{
                      this.setState({facilityList:res.data,hospitalName:res1.data.name});
                      console.log(res.data);
@@ -80,7 +81,7 @@ class FacilityAddUpdateComponent extends Component {
                 const url=`http://localhost:8080/addfacility/${this.state.hospitalId}/${this.state.facility}`;
                 console.log(url);
                 console.log(body);
-                axios.post(url,body)
+                axios.post(url,getHeader(),body)
                 .then(res=>console.log(res.data))
                 .catch(err=>console.log(err));
             }
@@ -95,7 +96,7 @@ class FacilityAddUpdateComponent extends Component {
                 const url=`http://localhost:8080/updatefacility/${this.state.hospitalId}/${this.props.match.params.id}`
                 console.log(url);
                 console.log(body);
-                axios.put(url,body)
+                axios.put(url,getHeader(),body)
                 .then(res=>console.log(res.data))
                 .catch(err=>console.log(err));
 

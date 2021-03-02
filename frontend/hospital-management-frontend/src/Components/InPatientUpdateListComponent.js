@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {faPen } from "@fortawesome/free-solid-svg-icons";
+import { getHeader } from '../helpers/AuthorizationHeader';
 
 const { FontAwesomeIcon } = require("@fortawesome/react-fontawesome");
 
@@ -11,7 +12,7 @@ const InPatientUpdateListComponent = (props) => {
     const[display,setDisplay]=useState(false);
     useEffect(()=>{
 
-            axios.get(`http://localhost:8080/inpatients/${localStorage.getItem("hospitalId")}`)
+            axios.get(`http://localhost:8080/inpatients/${localStorage.getItem("hospitalId")}`,getHeader())
             .then(res=>{
                 setData(res.data);
                 setDisplay(true);
