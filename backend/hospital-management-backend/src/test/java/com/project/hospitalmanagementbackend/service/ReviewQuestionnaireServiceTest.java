@@ -1,6 +1,7 @@
 package com.project.hospitalmanagementbackend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -22,6 +23,14 @@ public class ReviewQuestionnaireServiceTest {
 	
 	@Mock
 	private ReviewQuestionnaireRepository reviewQuestionnaireRepository;
+	
+	@Test
+	public void testAddQuestionServiceFailure() {
+		String res="Question could not be added";
+		ReviewQuestionnaire question=new ReviewQuestionnaire(1,"How was the doctor?");
+		when(reviewQuestionnaireRepository.save(question)).thenReturn(null);
+		assertEquals(res,reviewQuestionnaireService.addQuestionService(question));
+	}
 	
 	@Test
 	public void testAddQuestionService() {

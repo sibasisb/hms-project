@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.project.hospitalmanagementbackend.dto.TestResultDto;
 import com.project.hospitalmanagementbackend.model.Appointment;
+import com.project.hospitalmanagementbackend.model.Baseline;
 import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Facility;
 import com.project.hospitalmanagementbackend.model.Hospital;
@@ -183,5 +185,22 @@ public class TestResultControllerTest {
 		assertEquals(obj.getBody().size(), new ResponseEntity<>(testInfoList, HttpStatus.OK).getBody().size());
 	}
 	
+	@Test
+	public void fetchTestInfoTest() {
+		Patient patient =  new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male", "7894561230", "john@doe.com", "incorrect", "patient"));
+		Hospital hospital = new Hospital("HOS001", "something", "on Earth", "8450351976", "www.earth.com", null, null);
+		Doctor doctor = new Doctor("DOC001", "M. B. B. S.", "cardio", 5, "Monday", "5:00", new BigDecimal(250.00), null , new User(2l, "Munna", "Bhai", LocalDate.of(1968, 8, 4), "male", "8459872650", "munna@bhai.mbbs", "circiut", "Doctor"));
+		HashMap<String, String> map = new HashMap<String,String>();
+		map.put("baseline1","value1");
+		Baseline baseline = new Baseline(1l,"baseline1","value1",null);
+		List<Baseline> baselineList= new ArrayList<Baseline>();
+		baselineList.add(baseline);
+		Facility facility = new Facility(4l, "this",baselineList );
+		HospitalFacility hospitalFacility = new HospitalFacility(3l, hospital, facility , "desc", "rem", new BigDecimal(54.00));
+		Appointment appointment = new Appointment(121l, patient, doctor , hospital, hospitalFacility , LocalDate.of(2021, 02, 14), LocalTime.of(20, 04), "hem", null, true, false);
+		TestResultDto testInfo = new TestResultDto(0, "this",121L,"PAT001", "John Doe",map);
+		when(testResultService.fetchTestInfo(121l)).thenReturn(testInfo);
+		assertEquals(new ResponseEntity<>(testInfo,HttpStatus.OK),testResultController.fetchTestInfo(121l) );
+	}
 	
 }

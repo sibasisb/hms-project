@@ -30,7 +30,7 @@ const TestResultsUpdate=()=>{
                 let testResultUrl="/testresults/" + appointmentInfo.patientId + "/" + appointmentInfo.appointmentId 
                 return (
                     <div className="list-group-item" key={index}>
-                        {appointmentInfo.patientId}
+                        {appointmentInfo.patientId} - {appointmentInfo.facilityName} 
                         <Link to={testResultUrl} key={index} style={{color:"black",textDecoration:"none"}}>
                         <span className="material-icons float-right" style={{color:"black"}}>visibility</span>
                         </Link>

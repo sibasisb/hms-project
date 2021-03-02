@@ -63,5 +63,12 @@ public class TestResultController {
 		Set<TestResultDto> testResultsDetailsList = testResultService.fetchTestResultsAndDetails(patientId);
 		return new ResponseEntity<>(testResultsDetailsList, HttpStatus.OK);
 	}
+	
+	//can fetch test results from hospital admin
+	@GetMapping("/testinfo/{appointmentId}")
+	public ResponseEntity<?> fetchTestInfo(@PathVariable("appointmentId") long appointmentId){
+		 TestResultDto testInfo=testResultService.fetchTestInfo(appointmentId);
+		return new ResponseEntity<>(testInfo, HttpStatus.OK);
+	}
 
 }

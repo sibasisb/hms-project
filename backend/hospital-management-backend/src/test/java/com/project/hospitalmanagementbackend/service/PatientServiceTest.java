@@ -1,6 +1,7 @@
 package com.project.hospitalmanagementbackend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -14,9 +15,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 
 import com.project.hospitalmanagementbackend.dto.PatientInfo;
+import com.project.hospitalmanagementbackend.exception.PatientNotFoundException;
 import com.project.hospitalmanagementbackend.model.Appointment;
 import com.project.hospitalmanagementbackend.model.Doctor;
 import com.project.hospitalmanagementbackend.model.Facility;
@@ -54,6 +55,13 @@ public class PatientServiceTest {
 		patientList.add(patient);
 		when(appointmentRepository.findAppointmentsByDoctorId(doctorId)).thenReturn(appointmentList);
 		assertEquals(patientService.findPatientsFromDoctorId(doctorId), patientList);
+	}
+	
+	@Test
+	public void testFindPatientByPatientIdFailure() {
+		Patient patient =  new Patient("PAT001", new User(1l, "John", "Doe", LocalDate.of(1985, 5, 25), "Male", "7894561230", "john@doe.com", "incorrect", "patient"));
+		when(patientRepository.findById(patient.getPatientId())).thenReturn(Optional.empty());
+		assertThrows(PatientNotFoundException.class,()->patientService.findPatientByPatientId(patient.getPatientId()));
 	}
 	
 	@Test
