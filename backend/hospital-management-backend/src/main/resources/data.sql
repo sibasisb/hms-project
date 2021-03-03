@@ -100,6 +100,10 @@ insert into patient(patient_id,user_id) values('PAT99996',1);
 insert into patient(patient_id,user_id) values('PAT99997',5);
 insert into patient(patient_id,user_id) values('PAT99998',6);
 
+--INSERT INTO APPOINTMENTS TABLE
+INSERT INTO APPOINTMENTS VALUES(1,'2021-03-05','12:31:00','TRUE',null,'FALSE','good','DOC0999','HOS0595',null,'PAT99996');
+INSERT INTO APPOINTMENTS VALUES(2,'2020-03-06','12:31:00','TRUE',null,'FALSE','good','DOC0999','HOS0595',null,'PAT99997');
+
 -- insert into treatment_history table
 insert into treatment_history(treatment_id,prescription,treatment_patient_id,treatment_doctor_id) values(1, 'Exercise and eat well','PAT99996','DOC0999');
 insert into treatment_history(treatment_id,prescription,treatment_patient_id,treatment_doctor_id) values(2, 'Eat and sleep well','PAT99997','DOC0999');

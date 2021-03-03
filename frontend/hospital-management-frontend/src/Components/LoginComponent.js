@@ -175,8 +175,8 @@ export const LoginComponent = (props) => {
                             type: "LOGIN",
                             payload: {
                                 userId: res.data.userId,
-                                token: res.data,
-                                role: "admin",
+                                token: res.data.token,
+                                role: res.data.role,
                             }
                         }
                     )

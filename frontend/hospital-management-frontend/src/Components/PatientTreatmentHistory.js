@@ -34,7 +34,7 @@ function PatientTreatmentHistory(props) {
 
         console.log(dataToSend)
       
-        axios.post(`http://localhost:8080/treatmenthistory/${patientId}/${doctorId}`,getHeader(), dataToSend)
+        axios.post(`http://localhost:8080/treatmenthistory/${patientId}/${doctorId}`, dataToSend, getHeader())
             .then(res => {
                 console.log(res)
                 const alertmsg=<div className="alert alert-success text-bold">Prescription updated successfully.</div>

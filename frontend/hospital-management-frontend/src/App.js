@@ -38,6 +38,7 @@ import ViewAppointment from "./Components/ViewAppointment";
 import ApproveAppointments from "./Components/ApproveAppointments";
 import Notification from "./Components/Notification";
 import AddTestResult from "./Components/AddTestResult";
+import { ModalProvider } from "react-modal-hook";
 
 export const UserContext = createContext();
 
@@ -96,7 +97,9 @@ function App() {
       <UserContext.Provider value={{ state, dispatch }}>
         <BrowserRouter>
           <MenuComponent />
+          <ModalProvider>
           <Routing />
+          </ModalProvider>
         </BrowserRouter>
       </UserContext.Provider>
     </div>

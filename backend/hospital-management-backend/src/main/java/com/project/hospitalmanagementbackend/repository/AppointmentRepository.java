@@ -33,7 +33,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 	@Query("from Appointment a where a.approved=true and a.paid=false and a.hospitalFacility.hospitalFacilityId is not null and a.hospital.hospitalId=:hospitalId")
 	public List<Appointment> findPatientsWithFacilityRequests(@Param("hospitalId") String hospitalId);
 
-	@Query("SELECT a from Appointment a where a.doctor.doctorId=?1")
+	@Query("SELECT a from Appointment a where a.doctor.doctorId=?1 and a.approved=true")
 	public List<Appointment> findAppointmentsByDoctorId(String doctorId);
 
 }
