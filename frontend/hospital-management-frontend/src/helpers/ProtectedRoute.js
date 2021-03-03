@@ -5,12 +5,11 @@ import jwt_decode from "jwt-decode";
 function ProtectedRoute({ component: Component, roles, ...rest }) {
 
 
-
   function checkAuthentication() {
     let token = localStorage.getItem("token");
     if (token) {
       const decode = jwt_decode(token);
-      if (decode.exp > Date.now())
+      if (decode.exp < Date.now()/1000)
         return false
       else
         return true

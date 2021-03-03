@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import feedback from '../images/feedback.png'
-
+import report from '../images/reports.png'
 function SystemAdminDashboard() {
     const imageStyle={
         height:"18vh"
@@ -21,6 +21,21 @@ function SystemAdminDashboard() {
 						<div className="card-body">
 							<p className="card-text font-weight-bold">
 								Add review question
+							</p>
+						</div>
+					</div>
+				</Link>
+				<Link to="/reports" className="col-md-4">
+					<div className="card m-4">
+						<img
+							className="card-img-top  embed-responsive-item"
+							src={report}
+							alt="Image by Arseny Togulev"
+							style={imageStyle}
+						/>
+						<div className="card-body">
+							<p className="card-text font-weight-bold">
+								View Reports
 							</p>
 						</div>
 					</div>
