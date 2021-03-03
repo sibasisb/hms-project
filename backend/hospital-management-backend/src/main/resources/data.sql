@@ -93,7 +93,7 @@ insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) valu
 insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(14,'Remarks','None',8);
 
 --insert into hospital_facility
-INSERT INTO HOSPITAL_FACILITY  (HOSPITAL_FACILITY_ID, CHARGES, DESCRIPTION, FACILITY_ID , HOSPITAL_ID) VALUES (1, 50, 'This', 1, 'HOS0595');
+--INSERT INTO HOSPITAL_FACILITY  (HOSPITAL_FACILITY_ID, CHARGES, DESCRIPTION, FACILITY_ID , HOSPITAL_ID) VALUES (1, 50, 'This', 1, 'HOS0595');
 
 -- insert into patient table
 insert into patient(patient_id,user_id) values('PAT99996',1);

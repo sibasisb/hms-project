@@ -43,7 +43,7 @@ const InPatientUpdateListComponent = (props) => {
                                 let link = "/inpatientform/"+inPatient.inPatientId;
                                 return(
                                     <li key={inPatient.inPatientId} className="list-group-item">
-                                        <span className="h5 text-muted">{inPatient.patientId} - {inPatient.firstName} {inPatient.lastName}</span>
+                                        <span className="h5 text-muted">{inPatient.patientId} - {inPatient.firstName} {inPatient.lastName} <span className="text-success">{inPatient.paid?"[Paid]":""}</span></span>
                                         <Link to={{pathname:link,state:{patient : inPatient}}} className="float-right text-black" > <FontAwesomeIcon style={{color:"black"}} icon={faPen} /></Link>
                                        
                                     </li>

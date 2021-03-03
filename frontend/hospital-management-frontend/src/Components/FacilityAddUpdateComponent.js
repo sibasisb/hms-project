@@ -81,7 +81,7 @@ class FacilityAddUpdateComponent extends Component {
                 const url=`http://localhost:8080/addfacility/${this.state.hospitalId}/${this.state.facility}`;
                 console.log(url);
                 console.log(body);
-                axios.post(url,getHeader(),body)
+                axios.post(url,body,getHeader())
                 .then(res=>console.log(res.data))
                 .catch(err=>console.log(err));
             }
@@ -96,7 +96,7 @@ class FacilityAddUpdateComponent extends Component {
                 const url=`http://localhost:8080/updatefacility/${this.state.hospitalId}/${this.props.match.params.id}`
                 console.log(url);
                 console.log(body);
-                axios.put(url,getHeader(),body)
+                axios.put(url,body,getHeader())
                 .then(res=>console.log(res.data))
                 .catch(err=>console.log(err));
 

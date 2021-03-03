@@ -110,7 +110,7 @@ const BillingComponent = (props) => {
 
     const payBills=()=>{
 
-        axios.put(`http://localhost:8080/billing/pay/${hospitalId}/${patientId}`,getHeader())
+        axios.put(`http://localhost:8080/billing/pay/${hospitalId}/${patientId}`,{},getHeader())
         .then(res=>{console.log(res);
             setState({...state,showPaid:true});
         })

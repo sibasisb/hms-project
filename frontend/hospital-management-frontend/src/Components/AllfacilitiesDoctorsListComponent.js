@@ -130,7 +130,7 @@ const AllFacilitiesDoctorsListComponent = (props) => {
                                     return(
                                         <li key={doctor.doctorId} className="list-group-item">
                                             <div className="h6">Dr. {doctor.name} </div>
-                                            <span className="h6 text-muted">{doctor.qualification}, {doctor.speciality} Specialist</span>
+                                            <span className="h6 text-muted">{doctor.qualification}, {doctor.speciality} </span>
                                             <Link to={{pathname: link,state:{doctorDetails : doctor}}} className="float-right text-black" > <FontAwesomeIcon style={{color:"black"}} icon={faEye} /></Link>  
                                         </li>
                                     )})

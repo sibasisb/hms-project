@@ -24,8 +24,9 @@ function HospitalAdminDashboard() {
 
 	useEffect(()=>{
 
-		axios.get(`http://localhost:8080/hospitals`)
+		axios.get(`http://localhost:8080/hospitals/${localStorage.getItem("hospitalId")}`,getHeader())
 		.then(res=>{
+			console.log(res.data);
 			setName(res.data.name);
 		})
 		.catch(err=>console.log(err));
