@@ -38,6 +38,9 @@ import ViewAppointment from "./Components/ViewAppointment";
 import ApproveAppointments from "./Components/ApproveAppointments";
 import Notification from "./Components/Notification";
 import AddTestResult from "./Components/AddTestResult";
+import SystemAdminReportingComponent from "./Components/SystemAdminReportingComponent";
+import CentralFacilityComponent from "./Components/CentralFacilityComponent";
+import CentralDoctorComponent from "./Components/CentralDoctorsComponent";
 
 export const UserContext = createContext();
 
@@ -71,12 +74,12 @@ const Routing = () => {
       <ProtectedRoute roles={[roles.hospital_admin]} path="/addfacility" exact component={FacilityAddUpdateComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/addfacility/:id" exact component={FacilityAddUpdateComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/updatefacility" exact component={FacilityUpdateList} />
-      <ProtectedRoute roles={[roles.patient]} path="/hospitals"  exact component={AllHospitalsListComponent} />
-      <ProtectedRoute roles={[roles.patient]} path="/viewhospital/:id" exact exact component={HospitalDetailsComponent} />
-      <ProtectedRoute roles={[roles.patient]} path="/facilities/:id"  exact component={AllFacilitiesDocotorsComponent} />
-      <ProtectedRoute roles={[roles.patient]} path="/doctors/:id"  exact component={AllFacilitiesDocotorsComponent} />
-      <ProtectedRoute roles={[roles.patient]} path="/viewfacility/:id" exact component={FacilityDoctorDetailsComponent} />
-      <ProtectedRoute roles={[roles.patient]} path="/viewdoctor/:id" exact component={FacilityDoctorDetailsComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/hospitals"  exact component={AllHospitalsListComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/viewhospital/:id" exact exact component={HospitalDetailsComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/facilities/:id"  exact component={AllFacilitiesDocotorsComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/doctors/:id"  exact component={AllFacilitiesDocotorsComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/viewfacility/:id" exact component={FacilityDoctorDetailsComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/viewdoctor/:id" exact component={FacilityDoctorDetailsComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/inpatientform" exact component={InPatientFormComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/inpatientform/:id" exact component={InPatientFormComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/inpatientlist" exact component={InPatientUpdateListComponent} />
@@ -85,6 +88,7 @@ const Routing = () => {
       <ProtectedRoute roles={[roles.patient]} path="/view-appointment/:patientId" exact component={ViewAppointment} />
       <ProtectedRoute roles={[roles.doctor, roles.hospital_admin]} path="/approve-appointment/:serviceId" exact component={ApproveAppointments} />
       <ProtectedRoute roles={[roles.patient]} path="/notifications/:patientId" exact component={Notification} />
+      <ProtectedRoute roles={[roles.sys_admin]} path="/reports" exact component={SystemAdminReportingComponent} />
     </Switch>
   );
 };

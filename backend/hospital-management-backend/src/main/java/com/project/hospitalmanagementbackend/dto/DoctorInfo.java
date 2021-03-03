@@ -1,7 +1,8 @@
 package com.project.hospitalmanagementbackend.dto;
 
 import java.math.BigDecimal;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +25,6 @@ public class DoctorInfo {
 	private String availableDays;
 	private String availableTime;
 	private BigDecimal charge;
+	private List<String> hospitalNames = new ArrayList<>() ;
 
 }

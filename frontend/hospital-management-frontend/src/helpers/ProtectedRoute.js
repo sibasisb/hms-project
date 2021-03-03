@@ -5,7 +5,6 @@ import jwt_decode from "jwt-decode";
 function ProtectedRoute({ component: Component, roles, ...rest }) {
 
 
-
   function checkAuthentication() {
     let token = localStorage.getItem("token");
     if (token) {
