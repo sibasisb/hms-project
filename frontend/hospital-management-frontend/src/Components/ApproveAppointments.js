@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getHeader } from "../helpers/AuthorizationHeader";
 
 import ApproveAppointmentCard from "./ApproveAppointmentCard";
 
@@ -22,7 +23,7 @@ const ApproveAppointments = () => {
 		}
 
 		axios
-			.get(url)
+			.get(url,getHeader())
 			.then((res) => {
 				setAppointments(res.data);
 				if (res.data.length == 0)
@@ -35,7 +36,7 @@ const ApproveAppointments = () => {
 		setShowApprove(false);
 		setShowReject(false);
 		axios
-			.get(`http://localhost:8080/appointments/approve/${appointmentId}`)
+			.get(`http://localhost:8080/appointments/approve/${appointmentId}`,getHeader())
 			.then((res) => {
 				res.status === 200
 					? setShowApprove(true)
@@ -48,7 +49,7 @@ const ApproveAppointments = () => {
 		setShowApprove(false);
 		setShowReject(false);
 		axios
-			.get(`http://localhost:8080/appointments/reject/${appointmentId}`)
+			.get(`http://localhost:8080/appointments/reject/${appointmentId}`,getHeader())
 			.then((res) => {
 				res.status === 200
 					? setShowReject(true)
