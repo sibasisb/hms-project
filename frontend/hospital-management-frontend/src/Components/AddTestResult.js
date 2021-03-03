@@ -69,7 +69,7 @@ const AddTestResult = () => {
             infos:infoList
         }
         console.log(obj)
-        axios.post(`http://localhost:8080/testresults/add/${appointmentId}/${patientId}`,obj)
+        axios.post(`http://localhost:8080/testresults/add/${appointmentId}/${patientId}`,obj,getHeader())
         .then(res=>{
             console.log(res)
             setShowAlert(true)

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getHeader } from "../helpers/AuthorizationHeader";
 
 const Appointment = () => {
 	const [hospitals, setHospitals] = useState([]);
@@ -31,7 +32,7 @@ const Appointment = () => {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:8080/hospitals")
+			.get("http://localhost:8080/hospitals",getHeader())
 			.then((res) => {
 				setHospitals(res.data);
 			})
@@ -47,7 +48,7 @@ const Appointment = () => {
 				// by using: INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0999', 'HOS0995');
 
 				axios
-					.get(`http://localhost:8080/hospitals/doctors/${hospital}`)
+					.get(`http://localhost:8080/hospitals/doctors/${hospital}`,getHeader())
 					.then((res) => {
 						setDoctors(res.data);
 					})
@@ -55,7 +56,8 @@ const Appointment = () => {
 			} else {
 				axios
 					.get(
-						`http://localhost:8080/hospitals/facilities/${hospital}`
+						`http://localhost:8080/hospitals/facilities/${hospital}`,
+						getHeader()
 					)
 					.then((res) => {
 						setFacilities(res.data);
@@ -131,7 +133,8 @@ const Appointment = () => {
 			axios
 				.post(
 					`http://localhost:8080/appointments/${patientId}/${hospital}/${serviceId}`,
-					payload
+					payload,
+					getHeader()
 				)
 				.then((res) => {
 					if (res.status == 201) setValidate(true);

@@ -20,9 +20,9 @@ const AddReviewQuestion=()=>{
             setShowFailureAlert(true)
             return
         }
-        axios.post(`http://localhost:8080/reviewquestion/add`,getHeader(),{
+        axios.post(`http://localhost:8080/reviewquestion/add`,{
             question:question
-        })
+        },getHeader())
         .then(res=>{
             console.log(res);
             setQuestion("")

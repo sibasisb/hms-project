@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getHeader } from "../helpers/AuthorizationHeader";
 
 const ViewAppointment = () => {
 	const [appointments, setAppointments] = useState([]);
@@ -10,7 +11,7 @@ const ViewAppointment = () => {
 		setShowError(false)
 		const patientId = localStorage.getItem("userId");
 		axios
-			.get(`http://localhost:8080/appointments/${patientId}`)
+			.get(`http://localhost:8080/appointments/${patientId}`,getHeader())
 			.then((res) => {
 				setAppointments(res.data);
 				if (res.data.length == 0)
