@@ -190,7 +190,7 @@ public class TestResultService {
 		testInfo.setTestName(facilityInfo.getName());
 			HashMap<String,String> hmap=new HashMap<>();
 			facilityInfo.getBaselines().forEach((baseline)->{
-				hmap.put(baseline.getBaselineName(),"");
+				hmap.put(baseline.getBaselineName(),baseline.getBaselineValue());
 			});
 			testInfo.setInfos(hmap);
 			

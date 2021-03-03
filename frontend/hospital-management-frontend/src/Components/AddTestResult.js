@@ -12,7 +12,7 @@ const AddTestResult = () => {
     const [result, setResult] = useState([])
     const [patientName,setPatientName]=useState("")
     const [showAlert, setShowAlert] = useState(false)
-
+    const[baselines,setBaselines]=useState({})
     useEffect(() => {
         setShowAlert(false)
         axios.get(`http://localhost:8080/testresults/testinfo/${appointmentId}`,getHeader())
@@ -22,6 +22,8 @@ const AddTestResult = () => {
             setResult(testResultInfo.infos)
             setTestName(testResultInfo.testName)
             setPatientName(testResultInfo.patientName)
+            setBaselines({...testResultInfo.infos})
+            console.log(baselines)
         })
         .catch(err=>{
             console.log(err);
@@ -44,8 +46,8 @@ const AddTestResult = () => {
         return li.map((item, index) => {
             return (
                 <div className="form-group col-xs-12 col-md-4" key={index}>
-                    <label htmlFor={item[0]}>{item[0]}</label><br />
-                    <input id={item[0]} type="text" value={item[1]} onChange={handleChangeResult} />
+                    <label htmlFor={item[0]}>{item[0]} ({baselines[item[0]]})</label><br />
+                    <input id={item[0]} type="text"  onChange={handleChangeResult} />
                 </div>
             )
         })

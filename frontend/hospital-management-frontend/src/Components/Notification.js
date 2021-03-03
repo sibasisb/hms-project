@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { getHeader } from "../helpers/AuthorizationHeader";
 
 const Notification = () => {
 	const [appointments, setAppointments] = useState([]);
 
 	useEffect(() => {
-		const patientId = "PAT99996";
+		const patientId = localStorage.getItem("userId");
 		axios
-			.get(`http://localhost:8080/appointments/${patientId}`)
+			.get(`http://localhost:8080/appointments/${patientId}`,getHeader())
 			.then((res) => {
 				setAppointments(res.data);
 			})

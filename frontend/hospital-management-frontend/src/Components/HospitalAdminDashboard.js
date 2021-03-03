@@ -93,7 +93,7 @@ function HospitalAdminDashboard() {
 						/>
 						<div className="card-body">
 							<p className="card-text font-weight-bold">
-								Update Test Results
+								Add/Update Test Results
 							</p>
 						</div>
 					</div>
