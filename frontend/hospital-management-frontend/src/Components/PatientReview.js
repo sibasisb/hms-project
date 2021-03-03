@@ -70,7 +70,7 @@ const PatientReview=()=>{
         if(flag===1)
             return
 
-        axios.post(`http://localhost:8080/feedback/add`,getHeader(),answersList)
+        axios.post(`http://localhost:8080/feedback/add`,answersList,getHeader())
         .then(res=>{
             console.log(res);
             setShowSuccessAlert(true)

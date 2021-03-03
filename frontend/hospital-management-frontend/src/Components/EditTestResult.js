@@ -55,7 +55,7 @@ const EditTestResult = () => {
     const handleEditSubmit = (e) => {
         e.preventDefault()
         console.log(result)
-        console.log(`http://localhost:8080/testresults/update/${appointmentId}/${patientId}/${testResultId}`,getHeader())
+        console.log(`http://localhost:8080/testresults/update/${appointmentId}/${patientId}/${testResultId}`)
         let infoList=[]
         for(let i in result){
             const infoObj={
@@ -70,7 +70,7 @@ const EditTestResult = () => {
             infos:infoList
         }
         console.log(obj)
-        axios.put(`http://localhost:8080/testresults/update/${appointmentId}/${patientId}/${testResultId}`,obj)
+        axios.put(`http://localhost:8080/testresults/update/${appointmentId}/${patientId}/${testResultId}`,obj,getHeader())
         .then(res=>{
             console.log(res)
             setShowAlert(true)
