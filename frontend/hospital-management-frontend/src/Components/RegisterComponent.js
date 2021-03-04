@@ -73,14 +73,15 @@ function RegisterComponent(props) {
             if (state.userDetails[field] === "")
                 error[field] = true
 
-            if (field === "fName" && (state.userDetails[field].length < 4 || state.userDetails[field].length > 50))
+            if (field === "firstName" && (state.userDetails[field].length < 4 || state.userDetails[field].length > 50))
                 error[field] = "First Name should be between 4 and 50 characters"
 
-            if (field === "lName" && (state.userDetails[field].length < 4 || state.userDetails[field].length > 50))
+            if (field === "lastName" && (state.userDetails[field].length < 4 || state.userDetails[field].length > 50))
                 error[field] = "Last Name should be between 4 and 50 characters"
 
-            if (field === "dob") {
+            if (field === "dateOfBirth") {
                 let getAge = Math.floor((new Date() - new Date(state.userDetails[field]).getTime()) / 3.15576e+10)
+                console.log(getAge)
                 if (getAge < 18)
                     error[field] = "Age should be greater than 18"
             }
@@ -190,7 +191,7 @@ function RegisterComponent(props) {
                         {
                             ...state,
                             errors: {},
-                            successAlert: <div className="alert alert-success text-bold">{res.data}</div>,
+                            successAlert: <div className="alert alert-success text-bold"><strong>{res.data}</strong></div>,
                             arrowDirectionUp: false
                         }
                     )
