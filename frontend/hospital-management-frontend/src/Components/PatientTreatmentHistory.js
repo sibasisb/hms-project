@@ -22,7 +22,7 @@ function PatientTreatmentHistory(props) {
     const {patientId,doctorId}=useParams();
 
     const [data, setData] = useState({});
-    const [prescription, changePrescription] = useState();
+    const [prescription, changePrescription] = useState("");
     const [alert,setalert]=useState("");
     const [errormsg,seterror]=useState(null)
 
@@ -40,7 +40,7 @@ function PatientTreatmentHistory(props) {
 
 
     function saveTreatmentHistory() {
-        if(prescription==="")
+        if(prescription===null || prescription==="")
            { const msg=<div className="alert alert-danger" role="alert">
            Please update the highlighted mandatory fields(s).</div>
                seterror(msg)

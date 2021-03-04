@@ -17,7 +17,7 @@ function DoctorForm(props) {
     const initialState = {
         speciality: "",
         experience: "",
-        quality: "",
+        qualification: "",
         hospitalID: "",
         dates: [],
         startTime: "",
@@ -85,8 +85,8 @@ function DoctorForm(props) {
                     <input
                         type="text"
                         className="form-control"
-                        name="quality"
-                        placeholder="Quality"
+                        name="qualification"
+                        placeholder="Qualification"
                         style={props.errors?.quality ? error : noerror}
                         onChange={changeValue} /></div>
                 <div className="col-md-6">
@@ -122,7 +122,6 @@ function DoctorForm(props) {
                         onChange={changeValue}>
                         <option value="" defaultValue>Choose</option>
                         {hospitals.map(hospitalInfo=>{
-                            console.log(hospitalInfo.hospitalId);
                            return <option key={hospitalInfo.hospitalId} value={hospitalInfo.hospitalId}>{hospitalInfo.name}</option>
 })}
                     </select>

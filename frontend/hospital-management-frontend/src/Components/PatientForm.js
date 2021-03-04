@@ -12,8 +12,8 @@ function PatientForm(props) {
     const noerror = {
         borderColor: "#ced4da"
     }
-    console.log(props.errors);
-    console.log(props.state)
+    //console.log(props.errors);
+    //console.log(props.state)
     const initialState = {
         firstName: "",
         lastName: "",
@@ -34,7 +34,6 @@ function PatientForm(props) {
     }, [state])
 
     function changeValue(event) {
-        console.log(event.target.value)
         setstate({
             ...state,
             [event.target.name]: event.target.value

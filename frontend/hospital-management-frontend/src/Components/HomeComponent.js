@@ -19,8 +19,8 @@ function HomeComponent(props) {
     const [state, setstate] = useState(initialState)
    
     const anonymousUser=
-    <div className="container ">
-        <div className="row text-center "  style={{height:'90vh',display:'flex',alignItems:'center',justifyContent:'center'}}>
+    <div className="container mt-5 ">
+        <div className="row text-center "  style={{height:'70vh',display:'flex',alignItems:'center',justifyContent:'center'}}>
             <div className="col-md-4">
             <Link
              

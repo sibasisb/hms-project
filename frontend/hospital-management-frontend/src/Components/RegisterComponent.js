@@ -167,7 +167,7 @@ function RegisterComponent(props) {
                     availableDate += `${date.value},`
                 }
 
-                let doctorDetails = {
+                 doctorDetails = {
                     ...restD,
                     availableDays: availableDate,
                     availableTime: `${startTime}-${endTime}`
