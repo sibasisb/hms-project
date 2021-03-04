@@ -38,9 +38,14 @@ import ViewAppointment from "./Components/ViewAppointment";
 import ApproveAppointments from "./Components/ApproveAppointments";
 import Notification from "./Components/Notification";
 import AddTestResult from "./Components/AddTestResult";
+<<<<<<< HEAD
 import { ModalProvider } from "react-modal-hook";
 import SystemAdminReportingComponent from "./Components/SystemAdminReportingComponent";
 
+=======
+import ViewTieUps from "./Components/ViewTieUps";
+import AddUpdateTieUp from "./Components/AddUpdateTieUp";
+>>>>>>> tie-up
 
 export const UserContext = createContext();
 
@@ -89,6 +94,8 @@ const Routing = () => {
       <ProtectedRoute roles={[roles.doctor, roles.hospital_admin]} path="/approve-appointment/:serviceId" exact component={ApproveAppointments} />
       <ProtectedRoute roles={[roles.patient]} path="/notifications/:patientId" exact component={Notification} />
       <ProtectedRoute roles={[roles.sys_admin]} path="/reports" exact component={SystemAdminReportingComponent} />
+      <ProtectedRoute roles={[roles.sys_admin]} path="/tieup" exact component={ViewTieUps} />
+      <ProtectedRoute roles={[roles.sys_admin]} path="/tieup/add/:hospital1/:hospital2/:tieUpId" exact component={AddUpdateTieUp} />
     </Switch>
   );
 };

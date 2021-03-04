@@ -4,9 +4,11 @@ INSERT INTO sys_admins VALUES ('su', 'root');
 
 -- insert into user table
 insert into user values(1,'8545635212','1998-03-26','abc@gmail.com','John','male','Smith','pass12$','patient');
-insert into user values(2,'8545635212','1998-03-26','abc@gmail.com','Patty','female','Watson','pass12$','hospital admin');
-insert into user values(3,'8545635212','1998-03-26','abc@gmail.com','Kenny','male','','pass12$','hospital admin');
+insert into user values(2,'8545635212','1998-03-26','abc@gmail.com','Pawtty','female','Watson','pass12$','hospital admin');
+insert into user values(3,'8545635212','1998-03-26','abc@gmail.com','Ken6ny','male','','pass12$','hospital admin');
 insert into user values(4,'8545635212','1998-03-26','abc@gmail.com','Victor','male','Strange','pass12$','doctor');
+insert into user values(5,'8545635212','1998-03-26','abc@gmail.com','Peter','male','Fernandez','pass12$','patient');
+insert into user values(6,'8545635212','1998-03-26','abc@gmail.com','Bobby','female','Denver','pass12$','patient');
 insert into user values(7,'8545635212','1998-03-26','abc@gmail.com','Stephen','male','Strange','pass12$','doctor');
 insert into user values(8,'8545635212','1998-03-26','abc@gmail.com','Bruce','male','Banner','pass12$','doctor');
 insert into user values(9,'8545635212','1998-03-26','abc@gmail.com','Pitt','male','Chak','pass12$','doctor');
@@ -14,8 +16,14 @@ insert into user values(10,'8545635212','1998-03-26','abc@gmail.com','George','m
 insert into user values(11,'8545635212','1998-03-26','abc@gmail.com','John','male','Bean','pass12$','doctor');
 insert into user values(12,'8545635212','1998-03-26','abc@gmail.com','Meredith','male','House','pass12$','doctor');
 insert into user values(13,'8545635212','1998-03-26','abc@gmail.com','Devi','male','Shetty','pass12$','doctor');
-insert into user values(5,'8545635212','1998-03-26','abc@gmail.com','Peter','male','Fernandez','pass12$','patient');
-insert into user values(6,'8545635212','1998-03-26','abc@gmail.com','Bobby','female','Denver','pass12$','patient');
+insert into user values(14,'8545635212','1998-03-26','abc@gmail.com','Paatty','female','Watson','pass12$','hospital admin');
+insert into user values(15,'8545635212','1998-03-26','abc@gmail.com','Paftty','female','Watson','pass12$','hospital admin');
+insert into user values(16,'8545635212','1998-03-26','abc@gmail.com','Patefdty','female','Watson','pass12$','hospital admin');
+insert into user values(17,'8545635212','1998-03-26','abc@gmail.com','Pwatty','female','Watson','pass12$','hospital admin');
+insert into user values(18,'8545635212','1998-03-26','abc@gmail.com','Patt5y','female','Watson','pass12$','hospital admin');
+insert into user values(19,'8545635212','1998-03-26','abc@gmail.com','Paetty','female','Watson','pass12$','hospital admin');
+insert into user values(20,'8545635212','1998-03-26','abc@gmail.com','Pgatty','female','Watson','pass12$','hospital admin');
+insert into user values(21,'8545635212','1998-03-26','abc@gmail.com','Pataty','female','Watson','pass12$','hospital admin');
 
 --insert into security_questions
 insert into security_questions values(1,'What is the name of your pet?');
@@ -33,7 +41,6 @@ insert into doctor values('DOC0996','Mon-Tue','2P.M.-5P.M.',500,5,'M.D.','Oncolo
 
 -- insert into hospital table
 insert into hospital values('HOS0995','111A, Rash Behari Ave, Dover Terrace, Gariahat, Kolkata, West Bengal 700029','Fortis Hospital','033-6628-4444','https://www.fortishealthcare.com/');
-insert into hospital values('HOS0597','9, Brahmachari Street (Formerly Loudon Street), Elgin, Kolkata, West Bengal 700017','Belle Vue Clinic','098361 93420','http://www.bellevueclinic.com/');
 insert into hospital values('HOS0590','Dr. U. N. Brahmachari Street, Elgin, Kolkata, West Bengal 700016','City Hospital','098361 93420','http://www.bellevueclinic.com/');
 insert into hospital values('HOS0591','Elgin, Kolkata, West Bengal 700017','AMRI Hospital','098361 93420','http://www.bellevueclinic.com/');
 insert into hospital values('HOS0592','10,U. N. Road, Elgin, Kolkata, West Bengal 700017','CMRI Hospital','098361 93420','http://www.bellevueclinic.com/');
@@ -41,24 +48,30 @@ insert into hospital values('HOS0593','Dr. U. N. Brahmachari Street (Formerly Lo
 insert into hospital values('HOS0594','Loudon Street, Elgin, Kolkata, West Bengal 700017','Sum','098361 93420','http://www.bellevueclinic.com/');
 insert into hospital values('HOS0595','S.K.Bose Raod,(Formerly Loudon Street), Elgin, Kolkata, West Bengal 700017','Narayana Hospital','098361 93420','http://www.bellevueclinic.com/');
 insert into hospital values('HOS0596','Behala,Elgin, Kolkata, West Bengal 700017','Disha Eye Hospital','098361 93420','http://www.bellevueclinic.com/');
+insert into hospital values('HOS0597','9, Brahmachari Street (Formerly Loudon Street), Elgin, Kolkata, West Bengal 700017','Belle Vue Clinic','098361 93420','http://www.bellevueclinic.com/');
 insert into hospital values('HOS0598','Camac Street, Elgin, Kolkata, West Bengal 700017','B.M.Birla Hospital','098361 93420','http://www.bellevueclinic.com/');
 
 --insert into doctor_hospital
 INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0999', 'HOS0595');
-INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0991', 'HOS0591');
-INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0992', 'HOS0592');
 INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0993', 'HOS0595');
-INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0994', 'HOS0595');
-INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0993', 'HOS0596');
+INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0994', 'HOS0590');
 INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0996', 'HOS0595');
 INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0992', 'HOS0595');
 INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0995', 'HOS0595');
-INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0991', 'HOS0595');
+INSERT INTO DOCTOR_HOSPITAL (DOCTOR_ID , HOSPITAL_ID ) VALUES ('DOC0991', 'HOS0597');
 
 
 -- insert into hospital_admin table
 insert into hospital_admin values('HAD0998','HOS0595',2);
 insert into hospital_admin values('HAD0987','HOS0597',3);
+insert into hospital_admin values('HAD0988','HOS0598',17);
+insert into hospital_admin values('HAD0989','HOS0590',18);
+insert into hospital_admin values('HAD0990','HOS0591',19);
+insert into hospital_admin values('HAD0991','HOS0592',20);
+insert into hospital_admin values('HAD0992','HOS0593',21);
+insert into hospital_admin values('HAD0994','HOS0596',14);
+insert into hospital_admin values('HAD0995','HOS0995',15);
+insert into hospital_admin values('HAD0996','HOS0594',16);
 
 -- insert into review_questionnaire table
 insert into review_questionnaire values(1, 'On a scale of 1-5,how good was your doctor/facility?');
@@ -74,6 +87,12 @@ insert into facility values(6,'ECG Services');
 insert into facility values(7,'Blood Sugar Test');
 insert into facility values(8,'Radiology/X-ray facility');
 insert into facility values(9,'Lipid Profile Test');
+
+--insert into tie_ups
+insert into tie_ups values(1,'HOS0590','HOS0591');
+insert into tie_ups values(2,'HOS0591','HOS0592');
+insert into tie_ups values(3,'HOS0591','HOS0593');
+insert into tie_ups values(4,'HOS0592','HOS0594');
 
 
 -- insert into baselines table
