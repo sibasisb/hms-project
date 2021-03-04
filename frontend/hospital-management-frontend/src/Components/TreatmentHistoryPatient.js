@@ -52,8 +52,7 @@ const TreatmentHistoryPatient = () => {
             .then(res => {
                 console.log(res)
                 setTreatmentHistoryInfo(res.data)
-                if (res.data.length == 0)
-                    setShowError(true)
+                setShowError(true)
             })
             .catch(err => {
                 console.log(err)
@@ -80,7 +79,7 @@ const TreatmentHistoryPatient = () => {
                 <div className="card-header"><h3 className="">Treatment history of patient {patientId}</h3></div>
                 <div className="card-body">
                     {
-                        showError ?
+                        showError?treatmentHistoryInfo.length==0?
                             (<div className="alert alert-danger">
                                 <h3><strong>No treatment history found!!!</strong></h3>
                             </div>) :
@@ -98,7 +97,7 @@ const TreatmentHistoryPatient = () => {
                                     {fetchResults()}
                                 </tbody>
                             </table>
-                            </>)
+                            </>):""
                     }
                 </div>
             </div>

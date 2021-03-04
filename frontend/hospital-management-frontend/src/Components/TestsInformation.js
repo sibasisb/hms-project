@@ -13,8 +13,7 @@ const TestsInformation=()=>{
         .then(res=>{
             console.log(res)
             setTestFacilities(res.data)
-            if(res.data.length==0)
-                setShowError(true)
+            setShowError(true)
         })
         .catch(err=>{
             console.log(err)
@@ -69,7 +68,7 @@ const TestsInformation=()=>{
             <div className="card-header"><h3 className="">Information for all test facilities</h3></div>
             <div className="card-body">
             {
-                showError?
+                showError?(testFacilities.length==0?
                 (<div className="alert alert-danger">
                     <h3><strong>No facility found!!!</strong></h3>
                 </div>):
@@ -89,7 +88,7 @@ const TestsInformation=()=>{
                     {fetchResults()}
                     </tbody>
                 </table>
-                </>)
+                </>)):""
             }
             </div>
             </div>
