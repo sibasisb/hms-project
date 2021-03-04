@@ -56,7 +56,7 @@ export const LoginComponent = (props) => {
             console.log(err)
             setState({
                 ...state,
-                errorsAlert: <div class="alert alert-danger mt-3" role="alert">
+                errorsAlert: <div className="alert alert-danger mt-3" role="alert">
                     Please update the highlighted mandatory fields(s).</div>,
                 invalidLogin: "",
                 errors: err
@@ -148,7 +148,7 @@ export const LoginComponent = (props) => {
                             pass: ""
                         },
                         errorsAlert: "",
-                        invalidLogin: <div class="alert alert-danger mt-3" role="alert">Invalid UserID/Password.</div>
+                        invalidLogin: <div className="alert alert-danger mt-3" role="alert">Invalid UserID/Password.</div>
                     })
                 })
 
@@ -175,8 +175,8 @@ export const LoginComponent = (props) => {
                             type: "LOGIN",
                             payload: {
                                 userId: res.data.userId,
-                                token: res.data,
-                                role: "admin",
+                                token: res.data.token,
+                                role: res.data.role,
                             }
                         }
                     )
@@ -192,7 +192,7 @@ export const LoginComponent = (props) => {
                             pass: ""
                         },
                         errorsAlert: "",
-                        invalidLogin: <div class="alert alert-danger mt-3" role="alert">Invalid UserID/Password.</div>
+                        invalidLogin: <div className="alert alert-danger mt-3" role="alert">Invalid UserID/Password.</div>
                     })
                 })
 
@@ -227,7 +227,7 @@ export const LoginComponent = (props) => {
                             <div className="form-row mb-2 ">
                                 <div className="form-group col-12 ">
                                     <label htmlFor="inputPassword">Password<span style={{ color: "#ff0000" }}>*</span></label>
-                                    <div class="input-group">
+                                    <div className="input-group">
                                         <input type={show ?"text":"password"} className="form-control" name="password" value={state.password} onChange={handleChange} style={state.errors.pass ? error : noerror} placeholder="Password" />
                                         <div className="input-group-append">
                                             <button className="btn" style={{borderColor:"#ced4da"}} onClick={toggleShow}>

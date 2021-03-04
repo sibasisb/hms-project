@@ -38,6 +38,8 @@ import ViewAppointment from "./Components/ViewAppointment";
 import ApproveAppointments from "./Components/ApproveAppointments";
 import Notification from "./Components/Notification";
 import AddTestResult from "./Components/AddTestResult";
+import ViewTieUps from "./Components/ViewTieUps";
+import AddUpdateTieUp from "./Components/AddUpdateTieUp";
 
 export const UserContext = createContext();
 
@@ -85,6 +87,8 @@ const Routing = () => {
       <ProtectedRoute roles={[roles.patient]} path="/view-appointment/:patientId" exact component={ViewAppointment} />
       <ProtectedRoute roles={[roles.doctor, roles.hospital_admin]} path="/approve-appointment/:serviceId" exact component={ApproveAppointments} />
       <ProtectedRoute roles={[roles.patient]} path="/notifications/:patientId" exact component={Notification} />
+      <ProtectedRoute roles={[roles.sys_admin]} path="/tieup" exact component={ViewTieUps} />
+      <ProtectedRoute roles={[roles.sys_admin]} path="/tieup/add/:hospital1/:hospital2/:tieUpId" exact component={AddUpdateTieUp} />
     </Switch>
   );
 };

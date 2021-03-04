@@ -76,6 +76,13 @@ insert into facility values(8,'Radiology/X-ray facility');
 insert into facility values(9,'Lipid Profile Test');
 
 
+--insert into tie_ups
+insert into tie_ups values(1,'HOS0590','HOS0591');
+insert into tie_ups values(2,'HOS0591','HOS0592');
+insert into tie_ups values(3,'HOS0591','HOS0593');
+insert into tie_ups values(4,'HOS0592','HOS0594');
+
+
 -- insert into baselines table
 insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(1,'TSH','0.40 - 4.50 mIU/mL',1);
 insert into baselines(baseline_id,baseline_name,baseline_value,facility_id) values(2,'T3','100 - 200 ng/dL',1);

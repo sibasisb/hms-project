@@ -11,7 +11,7 @@ const ViewAppointment = () => {
 		setShowError(false)
 		const patientId = localStorage.getItem("userId");
 		axios
-			.get(`http://localhost:8080/appointments/${patientId}`,getHeader())
+			.get(`http://localhost:8080/appointments/${patientId}`, getHeader())
 			.then((res) => {
 				setAppointments(res.data);
 				if (res.data.length == 0)
@@ -25,22 +25,21 @@ const ViewAppointment = () => {
 			<div className="card">
 				<h4 className="card-header"> List of your appointments </h4>
 				<div className="card-body">
-					
-						{
-							showError ?
-								(<div className="alert alert-danger">
-									<h5><strong>No appointments to view yet!!!</strong></h5>
-								</div>) :
+
+					{
+						showError ?
+							(<div className="alert alert-danger">
+								<h5><strong>No appointments to view yet!!!</strong></h5>
+							</div>) :
 							(<div className="row">
 								{appointments.map((appointment) => (
-								
+									<div className="col-md-4 mb-4" key={appointment.appointmentId}>
 										<div
 											className={
 												appointment.approved
-													? "cols-md-4 card bg-light border-success m-2"
-													: "cols-md-4 card bg-light border-secondary m-2"
+													? "card bg-light border-success"
+													: "card bg-light border-secondary"
 											}
-											key={appointment.appointmentId}
 										>
 											<div className="card-body">
 												<h5
@@ -142,9 +141,10 @@ const ViewAppointment = () => {
 												</small>
 											</div>
 										</div>
-									))}
-								</div>)
-						}
+									</div>
+								))}
+							</div>)
+					}
 				</div>
 			</div>
 		</div>
