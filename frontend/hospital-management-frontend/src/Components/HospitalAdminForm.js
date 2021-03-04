@@ -13,13 +13,13 @@ function HospitalAdminForm(props) {
     console.log(props.state)
     const initialState = {
         name: "",
-        phone: "",
+        phone: 0,
         website: "",
         addr1: "",
         addr2: "",
         city: "",
         state: "",
-        zip: ""
+        zip: 0
     }
     // const initialState=props.state
     const [state,
@@ -57,7 +57,7 @@ function HospitalAdminForm(props) {
                     <label htmlFor="phone">
                         Hospital Phone Number</label>
                     <input
-                        type="text"
+                        type="number"
                         name="phone"
                         id="phone"
                         className="form-control"
@@ -143,7 +143,7 @@ function HospitalAdminForm(props) {
                 <div className="col-md-3 mb-3">
                     <label htmlFor="zip">Zip</label>
                     <input
-                        type="text"
+                        type="number"
                         className="form-control"
                         id="zip"
                         name="zip"

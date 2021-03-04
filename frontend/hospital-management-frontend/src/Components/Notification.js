@@ -27,7 +27,7 @@ const Notification = () => {
 							key={appointment.appointmentId}
 							className="alert alert-primary mt-4"
 						>
-							{`You have an appointment on ${appointment.appointmentDate[2]}-${appointment.appointmentDate[1]}-${appointment.appointmentDate[0]} at ${(appointment.appointmentTime[1] < 10) ? ("0" + appointment.appointmentTime[1]) : appointment.appointmentTime[1]}:${(appointment.appointmentTime[1] < 10) ? ("0" + appointment.appointmentTime[1]) : appointment.appointmentTime[1]}`}
+							{`You have an appointment on ${appointment.appointmentDate[2]}-${appointment.appointmentDate[1]}-${appointment.appointmentDate[0]} at ${(appointment.appointmentTime[0] < 10) ? ("0" + appointment.appointmentTime[0]) : appointment.appointmentTime[0]}:${(appointment.appointmentTime[1] < 10) ? ("0" + appointment.appointmentTime[1]) : appointment.appointmentTime[1]}`}
 						</div>
 					) : (
 						<div key={appointment.appointmentId}> </div>

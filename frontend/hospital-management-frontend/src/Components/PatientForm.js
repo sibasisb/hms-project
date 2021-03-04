@@ -129,13 +129,13 @@ function PatientForm(props) {
                         placeholder="Password"
                         style={props.errors?.password ? error : noerror}
                         onChange={changeValue} />
-                    <small className="text-danger">{props.errors?.password}</small>
                     <div className="input-group-append">
                         <button className="btn" style={{borderColor:"#ced4da"}} onClick={toggleShow}>
                             <FontAwesomeIcon className="float-right" icon={faEye} />
                         </button>
                     </div>
                 </div>
+                <div><small className="text-danger">{props.errors?.password}</small></div>
             </div>
 
         </div>

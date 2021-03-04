@@ -54,7 +54,7 @@ const ViewAppointment = () => {
 													{appointment.appointmentId}
 												</h5>
 												<h6 className="card-subtitle mb-2 text-muted">
-													{`On ${appointment.appointmentDate[2]}-${appointment.appointmentDate[1]}-${appointment.appointmentDate[0]} at ${(appointment.appointmentTime[1] < 10) ? ("0" + appointment.appointmentTime[1]) : appointment.appointmentTime[1]}:${(appointment.appointmentTime[1] < 10) ? ("0" + appointment.appointmentTime[1]) : appointment.appointmentTime[1]}`}
+													{`On ${appointment.appointmentDate[2]}-${appointment.appointmentDate[1]}-${appointment.appointmentDate[0]} at ${(appointment.appointmentTime[0] < 10) ? ("0" + appointment.appointmentTime[0]) : appointment.appointmentTime[0]}:${(appointment.appointmentTime[1] < 10) ? ("0" + appointment.appointmentTime[1]) : appointment.appointmentTime[1]}`}
 												</h6>
 												<div className="card-text">
 													{appointment.doctorName != null ? (
