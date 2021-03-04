@@ -10,6 +10,7 @@ import facility from "../images/facility.png";
 import viewAllFacilities from '../images/view-all-facilities.jpg';
 import inpatient from "../images/inpatient.png";
 import viewInPatients from '../images/view-inpatients.jpg';
+import tieup from '../images/tieup.png'
 import "../styles/mystyle.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -157,6 +158,21 @@ function HospitalAdminDashboard() {
 						<div className="card-body">
 							<p className="card-text font-weight-bold">
 								Billing
+							</p>
+						</div>
+					</div>
+				</Link>
+				<Link to={"/view-tieUp-with-hospital"} className="col-md-4">
+					<div className="card m-4">
+						<img
+							className="card-img-top  embed-responsive-item"
+							src={tieup}
+							alt="Card image cap"
+							style={imageStyle}
+						/>
+						<div className="card-body">
+							<p className="card-text font-weight-bold">
+								View Tie Ups
 							</p>
 						</div>
 					</div>

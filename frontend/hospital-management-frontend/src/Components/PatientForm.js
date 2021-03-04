@@ -30,7 +30,6 @@ function PatientForm(props) {
     const [show ,setShow]=useState(false);
 
     useEffect(() => {
-        console.log(state)
         props.changeUserDetails(state)
     }, [state])
 

@@ -40,6 +40,7 @@ import Notification from "./Components/Notification";
 import AddTestResult from "./Components/AddTestResult";
 import { ModalProvider } from "react-modal-hook";
 import SystemAdminReportingComponent from "./Components/SystemAdminReportingComponent";
+import ViewTieUpWithHospital from "./Components/ViewTieUpWithHospital";
 
 
 export const UserContext = createContext();
@@ -89,6 +90,7 @@ const Routing = () => {
       <ProtectedRoute roles={[roles.doctor, roles.hospital_admin]} path="/approve-appointment/:serviceId" exact component={ApproveAppointments} />
       <ProtectedRoute roles={[roles.patient]} path="/notifications/:patientId" exact component={Notification} />
       <ProtectedRoute roles={[roles.sys_admin]} path="/reports" exact component={SystemAdminReportingComponent} />
+      <ProtectedRoute roles={[roles.hospital_admin]} path="/view-tieUp-with-hospital" exact component={ViewTieUpWithHospital} />
     </Switch>
   );
 };
