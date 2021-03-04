@@ -41,7 +41,7 @@ public class TieUpController {
 	}
 	
 	@GetMapping("/{hospitalId}")
-	public ResponseEntity<?> viewTieUps(@PathVariable String hospitalId)
+	public ResponseEntity<?> viewTieUpsOfHospital(@PathVariable String hospitalId)
 	{
 		return new ResponseEntity<>(tieUpService.getTieUpsOfHospital(hospitalId),HttpStatus.OK);
 	}

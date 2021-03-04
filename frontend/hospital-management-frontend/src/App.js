@@ -38,14 +38,12 @@ import ViewAppointment from "./Components/ViewAppointment";
 import ApproveAppointments from "./Components/ApproveAppointments";
 import Notification from "./Components/Notification";
 import AddTestResult from "./Components/AddTestResult";
-<<<<<<< HEAD
 import { ModalProvider } from "react-modal-hook";
 import SystemAdminReportingComponent from "./Components/SystemAdminReportingComponent";
+import ViewTieUpWithHospital from "./Components/ViewTieUpWithHospital";
 
-=======
 import ViewTieUps from "./Components/ViewTieUps";
 import AddUpdateTieUp from "./Components/AddUpdateTieUp";
->>>>>>> tie-up
 
 export const UserContext = createContext();
 
@@ -80,11 +78,11 @@ const Routing = () => {
       <ProtectedRoute roles={[roles.hospital_admin]} path="/addfacility/:id" exact component={FacilityAddUpdateComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/updatefacility" exact component={FacilityUpdateList} />
       <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/hospitals"  exact component={AllHospitalsListComponent} />
-      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/viewhospital/:id" exact exact component={HospitalDetailsComponent} />
-      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/facilities/:id"  exact component={AllFacilitiesDocotorsComponent} />
-      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/doctors/:id"  exact component={AllFacilitiesDocotorsComponent} />
-      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/viewfacility/:id" exact component={FacilityDoctorDetailsComponent} />
-      <ProtectedRoute roles={[roles.patient,roles.sys_admin]} path="/viewdoctor/:id" exact component={FacilityDoctorDetailsComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin,roles.hospital_admin]} path="/viewhospital/:id" exact exact component={HospitalDetailsComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin,roles.hospital_admin]} path="/facilities/:id"  exact component={AllFacilitiesDocotorsComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin,roles.hospital_admin]} path="/doctors/:id"  exact component={AllFacilitiesDocotorsComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin,roles.hospital_admin]} path="/viewfacility/:id" exact component={FacilityDoctorDetailsComponent} />
+      <ProtectedRoute roles={[roles.patient,roles.sys_admin,roles.hospital_admin]} path="/viewdoctor/:id" exact component={FacilityDoctorDetailsComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/inpatientform" exact component={InPatientFormComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/inpatientform/:id" exact component={InPatientFormComponent} />
       <ProtectedRoute roles={[roles.hospital_admin]} path="/inpatientlist" exact component={InPatientUpdateListComponent} />
@@ -96,6 +94,7 @@ const Routing = () => {
       <ProtectedRoute roles={[roles.sys_admin]} path="/reports" exact component={SystemAdminReportingComponent} />
       <ProtectedRoute roles={[roles.sys_admin]} path="/tieup" exact component={ViewTieUps} />
       <ProtectedRoute roles={[roles.sys_admin]} path="/tieup/add/:hospital1/:hospital2/:tieUpId" exact component={AddUpdateTieUp} />
+      <ProtectedRoute roles={[roles.hospital_admin]} path="/view-tieUp-with-hospital" exact component={ViewTieUpWithHospital} />
     </Switch>
   );
 };

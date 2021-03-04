@@ -52,10 +52,12 @@ const CentralDoctorComponent = (props) => {
                                             <span className="h6 text-muted" > Available at : 
                                             {doctor.hospitalNames.map((hospital,i)=>{
                                                return(
-                                                   <span className="font-weight-bold" key={i}> | {hospital}</span>
+                                                   <span className="font-weight-bold" key={i}>  {hospital}</span>
                                                );
                                             })}
                                             </span>
+                                            <br/>
+                                            <span className="h6 text-muted">Timings: {doctor.availableDays} {doctor.availableTime}</span>
                                        
                                     </li>
                                 )})

@@ -26,7 +26,6 @@ function HospitalAdminForm(props) {
         setstate] = useState(initialState)
 
     useEffect(() => {
-        console.log(state)
         props.changeAdminDetails(state)
     }, [state])
 

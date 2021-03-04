@@ -80,7 +80,7 @@ function DoctorForm(props) {
 
             <div className=" row mb-3">
                 <div className="col-md-6">
-                    <label>Quality
+                    <label>Qualification
                     </label>
                     <input
                         type="text"

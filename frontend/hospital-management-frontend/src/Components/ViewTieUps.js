@@ -15,8 +15,11 @@ const ViewTieUps = (props) => {
     }, []);
 
     return (
-        <div className="container">
-            <table className="table table-hover mt-5">
+        <div className="container mt-5">
+            <div className="card">
+				<h4 className="card-header"> List of Tie Ups </h4>
+				<div className="card-body">
+            <table className="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col"> Id </th>
@@ -25,16 +28,15 @@ const ViewTieUps = (props) => {
                         <th scope="col"> Update </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     {tieups.map((tieup, index) => (
                         <tr key={tieup.tieUpId}>
                             <th scope="row">{index + 1}</th>
-                            <td> <Link to={`/viewhospital/${tieup.hospital1Id}`} >{`${tieup.hospital1Id} - ${tieup.hospital1Name}`} </Link></td>
-                            <td> <Link to={`/viewhospital/${tieup.hospital2Id}`} >{`${tieup.hospital2Id} - ${tieup.hospital2Name}`} </Link></td>
+                            <td> <Link style={{color:"black"}} to={`/viewhospital/${tieup.hospital1Id}`} >{`${tieup.hospital1Id} - ${tieup.hospital1Name}`} </Link></td>
+                            <td> <Link style={{color:"black"}} to={`/viewhospital/${tieup.hospital2Id}`} >{`${tieup.hospital2Id} - ${tieup.hospital2Name}`} </Link></td>
                             <td>
-                                <Link to={`/tieup/add/${tieup.hospital1Id}/${tieup.hospital2Id}/${tieup.tieUpId}`}>
+                                <Link style={{color:"black"}} to={`/tieup/add/${tieup.hospital1Id}/${tieup.hospital2Id}/${tieup.tieUpId}`}>
                                     <FontAwesomeIcon icon={faPen} className="mr-2" />
-                    Update
                                 </Link>
                             </td>
                         </tr>
@@ -43,10 +45,12 @@ const ViewTieUps = (props) => {
             </table>
             <div className="w-100 d-flex justify-content-center">
 
-                <Link to="/tieup/add/0/0/0" className="btn btn-primary">
+                <Link  to="/tieup/add/0/0/0" className="btn btn-primary">
                     <FontAwesomeIcon icon={faPlus} className="mr-2" />
                     Add more
                     </Link>
+            </div>
+            </div>
             </div>
         </div>
     );

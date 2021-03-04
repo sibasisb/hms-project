@@ -31,6 +31,8 @@ public class DoctorService {
 			doctorInfo.setQualification(doctor.getQualification());
 			doctorInfo.setCharge(doctor.getCharge());
 			doctorInfo.setSpeciality(doctor.getSpeciality());
+			doctorInfo.setAvailableDays(doctor.getAvailableDays());
+			doctorInfo.setAvailableTime(doctor.getAvailableTime());
 			doctor.getHospital().forEach((hospital->{
 				doctorInfo.getHospitalNames().add(hospital.getName());
 			}));

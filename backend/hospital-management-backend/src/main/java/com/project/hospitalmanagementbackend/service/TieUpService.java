@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.hospitalmanagementbackend.dto.TieUpInfo;
+import com.project.hospitalmanagementbackend.exception.HospitalNotFoundException;
 import com.project.hospitalmanagementbackend.model.Hospital;
 import com.project.hospitalmanagementbackend.model.TieUp;
 import com.project.hospitalmanagementbackend.repository.HospitalRepository;
@@ -66,6 +67,8 @@ public class TieUpService {
 
 	public Set<TieUpInfo> getTieUpsOfHospital(String hospitalId)
 	{
+		if(!hospitalRepository.findById(hospitalId).isPresent())
+			throw new HospitalNotFoundException("Hospital Not Found");
 		Set<TieUp> tieUpSet = tieUpRespository.getTieUpOfHospital(hospitalId);
 		Set<TieUpInfo> tieUpInfoSet = new HashSet<TieUpInfo>();
 		tieUpSet.forEach((tieUp)->{
