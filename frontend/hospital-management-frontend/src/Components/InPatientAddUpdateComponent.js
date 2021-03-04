@@ -9,7 +9,7 @@ const InPatientFormComponent = (props) => {
         admissionTime:"",
         dischargeDate:"",
         dischargeTime:"",
-        roomCharges:"",
+        roomCharges:0,
         patientId:"",
         hospitalId:localStorage.getItem("hospitalId"),
         inPatientId:Object.keys(props.match.params).length === 0?"":props.match.params.id,
@@ -103,7 +103,17 @@ const InPatientFormComponent = (props) => {
                     }
                 axios.post(`http://localhost:8080/inpatients/add/${localStorage.getItem("hospitalId")}/${state.patientId}`,body,getHeader())
                 .then(res=>{console.log(res)
-                setState({...state,errors:{...state.errors,display_success:true,display_error:false,patientId:""}})
+                setState({...state,errors:{
+                    hospitalId:"",
+                    admissionDate:"",
+                    admissionTime:"",
+                    dischargeDate:"",
+                    dischargeTime:"",
+                    roomCharges:"",
+                    patientId:"",
+                    display_success:true,
+                    display_error:false
+                }})
                 })
                 .catch(err=>{
                     console.log(err);
@@ -123,7 +133,17 @@ const InPatientFormComponent = (props) => {
                     }
                 axios.post(`http://localhost:8080/inpatients/update/${localStorage.getItem("hospitalId")}/${state.patientId}`,body,getHeader())
                 .then(res=>{console.log(res)
-                    setState({...state,errors:{...state.errors,display_success:true,display_error:false,patientId:""}})
+                    setState({...state,errors:{
+                        hospitalId:"",
+                        admissionDate:"",
+                        admissionTime:"",
+                        dischargeDate:"",
+                        dischargeTime:"",
+                        roomCharges:"",
+                        patientId:"",
+                        display_success:true,
+                        display_error:false
+                    }})
                     })
                     .catch(err=>{
                         console.log(err);
@@ -180,17 +200,13 @@ const InPatientFormComponent = (props) => {
             valid=false;
             temp.dischargeTime="Please provide an discharge time";
         }
-        if(state.roomCharges==="")
+        if(state.roomCharges===0 || state.roomCharges==="")
         {
             valid=false;
             temp.roomCharges="Please provide room charges";
         }
-        if(isNaN(state.roomCharges))
-        {
-            valid=false;
-            temp.roomCharges="Amount should be a number in Rupees";
-        }
-
+        else
+            temp.roomCharges=""; 
 
         temp.display_error = !valid;
       //  temp.display_success  = valid;
@@ -277,8 +293,8 @@ const InPatientFormComponent = (props) => {
                         <div className="row">
                             <div className="form-group col-md-6 col-sm-12">
                                 <label>Room Charge</label>
-                                <input type="text" className={state.errors.roomCharges===""?"form-control":"form-control is-invalid"} id="roomCharges" name="roomCharges" value={state.roomCharges} onChange={handleChange} />
-                                <p className="text-danger text-small">{state.errors.roomCharges==="Amount should be a number in Rupees"?state.errors.roomCharges:null}</p>
+                                <input type="number" className={state.errors.roomCharges===""?"form-control":"form-control is-invalid"} id="roomCharges" name="roomCharges" value={state.roomCharges} onChange={handleChange} />
+                                {/* <p className="text-danger text-small">{state.errors.roomCharges==="Amount should be a number in Rupees"?state.errors.roomCharges:null}</p> */}
                             </div>
                         </div>
                         
@@ -350,8 +366,8 @@ const InPatientFormComponent = (props) => {
                 <div className="row">
                     <div className="form-group col-md-6 col-sm-12">
                         <label>Room Charge</label>
-                        <input type="text" className={state.errors.roomCharges===""?"form-control":"form-control is-invalid"} id="roomCharges" name="roomCharges" value={state.roomCharges} onChange={handleChange} />
-                        <p className="text-danger text-small">{state.errors.patientId==="Invalid Patient Id"?state.errors.patientId:null}</p>
+                        <input type="number" className={state.errors.roomCharges===""?"form-control":"form-control is-invalid"} id="roomCharges" name="roomCharges" value={state.roomCharges} onChange={handleChange} />
+                        {/* <p className="text-danger text-small">{state.errors.patientId==="Invalid Patient Id"?state.errors.patientId:null}</p> */}
                     </div>
                 </div>
                 
