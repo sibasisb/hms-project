@@ -21,12 +21,13 @@ import com.project.hospitalmanagementbackend.repository.HospitalRepository;
 
 
 @Service
+@Transactional
 public class HospitalService {
 	
 	@Autowired
 	HospitalRepository hospitalRepository;
 	
-	@Transactional
+	
 	public List<HospitalInfo> getAllHospitals(){
 		
 		Set<Hospital> hospitals = hospitalRepository.getAllHospitals();
@@ -43,7 +44,7 @@ public class HospitalService {
 		return hospitalInfoList;
 	}
 	
-	@Transactional
+	
 	public Hospital getHospitalById(String hospitalId) {
 		
 		Optional<Hospital> hospital = hospitalRepository.getHospitalById(hospitalId);

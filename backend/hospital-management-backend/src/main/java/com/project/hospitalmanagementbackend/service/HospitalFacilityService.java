@@ -18,6 +18,7 @@ import com.project.hospitalmanagementbackend.repository.HospitalAdminRepository;
 import com.project.hospitalmanagementbackend.repository.HospitalFacilityRepository;
 
 @Service
+@Transactional
 public class HospitalFacilityService {
 
 	@Autowired
@@ -32,7 +33,7 @@ public class HospitalFacilityService {
 	@Autowired
 	private HospitalAdminRepository hospitalAdminRepository;
 
-	@Transactional
+	
 	public List<HospitalFacility> getFacilitiesHospitalId(String hospitalAdminId) {
 		String hospitalId = hospitalAdminRepository.getHospitalIdByAdminId(hospitalAdminId);
 		return hospitalFacilityRepository.getFacilitiesByHospitalId(hospitalId);

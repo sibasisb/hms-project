@@ -13,17 +13,18 @@ import com.project.hospitalmanagementbackend.model.Facility;
 import com.project.hospitalmanagementbackend.repository.FacilityRepository;
 
 @Service
+@Transactional
 public class FacilityService {
 
 	@Autowired
 	FacilityRepository facilityRepository;
 
-	@Transactional
+	
 	public List<Facility> getAllFacilities() {
 		List<Facility> facilities = facilityRepository.findAll();
 		return facilities;
 	}
-
+	
 	public Facility getFacilityById(long facilityId) {
 		Optional<Facility> facility = facilityRepository.getFacilityById(facilityId);
 		if (facility.isPresent())

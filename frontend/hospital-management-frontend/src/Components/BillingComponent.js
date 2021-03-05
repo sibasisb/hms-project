@@ -5,8 +5,6 @@ import { getHeader } from '../helpers/AuthorizationHeader';
 const BillingComponent = (props) => {
 
     const initialState={
-        tax:0,
-        otherCharges:0,
         total:0,
         displayBills:false,
         showPaid:false

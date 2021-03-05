@@ -117,7 +117,16 @@ const InPatientFormComponent = (props) => {
                 })
                 .catch(err=>{
                     console.log(err);
-                    setState({...state,errors:{...state.errors,display_success:false,display_error:true,patientId:"Invalid Patient Id"}});
+                    setState({...state,errors:{
+                        hospitalId:"",
+                        admissionDate:"",
+                        admissionTime:"",
+                        dischargeDate:"",
+                        dischargeTime:"",
+                        roomCharges:"",
+                        display_success:false,
+                        display_error:true
+                    }});
                 });
             }
             else{
@@ -147,7 +156,16 @@ const InPatientFormComponent = (props) => {
                     })
                     .catch(err=>{
                         console.log(err);
-                        setState({...state,errors:{...state.errors,display_success:false,display_error:true,patientId:"Invalid Patient Id"}});
+                        setState({...state,errors:{
+                            hospitalId:"",
+                            admissionDate:"",
+                            admissionTime:"",
+                            dischargeDate:"",
+                            dischargeTime:"",
+                            roomCharges:"",
+                            display_success:false,
+                            display_error:true
+                        }});
                     });
 
             }
