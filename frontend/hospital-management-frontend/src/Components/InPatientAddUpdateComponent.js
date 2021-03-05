@@ -124,6 +124,7 @@ const InPatientFormComponent = (props) => {
                         dischargeDate:"",
                         dischargeTime:"",
                         roomCharges:"",
+                        patientId:"Invalid Patient Id",
                         display_success:false,
                         display_error:true
                     }});
@@ -163,6 +164,7 @@ const InPatientFormComponent = (props) => {
                             dischargeDate:"",
                             dischargeTime:"",
                             roomCharges:"",
+                            patientId:"Invalid Patient Id",
                             display_success:false,
                             display_error:true
                         }});
@@ -349,11 +351,11 @@ const InPatientFormComponent = (props) => {
                 <div className="row">
                     <div className="form-group col-md-6 col-sm-12">
                         <label >Hospital ID</label>
-                        <input type="text" className={state.errors.hospitalId===""?"form-control":"form-control is-invalid"} id="hospitalId" name="hospitalId" value={state.hospitalId} onChange={handleChange} />
+                        <input type="text" className={state.errors.hospitalId===""?"form-control":"form-control is-invalid"} id="hospitalId" name="hospitalId" value={state.hospitalId} onChange={()=>{}} disabled />
                     </div>
                     <div className="form-group col-md-6 col-sm-12">
                         <label >Patient ID</label>
-                        <input type="text" className={state.errors.patientId===""?"form-control":"form-control is-invalid"} id="patientId" name="patientId" value={state.patientId}  onChange={handleChange}/>
+                        <input type="text" className={state.errors.patientId===""?"form-control":"form-control is-invalid"} id="patientId" name="patientId" value={state.patientId}  onChange={()=>{}} disabled/>
                        
                     </div>
                 </div>
